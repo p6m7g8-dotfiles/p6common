@@ -110,13 +110,16 @@ p6_debug() {
 #  Args:
 #	msg -
 #
-#  Depends:	 p6_msg
+#  Depends:	 p6_dryrunning p6_msg
+#  Environment:	 P6_DFZ_LOG_DISABLED
 #>
 ######################################################################
 p6_log() {
     local msg="$*"
 
-    p6_msg "$msg" >>/tmp/p6/log.log
+    if [ -z "$P6_DFZ_LOG_DISABLED" ]; then
+      p6_msg "$msg" >>/tmp/p6/log.log
+    fi
 
     p6_return_void
 }
