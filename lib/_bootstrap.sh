@@ -12,7 +12,7 @@
 #>
 ######################################################################
 p6_bootstrap() {
-  local dir="${1:-$P6_DFZ_SRC_P6M7G8_DIR/p6common}"
+  local dir="${1:-$P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common}"
   local islocal="${2:-}"
 
   p6_bootstrap_optimize "$dir" "$islocal"
