@@ -1,4 +1,4 @@
-# shellcheck shell=zsh
+#!/bin/zsh
 
 # This file obviously is only useful in zsh
 ######################################################################
