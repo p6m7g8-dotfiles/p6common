@@ -1,4 +1,5 @@
-# XXX: DO NOT depend on anything
+# shellcheck shell=bash
+
 ######################################################################
 #<
 #

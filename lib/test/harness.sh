@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # t - total number of planed tests. From the TAP plan.
 # s - number of tests ok (includes TODO tests not accidentally passing)
 # S - number of tests SKIPPED

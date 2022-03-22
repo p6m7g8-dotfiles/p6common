@@ -1,6 +1,4 @@
-#!/bin/sh
-
-#    ssh -v -N -o ConnectTimeOut=2 -o BatchMode=yes $host 'echo' # >/dev/null 2>&1
+# shellcheck shell=bash
 
 ######################################################################
 #<

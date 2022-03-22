@@ -1,4 +1,4 @@
-#!/bin/sh
+# shellcheck shell=bash
 
 #
 # These are intentionally global.  No global should exist without being

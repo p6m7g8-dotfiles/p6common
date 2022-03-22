@@ -1,3 +1,5 @@
+# shellcheck shell=zsh
+
 # This file obviously is only useful in zsh
 ######################################################################
 #<
