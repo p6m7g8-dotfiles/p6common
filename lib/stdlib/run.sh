@@ -35,7 +35,6 @@ p6_run__debug() {
 p6_run_code() {
     local code="$*"
 
-    p6_run__debug "code(): [code=$code]"
     p6_log "$code"
     eval "$code"
     local rc=$?
