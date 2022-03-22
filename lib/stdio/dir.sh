@@ -266,8 +266,7 @@ p6_dir_mv() {
 p6_dir_cd() {
     local dir="$1"
 
-    p6_dir__debug "cd(): cd $dir"
-    cd $dir
+    p6_run_code "cd $dir"
 
     p6_return_void
 }

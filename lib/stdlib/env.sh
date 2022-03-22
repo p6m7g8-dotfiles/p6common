@@ -34,8 +34,6 @@ p6_env_export() {
 
     p6_run_code "export $var=\"$val\""
 
-    p6_env__debug "export(): [$var] => [$val]"
-
     p6_return_void
 }
 
@@ -54,9 +52,8 @@ p6_env_export() {
 p6_env_export_un() {
     local var="$1"
 
-    p6_env__debug "export_un(): [$var]"
-
-    ## XXX: p6_unset
+    ## XXX: subshells.........
+    p6_run_code "unset $var"
     unset $var
 
     p6_return_void
