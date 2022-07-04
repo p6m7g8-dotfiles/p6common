@@ -63,7 +63,7 @@ p6_word_not() {
   local a="$1"
   local b="$2"
 
-  local dir=$(p6_transient_create "word_not", 1)
+  local dir=$(p6_transient_create "word_not" "1")
   local i
   for i in $(echo $a); do
     echo $i
