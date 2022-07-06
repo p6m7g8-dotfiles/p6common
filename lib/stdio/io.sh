@@ -206,3 +206,18 @@ p6_h5() {
 
     p6_return_void
 }
+
+p6_vertical() {
+    local v="$1"
+
+    local IFS_SAVED=$IFS
+    local i
+
+    IFS=:
+    for i in $(echo $v); do
+        p6_echo "$i"
+    done
+    IFS=$IFS_SAVED
+
+    p6_return_void
+}

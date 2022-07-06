@@ -22,7 +22,7 @@ p6_word__debug() {
 # Function: words words = p6_word_unique(...)
 #
 #  Args:
-#	... - 
+#	... -
 #
 #  Returns:
 #	words - words
@@ -77,4 +77,25 @@ p6_word_not() {
   p6_transient_delete "$dir"
 
   p6_return_words "$result"
+}
+
+p6_word_in() {
+  local word="$1"
+  shift 1
+  local words="$@"
+
+  local found=0
+  local i
+  for i in $(echo $words); do
+    if p6_string_eq "$word" "$i"; then
+      found=1
+      break
+    fi
+  done
+
+  if p6_string_eq "$found" "1"; then
+    p6_return_true
+  else
+    p6_return_false
+  fi
 }

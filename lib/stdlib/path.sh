@@ -25,8 +25,8 @@ p6_path__debug() {
 #	dir -
 #
 #  Returns:
-#	true - 
-#	false - 
+#	true -
+#	false -
 #
 #  Depends:	 p6_dir p6_path
 #  Environment:	 DNE PATH
@@ -83,14 +83,7 @@ p6_path_default() {
 ######################################################################
 p6_path_current() {
 
-    local IFS_SAVED=$IFS
-    local p
-
-    IFS=:
-    for p in $(echo $PATH); do
-      echo "$p"
-    done
-    IFS=$IFS_SAVED
+    p6_vertical "$PATH"
 
     p6_return_void
 }
@@ -104,11 +97,7 @@ p6_path_current() {
 ######################################################################
 p6_cdpath_current() {
 
-    local p
-
-    for p in $(echo $cdpath); do
-      echo "$p"
-    done
+    p6_vertical "$CDPATH"
 
     p6_return_void
 }

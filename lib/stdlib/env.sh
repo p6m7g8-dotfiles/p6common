@@ -79,8 +79,15 @@ p6_env_list() {
     if p6_string_blank "$glob"; then
         env
     else
-        env | grep $glob
+        env | grep "$glob"
     fi
+
+    p6_return_void
+}
+
+p6_env_list_p6() {
+
+    p6_env_list "^P6" | sort
 
     p6_return_void
 }
