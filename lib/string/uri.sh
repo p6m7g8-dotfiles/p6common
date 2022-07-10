@@ -5,7 +5,6 @@
 #
 # Function: p6_uri__debug()
 #
-#  Depends:	 p6_string p6_uri
 #>
 ######################################################################
 p6_uri__debug() {
@@ -27,7 +26,6 @@ p6_uri__debug() {
 #  Returns:
 #	path - name
 #
-#  Depends:	 p6_string p6_uri
 #>
 ######################################################################
 p6_uri_name() {
@@ -53,7 +51,6 @@ p6_uri_name() {
 #  Returns:
 #	path - name
 #
-#  Depends:	 p6_string p6_uri
 #>
 ######################################################################
 p6_uri_path() {

@@ -5,7 +5,6 @@
 #
 # Function: p6_transient__debug()
 #
-#  Depends:	 p6_dir p6_transient
 #>
 ######################################################################
 p6_transient__debug() {
@@ -30,7 +29,6 @@ p6_transient__debug() {
 #	str - 
 #	str - dir_name
 #
-#  Depends:	 p6_dir p6_string p6_transient
 #  Environment:	 CREATED P6_DIR_TRANSIENTS P6_TEST_TRANSIENT_CREATE_RAND TEST_MODE
 #>
 ######################################################################
@@ -74,7 +72,6 @@ p6_transient_create() {
 #  Returns:
 #	path - file
 #
-#  Depends:	 p6_dir p6_transient
 #>
 ######################################################################
 p6_transient_create_file() {
@@ -97,7 +94,6 @@ p6_transient_create_file() {
 #  Returns:
 #	code - rc
 #
-#  Depends:	 p6_dir p6_file p6_transient
 #>
 ######################################################################
 p6_transient_is() {
@@ -117,7 +113,6 @@ p6_transient_is() {
 #  Args:
 #	dir -
 #
-#  Depends:	 p6_file p6_transient
 #>
 ######################################################################
 p6_transient_persist() {
@@ -136,7 +131,6 @@ p6_transient_persist() {
 #  Args:
 #	dir -
 #
-#  Depends:	 p6_file p6_transient
 #>
 ######################################################################
 p6_transient_persist_un() {
@@ -158,7 +152,6 @@ p6_transient_persist_un() {
 #  Returns:
 #	code - rc
 #
-#  Depends:	 p6_dir p6_file p6_transient
 #>
 ######################################################################
 p6_transient_persist_is() {
@@ -180,7 +173,6 @@ p6_transient_persist_is() {
 #	dir -
 #	OPTIONAL handler_name - []
 #
-#  Depends:	 p6_die p6_dir p6_file p6_string p6_transient
 #  Environment:	 P6_TRANSIENT_LOG
 #>
 ######################################################################
@@ -211,7 +203,6 @@ p6_transient_delete() {
 #
 # Function: p6_transient__cleanup()
 #
-#  Depends:	 p6_die p6_file p6_transient
 #  Environment:	 P6_TRANSIENT_LOG P6_TRUE
 #>
 ######################################################################
@@ -238,7 +229,6 @@ trap p6_transient__cleanup 0 1 2 3 6 14 15
 #  Args:
 #	dir -
 #
-#  Depends:	 p6_file p6_transient
 #  Environment:	 P6_TRANSIENT_LOG
 #>
 ######################################################################

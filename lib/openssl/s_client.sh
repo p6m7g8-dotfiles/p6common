@@ -3,14 +3,8 @@
 ######################################################################
 #<
 #
-# Function: p6_openssl_s_client_connect(host, [port=443], ...)
+# Function: p6_openssl_s_client_connect()
 #
-#  Args:
-#	host - FQDN of the website
-#	OPTIONAL port - TCP port [443]
-#	... - additional openssl options
-#
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 #/ Synopsis
@@ -37,7 +31,6 @@ p6_openssl_s_client_connect() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 ######################################################################
@@ -59,7 +52,6 @@ p6_openssl_not_after() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 ######################################################################
@@ -81,7 +73,6 @@ p6_openssl_not_before() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 ######################################################################
@@ -103,7 +94,6 @@ p6_openssl_serial() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 ######################################################################
@@ -125,7 +115,6 @@ p6_openssl_subject() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 ######################################################################
@@ -147,7 +136,6 @@ p6_openssl_purpose() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 ######################################################################
@@ -169,7 +157,6 @@ p6_openssl_not_purpose() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 ######################################################################
@@ -191,7 +178,6 @@ p6_openssl_alias() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Depends:	 p6_openssl
 #  Environment:	 FQDN TCP
 #>
 ######################################################################

@@ -22,7 +22,6 @@
 #
 # Function: p6_test_run()
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_run() {
@@ -50,7 +49,6 @@ p6_test_run() {
 #
 # Function: p6_test_run_stdout()
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_run_stdout() {
@@ -65,7 +63,6 @@ p6_test_run_stdout() {
 #
 # Function: p6_test_run_stderr()
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_run_stderr() {
@@ -80,7 +77,6 @@ p6_test_run_stderr() {
 #
 # Function: p6_test_run_rc()
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_run_rc() {
@@ -106,7 +102,6 @@ p6_test_run_rc() {
 #	OPTIONAL stdout - []
 #	OPTIONAL stderr - []
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_run_ok() {
@@ -139,7 +134,6 @@ p6_test_assert_run_ok() {
 #	description -
 #	rv -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_run_rc() {
@@ -164,7 +158,6 @@ p6_test_assert_run_rc() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_run_no_output() {
@@ -184,7 +177,6 @@ p6_test_assert_run_no_output() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_run_no_stdout() {
@@ -203,7 +195,6 @@ p6_test_assert_run_no_stdout() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_run_no_stderr() {
@@ -222,7 +213,6 @@ p6_test_assert_run_no_stderr() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_run_not_ok() {
@@ -248,7 +238,6 @@ p6_test_assert_run_not_ok() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_eq() {
@@ -284,7 +273,6 @@ p6_test_assert_eq() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_not_eq() {
@@ -320,7 +308,6 @@ p6_test_assert_not_eq() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_len() {
@@ -347,7 +334,6 @@ p6_test_assert_len() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_contains() {
@@ -382,7 +368,6 @@ p6_test_assert_contains() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_not_contains() {
@@ -418,7 +403,6 @@ p6_test_assert_not_contains() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_blank() {
@@ -449,7 +433,6 @@ p6_test_assert_blank() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_not_blank() {
@@ -480,7 +463,6 @@ p6_test_assert_not_blank() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #  Environment:	 DNE
 #>
 ######################################################################
@@ -512,7 +494,6 @@ p6_test_assert_dir_exists() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_dir_not_exists() {
@@ -543,7 +524,6 @@ p6_test_assert_dir_not_exists() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #  Environment:	 DNE
 #>
 ######################################################################
@@ -575,7 +555,6 @@ p6_test_assert_file_exists() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_file_not_exists() {
@@ -607,7 +586,6 @@ p6_test_assert_file_not_exists() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_assert_file_matches() {

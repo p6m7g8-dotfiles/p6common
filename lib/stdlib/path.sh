@@ -5,7 +5,6 @@
 #
 # Function: p6_path__debug()
 #
-#  Depends:	 p6_dir p6_path
 #>
 ######################################################################
 p6_path__debug() {
@@ -25,10 +24,9 @@ p6_path__debug() {
 #	dir -
 #
 #  Returns:
-#	true -
-#	false -
+#	true - 
+#	false - 
 #
-#  Depends:	 p6_dir p6_path
 #  Environment:	 DNE PATH
 #>
 ######################################################################
@@ -50,7 +48,6 @@ p6_path_if() {
 #
 # Function: p6_path_default()
 #
-#  Depends:	 p6_path
 #  Environment:	 HOME PATH X11
 #>
 ######################################################################
@@ -93,6 +90,7 @@ p6_path_current() {
 #
 # Function: p6_cdpath_current()
 #
+#  Environment:	 CDPATH
 #>
 ######################################################################
 p6_cdpath_current() {

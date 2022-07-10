@@ -3,12 +3,8 @@
 ######################################################################
 #<
 #
-# Function: p6_test_tap_plan(n)
+# Function: p6_test_tap_plan()
 #
-#  Args:
-#	n -
-#
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap_plan() {
@@ -26,7 +22,6 @@ p6_test_tap_plan() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap_ok() {
@@ -46,7 +41,6 @@ p6_test_tap_ok() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap_not_ok() {
@@ -65,7 +59,6 @@ p6_test_tap_not_ok() {
 #  Args:
 #	block -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap_block() {
@@ -83,7 +76,6 @@ p6_test_tap_block() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #  Environment:	 SKIP
 #>
 ######################################################################
@@ -104,7 +96,6 @@ p6_test_tap_skip() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #  Environment:	 TODO
 #>
 ######################################################################
@@ -125,7 +116,6 @@ p6_test_tap_todo_planned() {
 #	description -
 #	reason -
 #
-#  Depends:	 p6_test
 #  Environment:	 TODO
 #>
 ######################################################################
@@ -145,7 +135,6 @@ p6_test_tap_todo_bonus() {
 #  Args:
 #	msg -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap_diagnostic() {
@@ -162,7 +151,6 @@ p6_test_tap_diagnostic() {
 #  Args:
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap_bail_out() {
@@ -176,7 +164,6 @@ p6_test_tap_bail_out() {
 #
 # Function: p6_test_tap_shell()
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap_shell() {
@@ -195,7 +182,6 @@ p6_test_tap_shell() {
 #	directive -
 #	reason -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap__line() {
@@ -227,7 +213,6 @@ p6_test_tap__line() {
 #  Args:
 #	line -
 #
-#  Depends:	 p6_test
 #  Environment:	 FAIL SKIP TODO
 #>
 ######################################################################
@@ -248,7 +233,6 @@ p6_test_tap__line_colorize() {
 #
 # Function: p6_test_tap__i()
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_tap__i() {

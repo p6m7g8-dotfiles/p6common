@@ -5,7 +5,6 @@
 #
 # Function: p6_int__debug()
 #
-#  Depends:	 p6_die p6_int
 #>
 ######################################################################
 p6_int__debug() {
@@ -24,7 +23,6 @@ p6_int__debug() {
 #  Returns:
 #	code - 42
 #
-#  Depends:	 p6_die p6_int p6_msg
 #  Environment:	 TEST_MODE
 #>
 ######################################################################

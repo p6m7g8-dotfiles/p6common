@@ -3,12 +3,8 @@
 ######################################################################
 #<
 #
-# Function: p6_test_colorize_plan(line)
+# Function: p6_test_colorize_plan()
 #
-#  Args:
-#	line -
-#
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_colorize_plan() {
@@ -25,7 +21,6 @@ p6_test_colorize_plan() {
 #  Args:
 #	line -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_colorize_not_ok() {
@@ -42,7 +37,6 @@ p6_test_colorize_not_ok() {
 #  Args:
 #	line -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_colorize_ok() {
@@ -59,7 +53,6 @@ p6_test_colorize_ok() {
 #  Args:
 #	line -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_colorize_skip() {
@@ -76,7 +69,6 @@ p6_test_colorize_skip() {
 #  Args:
 #	line -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_colorize_todo() {
@@ -93,7 +85,6 @@ p6_test_colorize_todo() {
 #  Args:
 #	line -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_colorize_diagnostic() {
@@ -110,7 +101,6 @@ p6_test_colorize_diagnostic() {
 #  Args:
 #	line -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_colorize_block() {
@@ -127,7 +117,6 @@ p6_test_colorize_block() {
 #  Args:
 #	line -
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_test_colorize_bail() {
@@ -146,7 +135,6 @@ p6_test_colorize_bail() {
 #	color_bg -
 #	msg -
 #
-#  Depends:	 p6_test
 #  Environment:	 P6_TEST_COLOR_OFF
 #>
 ######################################################################

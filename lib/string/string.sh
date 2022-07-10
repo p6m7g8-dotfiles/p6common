@@ -5,7 +5,6 @@
 #
 # Function: p6_string__debug()
 #
-#  Depends:	 p6_string
 #>
 ######################################################################
 p6_string__debug() {
@@ -27,7 +26,6 @@ p6_string__debug() {
 #  Returns:
 #	bool - rv
 #
-#  Depends:	 p6_string
 #>
 ######################################################################
 p6_string_blank() {
@@ -53,7 +51,6 @@ p6_string_blank() {
 #  Returns:
 #	bool - rv
 #
-#  Depends:	 p6_string
 #  Environment:	 P6_FALSE P6_TRUE
 #>
 ######################################################################
@@ -84,7 +81,6 @@ p6_string_eq() {
 #  Returns:
 #	size_t - len
 #
-#  Depends:	 p6_string
 #>
 ######################################################################
 p6_string_len() {
@@ -108,7 +104,6 @@ p6_string_len() {
 #  Returns:
 #	str - str_a
 #
-#  Depends:	 p6_string
 #>
 ######################################################################
 p6_string_append() {
@@ -134,7 +129,6 @@ p6_string_append() {
 #  Returns:
 #	str - str_lc
 #
-#  Depends:	 p6_string
 #>
 ######################################################################
 p6_string_lc() {
@@ -158,7 +152,6 @@ p6_string_lc() {
 #  Returns:
 #	str - str_uc
 #
-#  Depends:	 p6_string
 #>
 ######################################################################
 p6_string_uc() {
@@ -184,7 +177,6 @@ p6_string_uc() {
 #  Returns:
 #	str - str_r
 #
-#  Depends:	 p6_echo p6_string
 #>
 ######################################################################
 p6_string_replace() {
@@ -210,7 +202,6 @@ p6_string_replace() {
 #  Returns:
 #	str - str_ic
 #
-#  Depends:	 p6_echo
 #>
 ######################################################################
 p6_string_init_cap() {

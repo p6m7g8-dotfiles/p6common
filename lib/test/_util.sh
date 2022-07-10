@@ -3,12 +3,8 @@
 ######################################################################
 #<
 #
-# Function: p6_test_dir(test_path)
+# Function: p6_test_dir()
 #
-#  Args:
-#	test_path -
-#
-#  Depends:	 p6_test
 #  Environment:	 LC_ALL P6_TEST_DIR_ROOT
 #>
 ######################################################################
@@ -33,7 +29,6 @@ p6_test_dir() {
 #
 # Function: p6_test__init()
 #
-#  Depends:	 p6_test
 #  Environment:	 P6_DIR P6_LF P6_TEST_BAIL_FILE P6_TEST_DIR P6_TEST_DIR_ORIG P6_TEST_DIR_ROOT TMPDIR
 #>
 ######################################################################
@@ -60,7 +55,6 @@ p6_test__init() {
 #  Args:
 #	n -
 #
-#  Depends:	 p6_test
 #  Environment:	 P6_TEST_DIR
 #>
 ######################################################################
@@ -80,7 +74,6 @@ p6_test__initialize() {
 #
 # Function: p6_test__prep()
 #
-#  Depends:	 p6_test
 #  Environment:	 P6_TEST_DIR_ORIG P6_TEST_DIR_ROOT
 #>
 ######################################################################
@@ -100,7 +93,6 @@ p6_test__prep() {
 #
 # Function: p6_test__bailout()
 #
-#  Depends:	 p6_test
 #  Environment:	 P6_TEST_BAIL_FILE
 #>
 ######################################################################
@@ -114,7 +106,6 @@ p6_test__bailout() {
 #
 # Function: p6_test__cleanup()
 #
-#  Depends:	 p6_test
 #  Environment:	 P6_TEST_BAIL_FILE P6_TEST_DIR_ORIG P6_TEST_DIR_ROOT
 #>
 ######################################################################

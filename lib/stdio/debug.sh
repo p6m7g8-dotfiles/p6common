@@ -3,12 +3,8 @@
 ######################################################################
 #<
 #
-# Function: p6_debug__debug(msg)
+# Function: p6_debug__debug()
 #
-#  Args:
-#	msg - msg to log
-#
-#  Depends:	 p6_echo p6_time
 #>
 ######################################################################
 p6_debug__debug() {
@@ -29,7 +25,6 @@ p6_debug__debug() {
 #	t1 -
 #	msg -
 #
-#  Depends:	 p6_echo p6_msg p6_verbose
 #>
 ######################################################################
 p6_time() {
@@ -53,7 +48,6 @@ p6_time() {
 #  Args:
 #	level - minimum verbosity before output
 #
-#  Depends:	 p6_log p6_msg
 #  Environment:	 P6_VERBOSE
 #>
 ######################################################################
@@ -84,7 +78,6 @@ p6_verbose() {
 #  Args:
 #	msg -
 #
-#  Depends:	 p6_log p6_msg
 #  Environment:	 P6_DEBUG P6_PREFIX
 #>
 ######################################################################
@@ -111,7 +104,6 @@ p6_debug() {
 #  Args:
 #	msg -
 #
-#  Depends:	 p6_dryrunning p6_msg
 #  Environment:	 P6_DFZ_LOG_DISABLED
 #>
 ######################################################################
@@ -159,7 +151,6 @@ p6_log_enable() {
 #  Returns:
 #	bool - rv
 #
-#  Depends:	 p6_dryrunning
 #  Environment:	 P6_DEBUG
 #>
 ######################################################################
@@ -183,7 +174,6 @@ p6_debugging() {
 #  Returns:
 #	code - rc
 #
-#  Depends:	 p6_dryrunning
 #  Environment:	 P6_FALSE P6_TRUE
 #>
 ######################################################################

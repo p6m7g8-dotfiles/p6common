@@ -5,7 +5,6 @@
 #
 # Function: p6_template__debug()
 #
-#  Depends:	 p6_file p6_template
 #>
 ######################################################################
 p6_template__debug() {
@@ -28,7 +27,6 @@ p6_template__debug() {
 #  Returns:
 #	str - processed
 #
-#  Depends:	 p6_file p6_transient
 #>
 ######################################################################
 p6_template_process() {

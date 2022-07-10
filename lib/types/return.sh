@@ -43,7 +43,6 @@ p6_return_false() {
 #
 # Function: p6_return_void()
 #
-#  Depends:	 p6_die
 #>
 #/ Synopsis
 #/    The literal absence of a return value
@@ -68,7 +67,6 @@ p6_return_void() {
 #  Returns:
 #	code - bool
 #
-#  Depends:	 p6_die p6_error
 #  Environment:	 P6_EXIT_ARGS
 #>
 #/ Synopsis
@@ -100,7 +98,6 @@ p6_return_bool() {
 #  Args:
 #	size_t -
 #
-#  Depends:	 p6_die
 #  Environment:	 P6_EXIT_ARGS
 #>
 #/ Synopsis
@@ -131,7 +128,6 @@ p6_return_size_t() {
 #  Args:
 #	int -
 #
-#  Depends:	 p6_die
 #  Environment:	 P6_EXIT_ARGS
 #>
 #/ Synopsis
@@ -158,7 +154,6 @@ p6_return_int() {
 #  Args:
 #	float -
 #
-#  Depends:	 p6_die
 #  Environment:	 P6_EXIT_ARGS
 #>
 #/ Synopsis
@@ -185,7 +180,6 @@ p6_return_float() {
 #  Args:
 #	str -
 #
-#  Depends:	 p6_die
 #>
 #/ Synopsis
 #/    Any string
@@ -206,7 +200,6 @@ p6_return_str() {
 #  Args:
 #	path -
 #
-#  Depends:	 p6_die
 #  Environment:	 P6_EXIT_ARGS
 #>
 #/ Synopsis
@@ -258,7 +251,6 @@ p6_return_words() {
 #  Returns:
 #	code - rc
 #
-#  Depends:	 p6_echo
 #>
 ######################################################################
 p6_return_code_as_code() {
@@ -280,7 +272,6 @@ p6_return_code_as_code() {
 #  Returns:
 #	code - rc
 #
-#  Depends:	 p6_echo
 #>
 ######################################################################
 p6_return_code_as_value() {
@@ -302,7 +293,6 @@ p6_return_code_as_value() {
 #  Returns:
 #	true - 
 #
-#  Depends:	 p6_die p6_echo
 #>
 ######################################################################
 p6_return() {
@@ -324,7 +314,6 @@ p6_return() {
 #  Args:
 #	rc -
 #
-#  Depends:	 p6_die p6_error
 #  Environment:	 P6_EXIT_ARGS
 #>
 ######################################################################

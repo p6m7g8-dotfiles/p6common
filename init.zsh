@@ -5,7 +5,6 @@
 #
 # Function: p6df::modules::p6common::init()
 #
-#  Depends:	 p6_bootstrap
 #>
 ######################################################################
 p6df::modules::p6common::init() {

@@ -5,7 +5,6 @@
 #
 # Function: p6_cicd__debug()
 #
-#  Depends:	 p6_cicd
 #>
 ######################################################################
 p6_cicd__debug() {
@@ -19,7 +18,6 @@ p6_cicd__debug() {
 #
 # Function: p6_cicd_tests_run()
 #
-#  Depends:	 p6_cicd p6_test
 #>
 ######################################################################
 p6_cicd_tests_run() {
@@ -32,7 +30,6 @@ p6_cicd_tests_run() {
 #
 # Function: p6_cicd_test_benchmark()
 #
-#  Depends:	 p6_test
 #>
 ######################################################################
 p6_cicd_test_benchmark() {

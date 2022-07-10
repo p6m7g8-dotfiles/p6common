@@ -5,7 +5,6 @@
 #
 # Function: p6_ssh__debug()
 #
-#  Depends:	 p6_ssh
 #>
 ######################################################################
 p6_ssh__debug() {
@@ -28,7 +27,6 @@ p6_ssh__debug() {
 #  Returns:
 #	code - rc
 #
-#  Depends:	 p6_run p6_ssh p6_transient
 #>
 ######################################################################
 p6_ssh_key_check() {
@@ -55,7 +53,6 @@ p6_ssh_key_check() {
 #
 # Function: p6_ssh_key_fingerprint()
 #
-#  Depends:	 p6_run p6_ssh
 #>
 ######################################################################
 p6_ssh_key_fingerprint() {
@@ -74,7 +71,6 @@ p6_ssh_key_fingerprint() {
 #  Args:
 #	key_file_priv -
 #
-#  Depends:	 p6_run p6_ssh
 #>
 ######################################################################
 p6_ssh_key_add() {
@@ -99,7 +95,6 @@ p6_ssh_key_add() {
 #  Args:
 #	key_file_priv -
 #
-#  Depends:	 p6_run p6_ssh
 #>
 ######################################################################
 p6_ssh_key_delete() {
@@ -125,7 +120,6 @@ p6_ssh_key_delete() {
 #	key_file_priv -
 #	OPTIONAL key_file_pub - [${key_file_priv]
 #
-#  Depends:	 p6_run p6_ssh
 #>
 ######################################################################
 p6_ssh_key_pub_from_priv() {
@@ -145,7 +139,6 @@ p6_ssh_key_pub_from_priv() {
 #  Args:
 #	key_file_priv -
 #
-#  Depends:	 p6_file p6_run p6_ssh
 #>
 ######################################################################
 p6_ssh_key_make() {
@@ -165,7 +158,6 @@ p6_ssh_key_make() {
 #	key_file_priv -
 #	OPTIONAL key_file_pub - [${key_file_priv]
 #
-#  Depends:	 p6_file p6_run p6_ssh
 #>
 ######################################################################
 p6_ssh_key_remove() {
@@ -186,7 +178,6 @@ p6_ssh_key_remove() {
 #  Args:
 #	key_file_priv -
 #
-#  Depends:	 p6_run
 #>
 ######################################################################
 p6_ssh_keys_chmod() {

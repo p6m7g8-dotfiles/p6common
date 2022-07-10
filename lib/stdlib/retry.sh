@@ -5,7 +5,6 @@
 #
 # Function: p6_retry__debug()
 #
-#  Depends:	 p6_retry
 #>
 ######################################################################
 p6_retry__debug() {
@@ -21,7 +20,6 @@ p6_retry__debug() {
 #
 # Function: p6_retry_delay_doubling()
 #
-#  Depends:	 p6_retry
 #>
 ######################################################################
 p6_retry_delay_doubling() {
@@ -36,7 +34,6 @@ p6_retry_delay_doubling() {
 #
 # Function: p6_retry_delay_log()
 #
-#  Depends:	 p6_die p6_retry
 #>
 ######################################################################
 p6_retry_delay_log() {
@@ -58,7 +55,6 @@ p6_retry_delay_log() {
 #  Returns:
 #	size_t - i
 #
-#  Depends:	 p6_die p6_sleep
 #  Environment:	 FATAL
 #>
 ######################################################################

@@ -16,7 +16,6 @@
 #
 # Function: p6_test_harness_test_run()
 #
-#  Depends:	 p6_test
 #  Environment:	 EDITOR IFS P6_TEST_COLOR_OFF P6_TEST_DIR SKIP TODO
 #>
 ######################################################################
@@ -105,7 +104,6 @@ p6_test_harness_test_run() {
 #  Args:
 #	dir -
 #
-#  Depends:	 p6_test
 #  Environment:	 FAIL P6_TEST_DIR PASS PROVISIONAL ___
 #>
 ######################################################################
@@ -193,7 +191,6 @@ p6_test_harness_tests_run() {
 #	todo -
 #	skipped -
 #
-#  Depends:	 p6_test
 #  Environment:	 ___
 #>
 ######################################################################

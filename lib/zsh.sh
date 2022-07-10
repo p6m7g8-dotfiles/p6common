@@ -4,12 +4,8 @@
 ######################################################################
 #<
 #
-# Function: p6_zsh_profile_on(name)
+# Function: p6_zsh_profile_on()
 #
-#  Args:
-#	name -
-#
-#  Depends:	 p6_zsh
 #  Environment:	 PROMPT_SUBST PS4 XTRACE XXXXXXXX
 #>
 ######################################################################

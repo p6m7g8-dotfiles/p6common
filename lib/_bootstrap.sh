@@ -3,14 +3,9 @@
 ######################################################################
 #<
 #
-# Function: p6_bootstrap([dir=$P6_DFZ_SRC_P6M7G8_DIR/p6common], [islocal=])
+# Function: p6_bootstrap()
 #
-#  Args:
-#	OPTIONAL dir - [$P6_DFZ_SRC_P6M7G8_DIR/p6common]
-#	OPTIONAL islocal - []
-#
-#  Depends:	 p6_bootstrap p6_file p6_path p6_time
-#  Environment:	 EPOCHREALTIME P6_DFZ_SRC_P6M7G8_DIR
+#  Environment:	 EPOCHREALTIME P6_DFZ_SRC_P6M7G8_DOTFILES_DIR
 #>
 ######################################################################
 p6_bootstrap() {

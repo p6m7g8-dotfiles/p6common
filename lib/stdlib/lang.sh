@@ -5,7 +5,6 @@
 #
 # Function: p6_lang__debug()
 #
-#  Depends:	 p6_lang
 #>
 ######################################################################
 p6_lang__debug() {
@@ -27,7 +26,6 @@ p6_lang__debug() {
 #  Returns:
 #	str - v
 #
-#  Depends:	 p6_lang p6_run p6_time
 #  Environment:	 EPOCHREALTIME
 #>
 ######################################################################
@@ -70,7 +68,6 @@ p6_lang_version() {
 #	str - sys@$ver
 #	str - no
 #
-#  Depends:	 p6_lang p6_run p6_string
 #  Environment:	 _2_
 #>
 ######################################################################
@@ -114,7 +111,6 @@ p6_lang_system_version() {
 #  Returns:
 #	str - prefix
 #
-#  Depends:	 p6_lang
 #  Environment:	 _2_
 #>
 ######################################################################

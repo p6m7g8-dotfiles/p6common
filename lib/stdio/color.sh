@@ -5,7 +5,6 @@
 #
 # Function: p6_color__debug()
 #
-#  Depends:	 p6_color
 #>
 ######################################################################
 p6_color__debug() {
@@ -26,7 +25,6 @@ p6_color__debug() {
 #	color_bg -
 #	msg -
 #
-#  Depends:	 p6_color p6_msg
 #  Environment:	 P6_TEST_COLOR_OFF
 #>
 ######################################################################
@@ -62,7 +60,6 @@ p6_color_ize() {
 #	color_bg -
 #	msg -
 #
-#  Depends:	 p6_color p6_msg
 #>
 ######################################################################
 p6_color_say() {
@@ -87,7 +84,6 @@ p6_color_say() {
 #  Returns:
 #	size_t - code
 #
-#  Depends:	 p6_color
 #>
 ######################################################################
 p6_color_to_code() {
@@ -116,7 +112,6 @@ p6_color_to_code() {
 #
 # Function: p6_color_opacity_factor()
 #
-#  Depends:	 p6_color
 #>
 ######################################################################
 p6_color_opacity_factor() {
@@ -135,7 +130,6 @@ p6_color_opacity_factor() {
 #  Returns:
 #	str - rgb
 #
-#  Depends:	 p6_color
 #>
 ######################################################################
 p6_color_name_to_rgb() {
@@ -174,7 +168,6 @@ p6_color_name_to_rgb() {
 #	hex -
 #	ord -
 #
-#  Depends:	 p6_color p6_error p6_string
 #>
 ######################################################################
 p6_color_hex_to_d16b() {

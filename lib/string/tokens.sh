@@ -5,7 +5,6 @@
 #
 # Function: p6_token__debug()
 #
-#  Depends:	 p6_string p6_token
 #>
 ######################################################################
 p6_token__debug() {
@@ -27,7 +26,6 @@ p6_token__debug() {
 #  Returns:
 #	str - hashed
 #
-#  Depends:	 p6_string p6_token
 #>
 ######################################################################
 p6_token_hash() {
@@ -56,7 +54,6 @@ p6_token_hash() {
 #  Returns:
 #	str - token
 #
-#  Depends:	 p6_string p6_token
 #  Environment:	 LC_ALL
 #>
 ######################################################################

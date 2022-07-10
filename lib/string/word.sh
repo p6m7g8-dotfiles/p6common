@@ -5,7 +5,6 @@
 #
 # Function: p6_word__debug()
 #
-#  Depends:	 p6_word
 #>
 ######################################################################
 p6_word__debug() {
@@ -22,12 +21,11 @@ p6_word__debug() {
 # Function: words words = p6_word_unique(...)
 #
 #  Args:
-#	... -
+#	... - 
 #
 #  Returns:
 #	words - words
 #
-#  Depends:	 p6_transient p6_word
 #>
 ######################################################################
 p6_word_unique() {
@@ -56,7 +54,6 @@ p6_word_unique() {
 #  Returns:
 #	words - result
 #
-#  Depends:	 p6_transient
 #>
 ######################################################################
 p6_word_not() {

@@ -3,15 +3,8 @@
 ######################################################################
 #<
 #
-# Function: p6_openssl_certificate_create(key_file, csr_file, subject, [cert_exp=365])
+# Function: p6_openssl_certificate_create()
 #
-#  Args:
-#	key_file - name of Key File (created)
-#	csr_file - name of Certificate Signing Request file (created)
-#	subject - I.E:  "/C=US/ST=Maryland/L=Bowie/O=P6M7G8/OU=Technology/CN=p6m7g8.net"
-#	OPTIONAL cert_exp - Ceritificate Expiration in days [365]
-#
-#  Depends:	 p6_openssl
 #  Environment:	 P6M7G8
 #>
 #/ Synopsis
