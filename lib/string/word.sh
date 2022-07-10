@@ -79,6 +79,22 @@ p6_word_not() {
   p6_return_words "$result"
 }
 
+######################################################################
+#<
+#
+# Function: true  = p6_word_in(word, ..., words)
+#
+#  Args:
+#	word -
+#	... - 
+#	words -
+#
+#  Returns:
+#	true - 
+#	false - 
+#
+#>
+######################################################################
 p6_word_in() {
   local word="$1"
   shift 1

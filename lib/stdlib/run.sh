@@ -272,3 +272,25 @@ p6_run_script() {
     p6_run__debug "run(): $file"
     env -i ${cmd_env} ${shell} ${set_flags} ${file} $arg_list
 }
+
+######################################################################
+#<
+#
+# Function: p6_run_if(thing)
+#
+#  Args:
+#	thing -
+#
+#  Environment:	 DNE
+#>
+######################################################################
+p6_run_if() {
+    local thing="$1"
+
+    if type -f "$thing" >/dev/null 2>&1; then
+        p6_log "$thing"
+        eval "$thing"
+    else
+        p6_log "# DNE: $thing"
+    fi
+}
