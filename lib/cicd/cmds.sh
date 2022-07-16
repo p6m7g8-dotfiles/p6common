@@ -1,44 +1,5 @@
 # shellcheck shell=bash
 
-######################################################################
-#<
-#
-# Function: p6df_usage([rc=0], [msg=])
-#
-#  Args:
-#	OPTIONAL rc - [0]
-#	OPTIONAL msg - []
-#
-#  Environment:	 EOF
-#>
-#/ Synopsis
-#/    bin/p6ctl [-D|-d] [cmd]
-#/
-######################################################################
-p6df_usage() {
-  local rc="${1:-0}"
-  local msg="${2:-}"
-
-  if [ -n "$msg" ]; then
-    p6_msg "$msg"
-  fi
-  cat <<EOF
-Usage: bin/p6ctl [-D|-d] [cmd]
-
-Options:
-  -D    debeug off
-  -d	debug on
-
-Cmds:
-  help
-  doc
-  module update
-  module fetch
-EOF
-
-  exit "$rc"
-}
-
 p6ctl_usage() {
   local rc="${1:-0}"
   local msg="${2:-}"
@@ -71,7 +32,7 @@ EOF
 # Function: p6_function_p6ctl(...)
 #
 #  Args:
-#	... - 
+#	... -
 #
 #  Environment:	 LC_ALL OPTIND
 #>
@@ -137,62 +98,95 @@ p6_function_p6ctl() {
 ######################################################################
 #<
 #
-# Function: p6_function_p6df(...)
+# Function: p6_cmd_ctl_docker_build()
+#
+#  Environment:	 TERM
+#>
+######################################################################
+p6_cmd_ctl_docker_build() {
+
+  apk --no-cache add ncurses bash
+
+  TERM=xterm-256color
+  export TERM
+}
+
+######################################################################
+#<
+#
+# Function: p6_cmd_ctl_install([home=pgollucci/home])
 #
 #  Args:
-#	... - 
+#	OPTIONAL home - [pgollucci/home]
 #
-#  Environment:	 LC_ALL OPTIND
+#  Environment:	 HOME SHELL
 #>
-#/ Synopsis
-#/    The entry point for bin/p6ctl
-#/
 ######################################################################
-p6_function_p6df() {
-  shift 0
+p6_cmd_ctl_install() {
+  local home="${1:-pgollucci/home}"
 
-  # sanitize env
-  LC_ALL=C
+  local root
+  local gh_dir
+  gh_dir="$HOME/src/github.com/p6"
+  root="$gh_dir"
 
-  # default options
-  local flag_debug=0
+  # Hier
+  mkdir -p "$root"
 
-  # parse options
-  local flag
-  while getopts "dD" flag; do
-    case $flag in
-    D) flag_debug=0 ;;
-    d) flag_debug=1 ;;
-    *) p6df_usage 1 "invalid flag" ;;
-    esac
+  # Clone
+  local p6_org
+  p6_org="p6m7g8-dotfiles"
+  local repos="$p6_org/p6df-core $p6_org/p6ctl $home"
+  local repo
+  for repo in $(echo "$repos"); do
+    gh repo clone "$repo" "$root/$repo"
   done
-  shift $((OPTIND - 1))
 
-  # grab command
-  local cmd="$1"
-  shift 1
+  # Connect
+  (
+    cd ~
 
-  # security 101: only allow valid comamnds
-  case $cmd in
-  help) p6df_usage ;;
-  doc) ;;
-  module) ;;
-  *) p6df_usage 1 "invalid cmd" ;;
-  esac
+    # connect p6dfz to zsh init files
+    rm -f .zlogin .zlogout .zprofile .zshrc .zshenv
+    ln -fs "$gh_dir/$p6_org"/p6df-core/conf/zshenv-xdg .zshenv
+    ln -fs "$gh_dir/$p6_org"/p6df-core/conf/zshrc .zshrc
 
-  # setup -x based on flag_debug
-  [ ${flag_debug} = 1 ] && set -x
+    # connect "my" config
+    ln -fs "$gh_dir/$home"/.zsh-me .
+  )
 
-  # exit if any cli errors w/ >0 return code
-  # the commands can still disable locally if needed
-  set -e
-  p6_msg "$cmd"
-  p6_cmd_df_"${cmd}" "$@"
-  p6_msg_success "$cmd"
-  set +e
+  # Reload
+  echo "reloading...."
+  echo exec "$SHELL" -li
+}
 
-  # stop debugging if it was enabled
-  [ ${flag_debug} = 1 ] && set +x
+######################################################################
+#<
+#
+# Function: p6_cmd_ctl_docker_test()
+#
+#>
+######################################################################
+p6_cmd_ctl_docker_test() {
 
-  return 0
+  . lib/_bootstrap.sh
+  p6_bootstrap "." "github"
+
+  p6_cicd_tests_run
+}
+
+######################################################################
+#<
+#
+# Function: p6_cmd_ctl_build(dockerfile)
+#
+#  Args:
+#	dockerfile -
+#
+#>
+######################################################################
+p6_cmd_ctl_build() {
+  local dockerfile="$1"
+
+  p6_cicd_build_run "$dockerfile"
 }
