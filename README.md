@@ -55,9 +55,11 @@
 
 #### cicd/cmds.sh:
 
+- p6_cmd_ctl_build(dockerfile)
+- p6_cmd_ctl_docker_build()
+- p6_cmd_ctl_docker_test()
+- p6_cmd_ctl_install([home=pgollucci/home])
 - p6_function_p6ctl(...)
-- p6_function_p6df(...)
-- p6df_usage([rc=0], [msg=])
 
 #### cicd/doc.sh:
 
@@ -71,29 +73,6 @@
 
 - p6_cicd_test_benchmark()
 - p6_cicd_tests_run()
-
-
-### cicd/ctl:
-
-#### cicd/ctl/cmds.sh:
-
-- p6_cmd_ctl_build(dockerfile)
-- p6_cmd_ctl_docker_build()
-- p6_cmd_ctl_docker_test()
-- p6_cmd_ctl_install([home=pgollucci/home])
-
-
-### cicd/df:
-
-#### cicd/df/cmds.sh:
-
-- p6_cmd_df_doc()
-- p6_cmd_df_module(sub_cmd, module)
-- p6_cmd_df_module_fetch(module)
-- p6_cmd_df_module_langs(module)
-- p6_cmd_df_module_update(module)
-- p6_cmd_df_module_use(module)
-- p6_cmd_df_module_vscodes(module)
 
 
 ### math:
@@ -328,6 +307,11 @@
 - path file = p6_transient_create_file(file_name)
 - str  = p6_transient_create(dir_name, [len=4])
 
+#### stdlib/unroll.sh:
+
+- p6_unroll_function(function)
+- p6_unroll_functions()
+
 
 ### string:
 
@@ -460,11 +444,7 @@
 ├── cicd
 │   ├── build.sh
 │   ├── cmds.sh
-│   ├── ctl
-│   │   └── cmds.sh
 │   ├── deploy.sh
-│   ├── df
-│   │   └── cmds.sh
 │   ├── doc.sh
 │   ├── release.sh
 │   └── test.sh
@@ -504,7 +484,8 @@
 │   ├── path.sh
 │   ├── retry.sh
 │   ├── run.sh
-│   └── transients.sh
+│   ├── transients.sh
+│   └── unroll.sh
 ├── string
 │   ├── json.sh
 │   ├── string.sh
@@ -526,7 +507,7 @@
 │   └── return.sh
 └── zsh.sh
 
-13 directories, 56 files
+11 directories, 55 files
 ```
 ## Author
 
