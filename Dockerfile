@@ -13,7 +13,7 @@ RUN apk --no-cache add git
 ENV DOCKER_WORKFLOW Build
 RUN bin/deps.sh
 
-RUN ../p6ctl/bin/p6ctl docker_build
+RUN bin/p6ctl docker_build
 
 ENV TERM xterm-256color
-RUN ../p6ctl/bin/p6ctl docker_test
+RUN bin/p6ctl docker_test

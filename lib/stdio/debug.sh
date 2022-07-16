@@ -34,9 +34,9 @@ p6_time() {
 
     local delta
     if [ -n "$t0" ] && [ -n "$t1" ]; then
-      delta=$(($t1 - $t0))
-      delta=$(printf "%.3f" "$delta")
-      p6_echo "p6_time: $delta $msg" >>/tmp/p6/time.log
+        delta=$(($t1 - $t0))
+        delta=$(printf "%.3f" "$delta")
+        p6_echo "p6_time: $delta $msg" >>/tmp/p6/time.log
     fi
 }
 
@@ -111,7 +111,7 @@ p6_log() {
     local msg="$*"
 
     if [ -z "$P6_DFZ_LOG_DISABLED" ]; then
-      p6_msg "$msg" >>/tmp/p6/log.log
+        p6_msg "$msg" >>/tmp/p6/log.log
     fi
 
     p6_return_void

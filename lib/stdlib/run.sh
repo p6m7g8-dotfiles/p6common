@@ -273,11 +273,22 @@ p6_run_script() {
 ######################################################################
 p6_run_if() {
     local thing="$1"
+    shift 1
 
     if type -f "$thing" >/dev/null 2>&1; then
-        p6_log "$thing"
-        eval "$thing"
+        p6_log "$thing @=[$@]"
+        eval "$thing "$@""
     else
-        p6_log "# DNE: $thing"
+        p6_log "# DNE: $thing @=[$@]"
     fi
+}
+
+p6_run_dir() {
+    local dir="$1"
+    shift 1
+
+    (
+        p6_dir_cd "$dir"
+        p6_run_if "$@"
+    )
 }

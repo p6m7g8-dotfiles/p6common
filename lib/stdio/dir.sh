@@ -60,10 +60,7 @@ p6_dir_list() {
 
     local children
     if p6_dir_exists "$dir"; then
-        children=$(
-            p6_dir_cd "$dir"
-            ls -1 | xargs
-        )
+        children=$(p6_run_dir "$dir" "ls -1 | xargs")
         p6_dir__debug "list(): collected [$dir] -> [$children]"
     else
         p6_dir__debug "list(): [$dir] DNE"
@@ -256,6 +253,7 @@ p6_dir_cd() {
     local dir="$1"
 
     p6_dir__debug "cd(): cd $dir"
+    p6_log "cd $dir"
     cd $dir
 
     p6_return_void
