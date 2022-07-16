@@ -3,7 +3,6 @@
 #
 # Function: p6_diagnostics()
 #
-#  Depends:	 p6_main p6_msg
 #  Environment:	 GIT
 #>
 #/ Synopsis

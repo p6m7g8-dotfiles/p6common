@@ -17,11 +17,12 @@ p6_cmd_docker_build() {
 ######################################################################
 #<
 #
-# Function: p6_cmd_install(home=pgollucci/home)
+# Function: p6_cmd_install([home=pgollucci/home])
 #
 #  Args:
-# OPTIONAL home - [pgollucci/home]
+#	OPTIONAL home - [pgollucci/home]
 #
+#  Environment:	 HOME SHELL
 #>
 ######################################################################
 p6_cmd_install() {
@@ -77,12 +78,30 @@ p6_cmd_docker_test() {
     p6_cicd_tests_run
 }
 
+######################################################################
+#<
+#
+# Function: p6_cmd_doc()
+#
+#>
+######################################################################
 p6_cmd_doc() {
 
   p6df::core::module::use "p6m7g8-dotfiles/p6df-perl"
   p6_cicd_doc_gen
 }
 
+######################################################################
+#<
+#
+# Function: p6_cmd_module(sub_cmd, module)
+#
+#  Args:
+#	sub_cmd -
+#	module -
+#
+#>
+######################################################################
 p6_cmd_module() {
   local sub_cmd="$1"
   local module="$2"
@@ -106,16 +125,9 @@ p6_cmd_langs() {   local module="$1"; p6df::core::module::use "$module"; p6df::c
 ######################################################################
 #<
 #
-# Function: p6_usage(..., flag_debug, cmd, ...)
+# Function: p6_usage()
 #
-#  Args:
-#	... -
-#	flag_debug -
-#	cmd -
-#	... -
-#
-#  Depends:	 p6_cmd p6_msg p6_usage
-#  Environment:	 EOF LC_ALL OPTIND
+#  Environment:	 EOF
 #>
 #/ Synopsis
 #/    bin/p6ctl [-D|-d] [cmd]
@@ -152,8 +164,12 @@ EOF
 ######################################################################
 #<
 #
-# Function: p6main()
+# Function: p6_function_p6ctl(...)
 #
+#  Args:
+#	... - 
+#
+#  Environment:	 LC_ALL OPTIND
 #>
 #/ Synopsis
 #/    The entry point for bin/p6ctl

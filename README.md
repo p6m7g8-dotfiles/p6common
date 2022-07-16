@@ -47,19 +47,26 @@
 - p6df::modules::p6common::init()
 
 
-### ../p6common/lib:
-
-#### ../p6common/lib/zsh.sh:
-
-- p6_zsh_profile_off()
-- p6_zsh_profile_on(name)
-
-
 ### cicd:
 
 #### cicd/build.sh:
 
 - p6_cicd_build_run()
+
+#### cicd/cmds.sh:
+
+- p6_cmd_doc()
+- p6_cmd_docker_build()
+- p6_cmd_docker_test()
+- p6_cmd_fetch()
+- p6_cmd_install([home=pgollucci/home])
+- p6_cmd_langs()
+- p6_cmd_module(sub_cmd, module)
+- p6_cmd_update()
+- p6_cmd_use()
+- p6_cmd_vscodes()
+- p6_function_p6ctl(...)
+- p6_usage()
 
 #### cicd/doc.sh:
 
@@ -67,7 +74,7 @@
 
 #### cicd/release.sh:
 
-- p6_cicd_release_make()
+- code  = p6_cicd_release_make()
 
 #### cicd/test.sh:
 
@@ -146,7 +153,15 @@
 
 #### openssl/x509.sh:
 
-- p6_openssl_req_cert_self_signed_create(key_file, csr_file, [cert_exp=365])
+- p6_openssl_req_cert_self_signed_create()
+
+
+### p6common/lib:
+
+#### p6common/lib/zsh.sh:
+
+- p6_zsh_profile_off()
+- p6_zsh_profile_on()
 
 
 ### stdio:
@@ -159,6 +174,10 @@
 - p6_color_say(color_fg, color_bg, msg)
 - size_t code = p6_color_to_code(color)
 - str rgb = p6_color_name_to_rgb(name)
+
+#### stdio/diag.sh:
+
+- p6_diagnostics()
 
 #### stdio/dir.sh:
 
@@ -208,6 +227,11 @@
 - p6_h4(header)
 - p6_h5(header)
 - p6_msg(msg)
+- p6_msg_fail()
+- p6_msg_h3()
+- p6_msg_no_nl(msg)
+- p6_msg_success()
+- p6_vertical(v)
 
 #### stdio/template.sh:
 
@@ -234,10 +258,7 @@
 - p6_env_export(var, val)
 - p6_env_export_un(var)
 - p6_env_list(glob)
-
-#### stdlib/inc.sh:
-
-- p6_include_module(module, [start=init.sh])
+- p6_env_list_p6()
 
 #### stdlib/lang.sh:
 
@@ -258,6 +279,7 @@
 
 #### stdlib/path.sh:
 
+- p6_cdpath_current()
 - p6_path_current()
 - p6_path_default()
 - true  = p6_path_if(dir)
@@ -275,6 +297,8 @@
 - code rc = p6_run_write_cmd(cmd)
 - code rc = p6_run_yield(func, ...)
 - code status = p6_run_retry(stop, fail, func, ...)
+- p6_run_dir(dir, ...)
+- p6_run_if(thing, ...)
 - p6_run_parallel(i, parallel, things, cmd, ...)
 - p6_run_script(cmd_env, shell, set_flags, cmd, [exts=.sh], arg_list, ...)
 - p6_run_serial(things, cmd, ...)
@@ -321,6 +345,7 @@
 
 #### string/word.sh:
 
+- true  = p6_word_in(word, ..., words)
 - words result = p6_word_not(a, b)
 - words words = p6_word_unique(...)
 
@@ -387,7 +412,7 @@
 - p6_test_tap_diagnostic(msg)
 - p6_test_tap_not_ok(description, reason)
 - p6_test_tap_ok(description, reason)
-- p6_test_tap_plan(n)
+- p6_test_tap_plan()
 - p6_test_tap_shell()
 - p6_test_tap_skip(description, reason)
 - p6_test_tap_todo_bonus(description, reason)
@@ -420,6 +445,7 @@
 ├── _bootstrap.sh
 ├── cicd
 │   ├── build.sh
+│   ├── cmds.sh
 │   ├── deploy.sh
 │   ├── doc.sh
 │   ├── release.sh
@@ -443,6 +469,7 @@
 ├── stdio
 │   ├── color.sh
 │   ├── debug.sh
+│   ├── diag.sh
 │   ├── dir.sh
 │   ├── file.sh
 │   ├── interactive.sh
@@ -453,7 +480,6 @@
 │   ├── const.sh
 │   ├── dt.sh
 │   ├── env.sh
-│   ├── inc.sh
 │   ├── lang.sh
 │   ├── misc.sh
 │   ├── os.sh
@@ -482,7 +508,7 @@
 │   └── return.sh
 └── zsh.sh
 
-11 directories, 53 files
+11 directories, 54 files
 ```
 ## Author
 
