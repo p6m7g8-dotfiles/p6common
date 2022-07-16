@@ -1,17 +1,11 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
 # shellcheck shell=bash
 
 p6main() {
 
-  # XXX: hack
-  . $P6_DFZ_LIB_DIR/file.zsh
-  . $P6_DFZ_LIB_DIR/module.zsh
-  . $P6_DFZ_LIB_DIR/modules.zsh
-  . $P6_DFZ_LIB_DIR/prompt.zsh
-
-  # XXX: hack
-  p6df::core::modules::bootstrap::p6common
+  . lib/_bootstrap.sh
+  p6_bootstrap "."
 
   p6_function_p6ctl "$@"
 }

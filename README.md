@@ -55,18 +55,9 @@
 
 #### cicd/cmds.sh:
 
-- p6_cmd_doc()
-- p6_cmd_docker_build()
-- p6_cmd_docker_test()
-- p6_cmd_fetch()
-- p6_cmd_install([home=pgollucci/home])
-- p6_cmd_langs()
-- p6_cmd_module(sub_cmd, module)
-- p6_cmd_update()
-- p6_cmd_use()
-- p6_cmd_vscodes()
 - p6_function_p6ctl(...)
-- p6_usage()
+- p6_function_p6df(...)
+- p6df_usage([rc=0], [msg=])
 
 #### cicd/doc.sh:
 
@@ -82,13 +73,36 @@
 - p6_cicd_tests_run()
 
 
+### cicd/ctl:
+
+#### cicd/ctl/cmds.sh:
+
+- p6_cmd_ctl_build(dockerfile)
+- p6_cmd_ctl_docker_build()
+- p6_cmd_ctl_docker_test()
+- p6_cmd_ctl_install([home=pgollucci/home])
+
+
+### cicd/df:
+
+#### cicd/df/cmds.sh:
+
+- p6_cmd_df_doc()
+- p6_cmd_df_module(sub_cmd, module)
+- p6_cmd_df_module_fetch(module)
+- p6_cmd_df_module_langs(module)
+- p6_cmd_df_module_update(module)
+- p6_cmd_df_module_use(module)
+- p6_cmd_df_module_vscodes(module)
+
+
 ### math:
 
 #### math/math.sh:
 
 - code rc = p6_math_gt(a, b)
 - code rc = p6_math_gte(a, b)
-- code rc = p6_math_lt(a, b)
+- code rc = p6_math_lt()
 - code rc = p6_math_lte(a, b)
 - int result = p6_math_inc(a, [b=1])
 - int rv = p6_math_sub(a, b)
@@ -125,7 +139,7 @@
 
 #### openssl/req.sh:
 
-- p6_openssl_req_csr_create(key_file, csr_file, subject)
+- p6_openssl_req_csr_create()
 
 #### openssl/s_client.sh:
 
@@ -135,17 +149,17 @@
 - p6_openssl_not_before(host, port, ...)
 - p6_openssl_not_purpose(host, port, ...)
 - p6_openssl_purpose(host, port, ...)
-- p6_openssl_s_client_connect(host, [port=443], ...)
+- p6_openssl_s_client_connect()
 - p6_openssl_serial(host, port, ...)
 - p6_openssl_subject(host, port, ...)
 
 #### openssl/s_server.sh:
 
-- p6_openssl_s_server_run(key, crt, ...)
+- p6_openssl_s_server_run()
 
 #### openssl/util.sh:
 
-- p6_openssl_certificate_create(key_file, csr_file, subject, [cert_exp=365])
+- p6_openssl_certificate_create()
 
 #### openssl/version.sh:
 
@@ -359,7 +373,7 @@
 - p6_test_finish()
 - p6_test_not_ok(description)
 - p6_test_ok(description)
-- p6_test_setup(n)
+- p6_test_setup()
 - p6_test_skip(description, reason)
 - p6_test_start(block)
 - p6_test_teardown()
@@ -367,7 +381,7 @@
 
 #### test/bench.sh:
 
-- p6_test_bench(times, thing)
+- p6_test_bench()
 
 #### test/harness.sh:
 
@@ -446,7 +460,11 @@
 ├── cicd
 │   ├── build.sh
 │   ├── cmds.sh
+│   ├── ctl
+│   │   └── cmds.sh
 │   ├── deploy.sh
+│   ├── df
+│   │   └── cmds.sh
 │   ├── doc.sh
 │   ├── release.sh
 │   └── test.sh
@@ -508,7 +526,7 @@
 │   └── return.sh
 └── zsh.sh
 
-11 directories, 54 files
+13 directories, 56 files
 ```
 ## Author
 

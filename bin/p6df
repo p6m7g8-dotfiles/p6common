@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+# shellcheck shell=bash
+
+p6main() {
+
+  # XXX: hack
+  . $P6_DFZ_LIB_DIR/file.zsh
+  . $P6_DFZ_LIB_DIR/module.zsh
+  . $P6_DFZ_LIB_DIR/modules.zsh
+  . $P6_DFZ_LIB_DIR/prompt.zsh
+
+  # XXX: hack
+  p6df::core::modules::bootstrap::p6common
+
+  p6_function_p6df "$@"
+}
+
+p6main "$@"
