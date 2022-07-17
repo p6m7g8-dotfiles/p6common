@@ -26,13 +26,11 @@ p6_lang__debug() {
 #  Returns:
 #	str - v
 #
-#  Environment:	 EPOCHREALTIME
 #>
 ######################################################################
 p6_lang_version() {
     local prefix="$1"
 
-    local t0=$EPOCHREALTIME
     local cmd="${prefix}env"
     cmd=$(p6_echo "$cmd" | sed -e 's,nodeenv,nodenv,')
 
@@ -51,8 +49,6 @@ p6_lang_version() {
     else
         p6_lang_system_version "$prefix"
     fi
-    local t1=$EPOCHREALTIME
-    p6_time "$t0" "$t1" "p6_lang_version($prefix)"
 }
 
 ######################################################################
