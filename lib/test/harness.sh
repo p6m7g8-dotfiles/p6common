@@ -110,6 +110,20 @@ p6_test_harness_test_run() {
 p6_test_harness_tests_run() {
     local dir="$1"
 
+    case $dir in
+    *bats) p6_test_harness_tests_run_bats  "$dir" ;;
+    *t)     p6_test_harness_tests_run_local "$dir" ;;
+    esac
+}
+
+p6_test_harness_tests_run_bats() {
+  local dir="$1"
+
+  bats "$dir"
+}
+
+p6_test_harness_tests_run_local() {
+
     local f=0
     local t=0
     local i=0

@@ -53,7 +53,6 @@ p6_env_export_un() {
 
     p6_env__debug "export_un(): [$var]"
 
-    ## XXX: p6_unset
     unset $var
 
     p6_return_void

@@ -1,9 +1,6 @@
 FROM alpine
 
-RUN apk --no-cache add bash
-
 RUN mkdir -p /p6m7g8/p6common
-
 WORKDIR /p6m7g8/p6common
 
 COPY . .

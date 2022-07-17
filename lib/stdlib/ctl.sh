@@ -26,7 +26,7 @@ Cmds:
   help
 EOF
 
-  grep ^p6_ctl_cmd lib/stdlib/ctl.sh | sed -e 's,(.*,,' -e 's,p6_ctl_cmd_,,' -e 's,^,  ,' | sort
+  grep ^p6_ctl_cmd $P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common/lib/stdlib/ctl.sh | sed -e 's,(.*,,' -e 's,p6_ctl_cmd_,,' -e 's,^,  ,' | sort
 
   exit "$rc"
 }
@@ -76,9 +76,11 @@ p6_ctl_run() {
   case $cmd in
   help) p6_ctl_usage ;;
   install) ;;
+  build) ;;
+  test) ;;
   docker_build) ;;
   docker_test) ;;
-  build) ;;
+  deploy) ;;
   release) ;;
   *) p6_ctl_usage 1 "invalid cmd" ;;
   esac
@@ -132,7 +134,7 @@ p6_ctl_cmd_install() {
 
   local root
   local gh_dir
-  gh_dir="$HOME/src/github.com/p6"
+  gh_dir="$HOME/.p6"
   root="$gh_dir"
 
   # Hier
@@ -173,6 +175,11 @@ p6_ctl_cmd_install() {
 #>
 ######################################################################
 p6_ctl_cmd_docker_test() {
+
+  p6_cicd_tests_run
+}
+
+p6_ctl_cmd_test() {
 
   p6_cicd_tests_run
 }

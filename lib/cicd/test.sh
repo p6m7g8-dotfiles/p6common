@@ -22,7 +22,11 @@ p6_cicd__debug() {
 ######################################################################
 p6_cicd_tests_run() {
 
-    p6_test_harness_tests_run "t"
+    if p6_dir_exists "bats"; then
+      p6_test_harness_tests_run "bats"
+    else
+      p6_test_harness_tests_run "t"
+    fi
 }
 
 ######################################################################
