@@ -24,12 +24,9 @@ Options:
 
 Cmds:
   help
-  install
-  build
-  docker_build
-  docker_test
-  release
 EOF
+
+  grep ^p6_ctl_cmd lib/stdlib/ctl.sh | sed -e 's,(.*,,' -e 's,p6_ctl_cmd_,,' -e 's,^,  ,' | sort
 
   exit "$rc"
 }

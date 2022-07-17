@@ -4,8 +4,10 @@
 
 p6main() {
 
-  . lib/_bootstrap.sh
-  p6_bootstrap "."
+  local dir="$P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common"
+  . $dir/lib/_bootstrap.sh
+  p6_bootstrap "$dir"
+  p6_path_if "$dir/bin"
 
   p6_ctl_run "$@"
 }
