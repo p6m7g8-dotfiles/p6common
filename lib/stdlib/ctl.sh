@@ -1,6 +1,14 @@
 # shellcheck shell=bash
 
-p6ctl_usage() {
+######################################################################
+#<
+#
+# Function: p6_ctl_usage()
+#
+#  Environment:	 EOF
+#>
+######################################################################
+p6_ctl_usage() {
   local rc="${1:-0}"
   local msg="${2:-}"
 
@@ -29,10 +37,10 @@ EOF
 ######################################################################
 #<
 #
-# Function: p6_function_p6ctl(...)
+# Function: p6_ctl_run(...)
 #
 #  Args:
-#	... -
+#	... - 
 #
 #  Environment:	 LC_ALL OPTIND
 #>
@@ -43,7 +51,7 @@ EOF
 #/    The entry point for bin/p6ctl
 #/
 ######################################################################
-p6_function_p6ctl() {
+p6_ctl_run() {
   shift 0
 
   # sanitize env
@@ -58,7 +66,7 @@ p6_function_p6ctl() {
     case $flag in
     D) flag_debug=0 ;;
     d) flag_debug=1 ;;
-    *) p6ctl_usage 1 "invalid flag" ;;
+    *) p6_ctl_usage 1 "invalid flag" ;;
     esac
   done
   shift $((OPTIND - 1))
@@ -69,13 +77,13 @@ p6_function_p6ctl() {
 
   # security 101: only allow valid comamnds
   case $cmd in
-  help) p6ctl_usage ;;
+  help) p6_ctl_usage ;;
   install) ;;
   docker_build) ;;
   docker_test) ;;
   build) ;;
   release) ;;
-  *) p6ctl_usage 1 "invalid cmd" ;;
+  *) p6_ctl_usage 1 "invalid cmd" ;;
   esac
 
   # setup -x based on flag_debug
@@ -85,7 +93,7 @@ p6_function_p6ctl() {
   # the commands can still disable locally if needed
   set -e
   p6_msg "$cmd"
-  p6_cmd_ctl_"${cmd}" "$@"
+  p6_ctl_cmd_"${cmd}" "$@"
   p6_msg_success "$cmd"
   set +e
 
@@ -98,12 +106,12 @@ p6_function_p6ctl() {
 ######################################################################
 #<
 #
-# Function: p6_cmd_ctl_docker_build()
+# Function: p6_ctl_cmd_docker_build()
 #
 #  Environment:	 TERM
 #>
 ######################################################################
-p6_cmd_ctl_docker_build() {
+p6_ctl_cmd_docker_build() {
 
   apk --no-cache add ncurses bash
 
@@ -114,7 +122,7 @@ p6_cmd_ctl_docker_build() {
 ######################################################################
 #<
 #
-# Function: p6_cmd_ctl_install([home=pgollucci/home])
+# Function: p6_ctl_cmd_install([home=pgollucci/home])
 #
 #  Args:
 #	OPTIONAL home - [pgollucci/home]
@@ -122,7 +130,7 @@ p6_cmd_ctl_docker_build() {
 #  Environment:	 HOME SHELL
 #>
 ######################################################################
-p6_cmd_ctl_install() {
+p6_ctl_cmd_install() {
   local home="${1:-pgollucci/home}"
 
   local root
@@ -136,10 +144,10 @@ p6_cmd_ctl_install() {
   # Clone
   local p6_org
   p6_org="p6m7g8-dotfiles"
-  local repos="$p6_org/p6df-core $p6_org/p6ctl $home"
+  local repos="$p6_org/p6df-core $p6_org/p6common $home"
   local repo
   for repo in $(echo "$repos"); do
-    gh repo clone "$repo" "$root/$repo"
+    git clone "https://github.com/$repo" "$root/$repo"
   done
 
   # Connect
@@ -163,14 +171,11 @@ p6_cmd_ctl_install() {
 ######################################################################
 #<
 #
-# Function: p6_cmd_ctl_docker_test()
+# Function: p6_ctl_cmd_docker_test()
 #
 #>
 ######################################################################
-p6_cmd_ctl_docker_test() {
-
-  . lib/_bootstrap.sh
-  p6_bootstrap "." "github"
+p6_ctl_cmd_docker_test() {
 
   p6_cicd_tests_run
 }
@@ -178,14 +183,14 @@ p6_cmd_ctl_docker_test() {
 ######################################################################
 #<
 #
-# Function: p6_cmd_ctl_build(dockerfile)
+# Function: p6_ctl_cmd_build(dockerfile)
 #
 #  Args:
 #	dockerfile -
 #
 #>
 ######################################################################
-p6_cmd_ctl_build() {
+p6_ctl_cmd_build() {
   local dockerfile="$1"
 
   p6_cicd_build_run "$dockerfile"

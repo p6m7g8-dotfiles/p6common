@@ -7,7 +7,7 @@ p6main() {
   . lib/_bootstrap.sh
   p6_bootstrap "."
 
-  p6_function_p6ctl "$@"
+  p6_ctl_run "$@"
 }
 
 p6main "$@"

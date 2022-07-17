@@ -8,7 +8,8 @@
 #>
 ######################################################################
 p6df::modules::p6common::init() {
-  local dir="$1"
+    local _module="$1"
+    local dir="$2"
 
   . $dir/lib/_bootstrap.sh
   p6_bootstrap "$dir"

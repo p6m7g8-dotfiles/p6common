@@ -53,14 +53,6 @@
 
 - p6_cicd_build_run()
 
-#### cicd/cmds.sh:
-
-- p6_cmd_ctl_build(dockerfile)
-- p6_cmd_ctl_docker_build()
-- p6_cmd_ctl_docker_test()
-- p6_cmd_ctl_install([home=pgollucci/home])
-- p6_function_p6ctl(...)
-
 #### cicd/doc.sh:
 
 - p6_cicd_doc_gen()
@@ -237,6 +229,15 @@
 
 - p6_alias(from, to)
 - p6_alias_cd_dirs(dir)
+
+#### stdlib/ctl.sh:
+
+- p6_ctl_cmd_build(dockerfile)
+- p6_ctl_cmd_docker_build()
+- p6_ctl_cmd_docker_test()
+- p6_ctl_cmd_install([home=pgollucci/home])
+- p6_ctl_run(...)
+- p6_ctl_usage()
 
 #### stdlib/dt.sh:
 
@@ -443,7 +444,6 @@
 ├── _bootstrap.sh
 ├── cicd
 │   ├── build.sh
-│   ├── cmds.sh
 │   ├── deploy.sh
 │   ├── doc.sh
 │   ├── release.sh
@@ -476,6 +476,7 @@
 ├── stdlib
 │   ├── alias.sh
 │   ├── const.sh
+│   ├── ctl.sh
 │   ├── dt.sh
 │   ├── env.sh
 │   ├── lang.sh
