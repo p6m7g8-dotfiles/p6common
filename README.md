@@ -160,10 +160,6 @@
 - size_t code = p6_color_to_code(color)
 - str rgb = p6_color_name_to_rgb(name)
 
-#### stdio/diag.sh:
-
-- p6_diagnostics()
-
 #### stdio/dir.sh:
 
 - code rc = p6_dir_exists(dir)
@@ -218,9 +214,21 @@
 - p6_msg_success()
 - p6_vertical(v)
 
-#### stdio/template.sh:
+#### stdio/log-prod.sh:
 
-- str processed = p6_template_process(infile, ...)
+- p6_log(msg)
+- p6_log_disable()
+- p6_log_enable()
+
+#### stdio/prod.sh:
+
+- bool rv = p6_debugging()
+- code rc = p6_debugging_system_on(systems, system)
+- p6_debug(msg)
+
+#### stdio/verbose.sh:
+
+- p6_verbose(level)
 
 
 ### stdlib:
@@ -236,8 +244,17 @@
 - p6_ctl_cmd_docker_build()
 - p6_ctl_cmd_docker_test()
 - p6_ctl_cmd_install([home=pgollucci/home])
+- p6_ctl_cmd_test()
 - p6_ctl_run(...)
 - p6_ctl_usage()
+
+#### stdlib/diag.sh:
+
+- p6_diagnostics()
+
+#### stdlib/dryrunning.sh:
+
+- bool rv = p6_dryrunning()
 
 #### stdlib/dt.sh:
 
@@ -297,6 +314,14 @@
 - p6_run_script(cmd_env, shell, set_flags, cmd, [exts=.sh], arg_list, ...)
 - p6_run_serial(things, cmd, ...)
 - true  = p6_run_if_not_in(script, skip_list)
+
+#### stdlib/template.sh:
+
+- str processed = p6_template_process(infile, ...)
+
+#### stdlib/time-prod.sh:
+
+- p6_time(t0, t1, msg)
 
 #### stdlib/transients.sh:
 
@@ -372,6 +397,8 @@
 
 - p6_test_harness_test_run()
 - p6_test_harness_tests_run(dir)
+- p6_test_harness_tests_run_bats(dir)
+- p6_test_harness_tests_run_local()
 
 
 ### test/asserts:
@@ -467,16 +494,20 @@
 ├── stdio
 │   ├── color.sh
 │   ├── debug.sh
-│   ├── diag.sh
 │   ├── dir.sh
 │   ├── file.sh
 │   ├── interactive.sh
 │   ├── io.sh
-│   └── template.sh
+│   ├── log-debug.sh
+│   ├── log-prod.sh
+│   ├── prod.sh
+│   └── verbose.sh
 ├── stdlib
 │   ├── alias.sh
 │   ├── const.sh
 │   ├── ctl.sh
+│   ├── diag.sh
+│   ├── dryrunning.sh
 │   ├── dt.sh
 │   ├── env.sh
 │   ├── lang.sh
@@ -485,6 +516,9 @@
 │   ├── path.sh
 │   ├── retry.sh
 │   ├── run.sh
+│   ├── template.sh
+│   ├── time-debug.sh
+│   ├── time-prod.sh
 │   ├── transients.sh
 │   └── unroll.sh
 ├── string
@@ -508,7 +542,7 @@
 │   └── return.sh
 └── zsh.sh
 
-11 directories, 55 files
+11 directories, 62 files
 ```
 ## Author
 
