@@ -104,7 +104,6 @@ p6_test_harness_test_run() {
 #  Args:
 #	dir -
 #
-#  Environment:	 FAIL P6_TEST_DIR PASS PROVISIONAL ___
 #>
 ######################################################################
 p6_test_harness_tests_run() {
@@ -116,12 +115,30 @@ p6_test_harness_tests_run() {
     esac
 }
 
+######################################################################
+#<
+#
+# Function: p6_test_harness_tests_run_bats(dir)
+#
+#  Args:
+#	dir -
+#
+#>
+######################################################################
 p6_test_harness_tests_run_bats() {
   local dir="$1"
 
   bats "$dir"
 }
 
+######################################################################
+#<
+#
+# Function: p6_test_harness_tests_run_local()
+#
+#  Environment:	 FAIL P6_TEST_DIR PASS PROVISIONAL ___
+#>
+######################################################################
 p6_test_harness_tests_run_local() {
 
     local f=0

@@ -15,34 +15,27 @@ p6_debug__debug() {
     p6_return_void
 }
 
-p6_debug() {
-    true
-}
 ######################################################################
 #<
 #
-# Function: p6_debug(msg)
+# Function: p6_debug()
 #
-#  Args:
-#	msg -
-#
-#  Environment:	 P6_DEBUG P6_PREFIX
 #>
 ######################################################################
-# p6_debug() {
-#     local msg="$1"
+p6_debug() {
+    local msg="$1"
 
-#     local systems="$P6_DEBUG"
-#     local system=$(p6_echo "$msg" | cut -d : -f 1)
+    if p6_debugging; then
+        local systems="$P6_DEBUG"
+        local system=$(p6_echo "$msg" | cut -d : -f 1)
 
-#     if p6_debugging; then
-#         if p6_debugging_system_on "$systems" "$system"; then
-#             p6_msg "$msg" >>$P6_PREFIX/tmp/p6/debug.log
-#         fi
-#     fi
+        if p6_debugging_system_on "$systems" "$system"; then
+            p6_echo "$msg" >>$P6_PREFIX/tmp/p6/debug.log
+        fi
+    fi
 
-#     p6_return_void
-# }
+    p6_return_void
+}
 
 ######################################################################
 #<

@@ -5,7 +5,7 @@
 #
 # Function: p6_ctl_usage()
 #
-#  Environment:	 EOF
+#  Environment:	 EOF P6_DFZ_SRC_P6M7G8_DOTFILES_DIR
 #>
 ######################################################################
 p6_ctl_usage() {
@@ -179,6 +179,13 @@ p6_ctl_cmd_docker_test() {
   p6_cicd_tests_run
 }
 
+######################################################################
+#<
+#
+# Function: p6_ctl_cmd_test()
+#
+#>
+######################################################################
 p6_ctl_cmd_test() {
 
   p6_cicd_tests_run

@@ -1,26 +1,19 @@
-p6_log() {
-    true
-}
 ######################################################################
 #<
 #
-# Function: p6_log(msg)
+# Function: p6_log()
 #
-#  Args:
-#	msg -
-#
-#  Environment:	 P6_DFZ_LOG_DISABLED
 #>
 ######################################################################
-# p6_log() {
-#     local msg="$*"
+p6_log() {
+    local msg="$*"
 
-#     if [ -z "$P6_DFZ_LOG_DISABLED" ]; then
-#         p6_msg "$msg" >>/tmp/p6/log.log
-#     fi
+    if [ -z "$P6_DFZ_LOG_DISABLED" ]; then
+        p6_msg "$msg" >>/tmp/p6/log.log
+    fi
 
-#     p6_return_void
-# }
+    p6_return_void
+}
 
 ######################################################################
 #<
