@@ -302,7 +302,7 @@ p6_run_dir() {
 
     p6_dir_cd "$dir"
 
-    p6_run_if "$@"
+    p6_run_code "$@"
 
     p6_dir_cd "$owd"
 }
