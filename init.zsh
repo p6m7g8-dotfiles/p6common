@@ -1,9 +1,12 @@
 # shellcheck shell=bash
-
 ######################################################################
 #<
 #
-# Function: p6df::modules::p6common::init()
+# Function: p6df::modules::p6common::init(_module, dir)
+#
+#  Args:
+#	_module -
+#	dir -
 #
 #>
 ######################################################################
@@ -15,4 +18,6 @@ p6df::modules::p6common::init() {
   p6_bootstrap "$dir"
 
   p6_path_if "$dir/bin"
+
+  p6_return_void
 }

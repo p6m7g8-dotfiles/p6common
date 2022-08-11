@@ -207,6 +207,30 @@ p6_file_exists() {
 ######################################################################
 #<
 #
+# Function: bool rv = p6_file_executable(file)
+#
+#  Args:
+#	file -
+#
+#  Returns:
+#	bool - rv
+#
+#>
+######################################################################
+p6_file_executable() {
+    local file="$1"
+
+    test -x "$file"
+    local rv=$?
+
+    p6_file__debug "executable(): $file -> $rv"
+
+    p6_return_bool "$rv"
+}
+
+######################################################################
+#<
+#
 # Function: p6_file_display(file)
 #
 #  Args:

@@ -44,7 +44,7 @@
 
 #### p6common/init.zsh:
 
-- p6df::modules::p6common::init()
+- p6df::modules::p6common::init(_module, dir)
 
 
 ### cicd:
@@ -175,6 +175,7 @@
 
 #### stdio/file.sh:
 
+- bool rv = p6_file_executable(file)
 - bool rv = p6_file_exists(file)
 - p6_file_append(file, contents)
 - p6_file_contains(pattern, file)
@@ -219,12 +220,6 @@
 - p6_log(msg)
 - p6_log_disable()
 - p6_log_enable()
-
-#### stdio/prod.sh:
-
-- bool rv = p6_debugging()
-- code rc = p6_debugging_system_on(systems, system)
-- p6_debug(msg)
 
 #### stdio/verbose.sh:
 
@@ -308,6 +303,7 @@
 - code rc = p6_run_write_cmd(cmd)
 - code rc = p6_run_yield(func, ...)
 - code status = p6_run_retry(stop, fail, func, ...)
+- p6_run_code_and_result(code)
 - p6_run_dir(dir, ...)
 - p6_run_if(thing, ...)
 - p6_run_parallel(i, parallel, things, cmd, ...)
@@ -493,14 +489,14 @@
 │   └── x509.sh
 ├── stdio
 │   ├── color.sh
-│   ├── debug.sh
+│   ├── debug-debug.sh
+│   ├── debug-prod.sh
 │   ├── dir.sh
 │   ├── file.sh
 │   ├── interactive.sh
 │   ├── io.sh
 │   ├── log-debug.sh
 │   ├── log-prod.sh
-│   ├── prod.sh
 │   └── verbose.sh
 ├── stdlib
 │   ├── alias.sh
