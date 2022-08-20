@@ -13,8 +13,7 @@
 p6_network_ip_public() {
 
   local ip
-  ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
+  ip=$(curl -fsS http://ifconfig.me)
 
   p6_return_str "$ip"
 }
-

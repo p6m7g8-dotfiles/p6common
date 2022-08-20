@@ -81,7 +81,7 @@ p6_lang_system_version() {
         go) ver=$($rcmd version | awk '{print $3}' | sed -e 's,^go,,') ;;
         node) ver=$($rcmd -v | sed -e 's,v,,') ;;
         j) ver=$($rcmd -version 2>&1 | grep Environment | sed -e 's,.*(build ,,' -e 's,).*,,') ;;
-        jl) ver=julia ;;
+        jl) ver=$($rcmd -v | awk '{print $3}') ;;
         R) ver=$($rcmd --version | awk '/ version / { print $3}') ;;
         scala) ver=$($rcmd -nc -version 2>&1 | awk '{print $5}') ;;
         lua) ver=$($rcmd -v | awk '{print $2}') ;;
@@ -120,7 +120,7 @@ p6_lang_cmd_2_env() {
     ruby) prefix=rb ;;
     perl) prefix=pl ;;
     go) prefix=go ;;
-    node) prefix=node ;;
+    js|node) prefix=node ;;
     julia) prefix=jl ;;
     java) prefix=j ;;
     R) prefix=R ;;

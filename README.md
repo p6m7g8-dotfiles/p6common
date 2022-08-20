@@ -82,6 +82,10 @@
 
 ### network:
 
+#### network/download.sh:
+
+- path dest = p6_network_file_download()
+
 #### network/network.sh:
 
 - str ip = p6_network_ip_public()
@@ -217,7 +221,7 @@
 
 #### stdio/log-prod.sh:
 
-- p6_log(msg)
+- p6_log()
 - p6_log_disable()
 - p6_log_enable()
 
@@ -317,7 +321,7 @@
 
 #### stdlib/time-prod.sh:
 
-- p6_time(t0, t1, msg)
+- p6_time()
 
 #### stdlib/transients.sh:
 
@@ -337,9 +341,32 @@
 
 ### string:
 
+#### string/filter.sh:
+
+- p6_filter_alnum_and_underscore_strip()
+- p6_filter_alnum_strip()
+- p6_filter_double_quote_strip()
+- p6_filter_exclude(selector)
+- p6_filter_first(n)
+- p6_filter_from_end(n)
+- p6_filter_last(n)
+- p6_filter_leading_spaces_strip()
+- p6_filter_pluck_column(n, [split=])
+- p6_filter_pluck_column_when_row_selected(n, selector, [split=])
+- p6_filter_quotes_strip()
+- p6_filter_reverse()
+- p6_filter_select(selector)
+- p6_filter_select_and_after(selector, count)
+- p6_filter_single_quote_strip()
+- p6_filter_sort()
+- p6_filter_spaces_strip()
+- p6_filter_to_underscore(glob)
+- p6_filter_trailing_spaces_strip()
+
 #### string/json.sh:
 
 - p6_json_eval(json, ...)
+- p6_json_from_file(file)
 
 #### string/string.sh:
 
@@ -474,6 +501,7 @@
 ├── math
 │   └── math.sh
 ├── network
+│   ├── download.sh
 │   ├── network.sh
 │   ├── remote.sh
 │   └── ssh.sh
@@ -489,13 +517,11 @@
 │   └── x509.sh
 ├── stdio
 │   ├── color.sh
-│   ├── debug-debug.sh
 │   ├── debug-prod.sh
 │   ├── dir.sh
 │   ├── file.sh
 │   ├── interactive.sh
 │   ├── io.sh
-│   ├── log-debug.sh
 │   ├── log-prod.sh
 │   └── verbose.sh
 ├── stdlib
@@ -513,11 +539,11 @@
 │   ├── retry.sh
 │   ├── run.sh
 │   ├── template.sh
-│   ├── time-debug.sh
 │   ├── time-prod.sh
 │   ├── transients.sh
 │   └── unroll.sh
 ├── string
+│   ├── filter.sh
 │   ├── json.sh
 │   ├── string.sh
 │   ├── tokens.sh
@@ -538,7 +564,7 @@
 │   └── return.sh
 └── zsh.sh
 
-11 directories, 62 files
+11 directories, 61 files
 ```
 ## Author
 

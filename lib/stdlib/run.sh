@@ -320,5 +320,5 @@ p6_run_dir() {
 p6_run_code_and_result() {
     local code="$*"
 
-    eval "$(p6_run_code \"$code\")"
+    eval "$(eval \"$code\")"
 }
