@@ -381,6 +381,8 @@
 
 #### string/tokens.sh:
 
+- p6_token_encode_base64(string)
+- p6_token_sha256(string)
 - str hashed = p6_token_hash(string)
 - str pass = p6_token_passwd(len)
 - str token = p6_token_random(len)
@@ -564,7 +566,7 @@
 │   └── return.sh
 └── zsh.sh
 
-11 directories, 61 files
+12 directories, 61 files
 ```
 ## Author
 
