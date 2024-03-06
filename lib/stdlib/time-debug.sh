@@ -12,8 +12,9 @@
 ######################################################################
 p6_time() {
     local t0="$1"
-    local t1="$2"
-    local msg="$3"
+    local msg="$2"
+
+    local t1="$EPOCHREALTIME"
 
     local delta
     if [ -n "$t0" ] && [ -n "$t1" ]; then
