@@ -350,10 +350,13 @@
 - p6_filter_first(n)
 - p6_filter_from_end(n)
 - p6_filter_last(n)
+- p6_filter_leading_and_trailing_spaces_strip()
 - p6_filter_leading_spaces_strip()
 - p6_filter_pluck_column(n, [split=])
+- p6_filter_pluck_column_to_end(n, split)
 - p6_filter_pluck_column_when_row_selected(n, selector, [split=])
 - p6_filter_quotes_strip()
+- p6_filter_remove_trailing_slash()
 - p6_filter_reverse()
 - p6_filter_select(selector)
 - p6_filter_select_and_after(selector, count)
@@ -362,6 +365,9 @@
 - p6_filter_spaces_strip()
 - p6_filter_to_underscore(glob)
 - p6_filter_trailing_spaces_strip()
+- p6_filter_translate_parens_to_slash()
+- p6_filter_translate_space_to_underscore()
+- p6_filter_translate_trailing_slash_bang_to_bang()
 
 #### string/json.sh:
 

@@ -84,6 +84,18 @@ p6_filter_trailing_spaces_strip() {
 ######################################################################
 #<
 #
+# Function: p6_filter_leading_and_trailing_spaces_strip()
+#
+#>
+######################################################################
+p6_filter_leading_and_trailing_spaces_strip() {
+
+    p6_filter_trailing_spaces_strip | p6_filter_leading_spaces_strip
+}
+
+######################################################################
+#<
+#
 # Function: p6_filter_spaces_strip()
 #
 #>
@@ -270,7 +282,7 @@ p6_filter_pluck_column() {
     local n="$1"
     local split="${2:-}"
 
-    awk -F"$split" '{ print \$$n }'
+    awk -F"$split" "{ print \$$n }" | p6_filter_leading_and_trailing_spaces_strip
 }
 
 ######################################################################
@@ -290,5 +302,71 @@ p6_filter_pluck_column_when_row_selected() {
     local selector="$2"
     local split="${3:-}"
 
-    awk -F"$split" -v k=$selector '{ /$k/ print \$$n }'
+    awk -F"$split" -v k=$selector '{ /$k/ print \$$n }' | p6_filter_leading_and_trailing_spaces_strip
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_translate_parens_to_slash()
+#
+#>
+######################################################################
+p6_filter_translate_parens_to_slash() {
+
+    sed -e 's,(,/,g' -e 's,),/,g'
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_remove_trailing_slash()
+#
+#>
+######################################################################
+p6_filter_remove_trailing_slash() {
+
+    sed -e 's,/$,,'
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_translate_trailing_slash_bang_to_bang()
+#
+#>
+######################################################################
+p6_filter_translate_trailing_slash_bang_to_bang() {
+
+    sed -e 's,/\!,!,g'
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_translate_space_to_underscore()
+#
+#>
+######################################################################
+p6_filter_translate_space_to_underscore() {
+
+    sed -e 's, ,_,g'
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_pluck_column_to_end(n, split)
+#
+#  Args:
+#	n -
+#	split -
+#
+#>
+######################################################################
+p6_filter_pluck_column_to_end() {
+    local n="$1"
+    local split="${2:- }"
+
+    cut -d"$split" -f "${n}-"
 }
