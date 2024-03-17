@@ -356,11 +356,11 @@ p6_filter_translate_space_to_underscore() {
 ######################################################################
 #<
 #
-# Function: p6_filter_pluck_column_to_end(n, split)
+# Function: p6_filter_pluck_column_to_end(n, [split= ])
 #
 #  Args:
 #	n -
-#	split -
+#	OPTIONAL split - [ ]
 #
 #>
 ######################################################################

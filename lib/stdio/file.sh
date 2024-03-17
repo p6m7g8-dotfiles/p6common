@@ -394,3 +394,155 @@ p6_file_cascade() {
         fi
     done
 }
+
+######################################################################
+#<
+#
+# Function: str line = p6_file_line_first(file)
+#
+#  Args:
+#	file -
+#
+#  Returns:
+#	str - line
+#
+#>
+######################################################################
+p6_file_line_first() {
+    local file="$1"
+
+    local line=$(p6_file_display "$file" | p6_filter_first "1")
+
+    p6_return_str "$line"
+}
+
+######################################################################
+#<
+#
+# Function: str lines = p6_file_lines_last(file, n)
+#
+#  Args:
+#	file -
+#	n -
+#
+#  Returns:
+#	str - lines
+#
+#>
+######################################################################
+p6_file_lines_last() {
+    local file="$1"
+    local n="$2"
+
+    local lines=$(p6_file_display "$file" | p6_filter_last "$n")
+
+    p6_return_str "$lines"
+}
+
+######################################################################
+#<
+#
+# Function: int count = p6_file_lines(file)
+#
+#  Args:
+#	file -
+#
+#  Returns:
+#	int - count
+#
+#>
+######################################################################
+p6_file_lines() {
+    local file="$1"
+
+    local count=$(wc -l "$file" | awk '{print $1}')
+
+    p6_return_int "$count"
+}
+
+######################################################################
+#<
+#
+# Function: str lines = p6_file_lines_except_first(file)
+#
+#  Args:
+#	file -
+#
+#  Returns:
+#	str - lines
+#
+#>
+######################################################################
+p6_file_lines_except_first() {
+    local file="$1"
+
+    local c=$(p6_file_lines "$file")
+    local l=$(p6_math_sub "$c" "1")
+
+    local lines=$(p6_file_lines_last "$file" "$l")
+
+    p6_return_str "$lines"
+}
+
+######################################################################
+#<
+#
+# Function: str lines = p6_file_lines_first(file, n)
+#
+#  Args:
+#	file -
+#	n -
+#
+#  Returns:
+#	str - lines
+#
+#>
+######################################################################
+p6_file_lines_first() {
+    local file="$1"
+    local n="$2"
+
+    local lines=$(p6_file_display "$file" | p6_filter_first "$n")
+
+    p6_return_str "$lines"
+}
+
+######################################################################
+#<
+#
+# Function: p6_file_replace(file, sed_cmd)
+#
+#  Args:
+#	file -
+#	sed_cmd -
+#
+#>
+######################################################################
+p6_file_replace() {
+    local file="$1"
+    local sed_cmd="$2"
+
+    sed -i '' -e "$sed_cmd" "$file"
+
+    p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_file_marker_delete_to_end(file, marker)
+#
+#  Args:
+#	file -
+#	marker -
+#
+#>
+######################################################################
+p6_file_marker_delete_to_end() {
+    local file="$1"
+    local marker="$2"
+
+    p6_file_repalce "$file" "/^$marker/,\$d"
+
+    p6_return_void
+}

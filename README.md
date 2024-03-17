@@ -181,6 +181,7 @@
 
 - bool rv = p6_file_executable(file)
 - bool rv = p6_file_exists(file)
+- int count = p6_file_lines(file)
 - p6_file_append(file, contents)
 - p6_file_contains(pattern, file)
 - p6_file_copy(src, dst)
@@ -189,13 +190,19 @@
 - p6_file_line_delete_last(file)
 - p6_file_load(file)
 - p6_file_ma_sync(from, to)
+- p6_file_marker_delete_to_end(file, marker)
 - p6_file_move(src, dst)
 - p6_file_repalce(file, sed_cmd)
+- p6_file_replace(file, sed_cmd)
 - p6_file_rmf(file)
 - p6_file_symlink(to, from)
 - p6_file_unlink(file)
 - p6_file_write(file, contents)
 - path path/$cmd = p6_file_cascade(cmd, exts, ...)
+- str line = p6_file_line_first(file)
+- str lines = p6_file_lines_except_first(file)
+- str lines = p6_file_lines_first(file, n)
+- str lines = p6_file_lines_last(file, n)
 
 #### stdio/interactive.sh:
 
@@ -221,7 +228,7 @@
 
 #### stdio/log-prod.sh:
 
-- p6_log()
+- p6_log(msg)
 - p6_log_disable()
 - p6_log_enable()
 
@@ -262,6 +269,11 @@
 - str dt = p6_dt_now()
 - str dt = p6_dt_tomorrow()
 - str dt = p6_dt_yesterday()
+
+#### stdlib/edit.sh:
+
+- code ? = p6_edit_editor_run()
+- path scratch_file = p6_edit_scratch_file_create(msg)
 
 #### stdlib/env.sh:
 
@@ -321,7 +333,7 @@
 
 #### stdlib/time-prod.sh:
 
-- p6_time()
+- p6_time(t0, msg)
 
 #### stdlib/transients.sh:
 
@@ -353,7 +365,7 @@
 - p6_filter_leading_and_trailing_spaces_strip()
 - p6_filter_leading_spaces_strip()
 - p6_filter_pluck_column(n, [split=])
-- p6_filter_pluck_column_to_end(n, split)
+- p6_filter_pluck_column_to_end(n, [split= ])
 - p6_filter_pluck_column_when_row_selected(n, selector, [split=])
 - p6_filter_quotes_strip()
 - p6_filter_remove_trailing_slash()
@@ -525,11 +537,13 @@
 │   └── x509.sh
 ├── stdio
 │   ├── color.sh
+│   ├── debug-debug.sh
 │   ├── debug-prod.sh
 │   ├── dir.sh
 │   ├── file.sh
 │   ├── interactive.sh
 │   ├── io.sh
+│   ├── log-debug.sh
 │   ├── log-prod.sh
 │   └── verbose.sh
 ├── stdlib
@@ -539,6 +553,7 @@
 │   ├── diag.sh
 │   ├── dryrunning.sh
 │   ├── dt.sh
+│   ├── edit.sh
 │   ├── env.sh
 │   ├── lang.sh
 │   ├── misc.sh
@@ -547,6 +562,7 @@
 │   ├── retry.sh
 │   ├── run.sh
 │   ├── template.sh
+│   ├── time-debug.sh
 │   ├── time-prod.sh
 │   ├── transients.sh
 │   └── unroll.sh
@@ -572,7 +588,7 @@
 │   └── return.sh
 └── zsh.sh
 
-12 directories, 61 files
+12 directories, 65 files
 ```
 ## Author
 
