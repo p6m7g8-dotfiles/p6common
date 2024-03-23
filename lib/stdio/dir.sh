@@ -258,3 +258,28 @@ p6_dir_cd() {
 
     p6_return_void
 }
+
+######################################################################
+#<
+#
+# Function: p6_dir_replace_in(dir, from, to)
+#
+#  Args:
+#	dir -
+#	from -
+#	to -
+#
+#>
+######################################################################
+p6_dir_replace_in() {
+  local dir="$1"
+  local from="$2"
+  local to="$3"
+
+  find . -type f |
+    egrep -v '/.git/|/elpa/' |
+    xargs grep -l $from |
+    xargs perl -pi -e "s,$from,$to,g"
+
+  p6_return_void
+}

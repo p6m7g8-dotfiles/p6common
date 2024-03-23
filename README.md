@@ -10,8 +10,7 @@
   - [Summary](#summary)
   - [Contributing](#contributing)
   - [Code of Conduct](#code-of-conduct)
-  - [Changes](#changes)
-    - [Usage](#usage)
+  - [Usage](#usage)
   - [Author](#author)
 
 ### Badges
@@ -34,11 +33,13 @@
 
 - [Code of Conduct](https://github.com/p6m7g8/.github/blob/master/CODE_OF_CONDUCT.md)
 
-## Changes
-
-- [Change Log](CHANGELOG.md)
-
 ## Usage
+
+
+### Aliases
+
+
+### Functions
 
 ### p6common:
 
@@ -147,11 +148,6 @@
 
 ### p6common/lib:
 
-#### p6common/lib/zsh.sh:
-
-- p6_zsh_profile_off()
-- p6_zsh_profile_on()
-
 
 ### stdio:
 
@@ -172,6 +168,7 @@
 - p6_dir_load(dirs)
 - p6_dir_mk(dir)
 - p6_dir_mv(src, dst)
+- p6_dir_replace_in(dir, from, to)
 - p6_dir_rmrf(dir)
 - words children = p6_dir_list(dir)
 - words descendants = p6_dir_list_recursive(dir)
@@ -370,7 +367,7 @@
 - p6_filter_quotes_strip()
 - p6_filter_remove_trailing_slash()
 - p6_filter_reverse()
-- p6_filter_select(selector)
+- p6_filter_select(selector, [flag_case=])
 - p6_filter_select_and_after(selector, count)
 - p6_filter_single_quote_strip()
 - p6_filter_sort()
@@ -584,11 +581,10 @@
 │   │   └── tap.sh
 │   ├── bench.sh
 │   └── harness.sh
-├── types
-│   └── return.sh
-└── zsh.sh
+└── types
+    └── return.sh
 
-12 directories, 65 files
+12 directories, 64 files
 ```
 ## Author
 

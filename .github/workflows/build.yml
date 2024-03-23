@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Deps
-        run:  /bin/sh -x ./bin/deps.sh
-        shell: sh
       - name: Build
         run:  /bin/sh ../p6ctl/bin/p6ctl -d build
         shell: sh
