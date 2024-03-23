@@ -148,17 +148,24 @@ p6_filter_to_underscore() {
 ######################################################################
 #<
 #
-# Function: p6_filter_select(selector)
+# Function: p6_filter_select(selector, [flag_case=])
 #
 #  Args:
 #	selector -
+#	OPTIONAL flag_case - []
 #
 #>
 ######################################################################
 p6_filter_select() {
     local selector="$1"
+    local flag_case="${2:-}"
 
-    grep "$selector"
+    case $flag_case in
+    *insensitive*) flag_case="-i" ;;
+    *) ;;
+    esac
+
+    grep "$flag_case" "$selector"
 }
 
 ######################################################################
