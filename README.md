@@ -19,7 +19,6 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/p6m7g8/p6common)
 [![Mergify](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/p6m7g8/p6common/&style=flat)](https://mergify.io)
 [![codecov](https://codecov.io/gh/p6m7g8/p6common/branch/master/graph/badge.svg?token=14Yj1fZbew)](https://codecov.io/gh/p6m7g8/p6common)
-[![Known Vulnerabilities](https://snyk.io/test/github/p6m7g8/p6common/badge.svg?targetFile=package.json)](https://snyk.io/test/github/p6m7g8/p6common?targetFile=package.json)
 [![Gihub repo dependents](https://badgen.net/github/dependents-repo/p6m7g8/p6common)](https://github.com/p6m7g8/p6common/network/dependents?dependent_type=REPOSITORY)
 [![Gihub package dependents](https://badgen.net/github/dependents-pkg/p6m7g8/p6common)](https://github.com/p6m7g8/p6common/network/dependents?dependent_type=PACKAGE)
 
@@ -225,7 +224,7 @@
 
 #### stdio/log-prod.sh:
 
-- p6_log(msg)
+- p6_log()
 - p6_log_disable()
 - p6_log_enable()
 
@@ -330,7 +329,7 @@
 
 #### stdlib/time-prod.sh:
 
-- p6_time(t0, msg)
+- p6_time()
 
 #### stdlib/transients.sh:
 
@@ -534,13 +533,11 @@
 │   └── x509.sh
 ├── stdio
 │   ├── color.sh
-│   ├── debug-debug.sh
 │   ├── debug-prod.sh
 │   ├── dir.sh
 │   ├── file.sh
 │   ├── interactive.sh
 │   ├── io.sh
-│   ├── log-debug.sh
 │   ├── log-prod.sh
 │   └── verbose.sh
 ├── stdlib
@@ -559,7 +556,6 @@
 │   ├── retry.sh
 │   ├── run.sh
 │   ├── template.sh
-│   ├── time-debug.sh
 │   ├── time-prod.sh
 │   ├── transients.sh
 │   └── unroll.sh
@@ -584,7 +580,7 @@
 └── types
     └── return.sh
 
-12 directories, 64 files
+12 directories, 61 files
 ```
 ## Author
 
