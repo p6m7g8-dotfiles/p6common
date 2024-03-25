@@ -14,12 +14,8 @@ true
 ######################################################################
 #<
 #
-# Function: p6_debug(msg)
+# Function: p6_debug()
 #
-#  Args:
-#	msg -
-#
-#  Environment:	 P6_DEBUG P6_PREFIX
 #>
 ######################################################################
 p6_debug() {
@@ -29,12 +25,8 @@ true
 ######################################################################
 #<
 #
-# Function: bool rv = p6_debugging()
+# Function: p6_debugging()
 #
-#  Returns:
-#	bool - rv
-#
-#  Environment:	 P6_DEBUG
 #>
 ######################################################################
 p6_debugging() {
@@ -43,16 +35,8 @@ true
 ######################################################################
 #<
 #
-# Function: code rc = p6_debugging_system_on(systems, system)
+# Function: p6_debugging_system_on()
 #
-#  Args:
-#	systems -
-#	system -
-#
-#  Returns:
-#	code - rc
-#
-#  Environment:	 P6_FALSE P6_TRUE
 #>
 ######################################################################
 p6_debugging_system_on() {
