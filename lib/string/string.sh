@@ -73,23 +73,24 @@ p6_string_eq() {
 ######################################################################
 #<
 #
-# Function: bool rv = p6_string_eq_1(str)
+# Function: bool rc = p6_string_eq_1(str)
 #
 #  Args:
 #	str -
 #
 #  Returns:
-#	bool - rv
+#	bool - rc
 #
 #>
 ######################################################################
 p6_string_eq_1() {
     local str="$1"
 
-    local rv
-    rv=$(p6_string_eq "$str" "1")
+    p6_string_eq "$str" "1"
+    local rc=$?
+    p6_string__debug "eq_1(): [$str] eq? [1] -> $rc"
 
-    p6_return_bool "$rv"
+    p6_return_bool "$rc"
 }
 
 ######################################################################
