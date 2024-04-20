@@ -141,13 +141,22 @@ p6_math_inc() {
 ######################################################################
 #<
 #
-# Function: p6_math_dec(a)
+# Function: int result = p6_math_dec(a, [b=1])
 #
 #  Args:
 #	a -
+#	OPTIONAL b - [1]
+#
+#  Returns:
+#	int - result
 #
 #>
 ######################################################################
 p6_math_dec() {
     local a="$1"
+    local b="${2:-1}"
+
+    local result=$(($a - $b))
+
+    p6_return_int "$result"
 }
