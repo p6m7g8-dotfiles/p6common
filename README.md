@@ -1,100 +1,75 @@
-# p6common
+# P6's POSIX.2: p6common
 
 ## Table of Contents
 
-
-### p6common
-- [p6common](#p6common)
-  - [Badges](#badges)
-  - [Distributions](#distributions)
-  - [Summary](#summary)
-  - [Contributing](#contributing)
-  - [Code of Conduct](#code-of-conduct)
-  - [Usage](#usage)
-  - [Author](#author)
-
-### Badges
+## Badges
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/p6m7g8/p6common)
-[![Mergify](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/p6m7g8/p6common/&style=flat)](https://mergify.io)
-[![codecov](https://codecov.io/gh/p6m7g8/p6common/branch/master/graph/badge.svg?token=14Yj1fZbew)](https://codecov.io/gh/p6m7g8/p6common)
-[![Gihub repo dependents](https://badgen.net/github/dependents-repo/p6m7g8/p6common)](https://github.com/p6m7g8/p6common/network/dependents?dependent_type=REPOSITORY)
-[![Gihub package dependents](https://badgen.net/github/dependents-pkg/p6m7g8/p6common)](https://github.com/p6m7g8/p6common/network/dependents?dependent_type=PACKAGE)
+[![Mergify](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges//p6common/&style=flat)](https://mergify.io)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](<https://gitpod.io/#https://github.com//p6common>)
 
 ## Summary
 
 ## Contributing
 
-- [How to Contribute](CONTRIBUTING.md)
+- [How to Contribute](<https://github.com//.github/blob/main/CONTRIBUTING.md>)
 
 ## Code of Conduct
 
-- [Code of Conduct](https://github.com/p6m7g8/.github/blob/master/CODE_OF_CONDUCT.md)
+- [Code of Conduct](<https://github.com//.github/blob/main/CODE_OF_CONDUCT.md>)
 
 ## Usage
-
 
 ### Aliases
 
 
 ### Functions
 
-### p6common:
+## cicd
 
-#### p6common/init.zsh:
-
-- p6df::modules::p6common::init(_module, dir)
-
-
-### cicd:
-
-#### cicd/build.sh:
+### p6common/lib/cicd/build.sh
 
 - p6_cicd_build_run()
 
-#### cicd/doc.sh:
+### p6common/lib/cicd/doc.sh
 
 - p6_cicd_doc_gen()
 
-#### cicd/release.sh:
+### p6common/lib/cicd/release.sh
 
 - code  = p6_cicd_release_make()
 
-#### cicd/test.sh:
+## math
 
-- p6_cicd_test_benchmark()
-- p6_cicd_tests_run()
+### p6common/lib/math/agg.sh
 
+- p6_filter_aggregrate_table_by_group()
 
-### math:
-
-#### math/math.sh:
+### p6common/lib/math/math.sh
 
 - code rc = p6_math_gt(a, b)
 - code rc = p6_math_gte(a, b)
 - code rc = p6_math_lt()
 - code rc = p6_math_lte(a, b)
+- int result = p6_math_dec(a, [b=1])
 - int result = p6_math_inc(a, [b=1])
 - int rv = p6_math_sub(a, b)
-- p6_math_dec(a)
 
+## network
 
-### network:
-
-#### network/download.sh:
+### p6common/lib/network/download.sh
 
 - path dest = p6_network_file_download()
 
-#### network/network.sh:
+### p6common/lib/network/network.sh
 
 - str ip = p6_network_ip_public()
 
-#### network/remote.sh:
+### p6common/lib/network/remote.sh
 
 - p6_remote_ssh_do(cmd)
 
-#### network/ssh.sh:
+### p6common/lib/network/ssh.sh
 
 - code rc = p6_ssh_key_check(priv, test_pub)
 - p6_ssh_key_add(key_file_priv)
@@ -105,18 +80,17 @@
 - p6_ssh_key_remove(key_file_priv, [key_file_pub=${key_file_priv])
 - p6_ssh_keys_chmod(key_file_priv)
 
+## openssl
 
-### openssl:
-
-#### openssl/ciphers.sh:
+### p6common/lib/openssl/ciphers.sh
 
 - str str = p6_openssl_ciphers()
 
-#### openssl/req.sh:
+### p6common/lib/openssl/req.sh
 
 - p6_openssl_req_csr_create()
 
-#### openssl/s_client.sh:
+### p6common/lib/openssl/s_client.sh
 
 - p6_openssl_alias(host, port, ...)
 - p6_openssl_alt_name(host, port, ...)
@@ -128,29 +102,37 @@
 - p6_openssl_serial(host, port, ...)
 - p6_openssl_subject(host, port, ...)
 
-#### openssl/s_server.sh:
+### p6common/lib/openssl/s_server.sh
 
 - p6_openssl_s_server_run()
 
-#### openssl/util.sh:
+### p6common/lib/openssl/util.sh
 
 - p6_openssl_certificate_create()
 
-#### openssl/version.sh:
+### p6common/lib/openssl/version.sh
 
 - str str = p6_openssl_version()
 
-#### openssl/x509.sh:
+### p6common/lib/openssl/x509.sh
 
 - p6_openssl_req_cert_self_signed_create()
 
+## p6common
 
-### p6common/lib:
+### p6common/init.zsh
 
+- p6df::modules::p6common::init(_module, dir)
 
-### stdio:
+## p6common/lib
 
-#### stdio/color.sh:
+### p6common/lib/_bootstrap.sh
+
+- p6_bootstrap()
+
+## stdio
+
+### p6common/lib/stdio/color.sh
 
 - p6_color_hex_to_d16b(hex, ord)
 - p6_color_ize(color_fg, color_bg, msg)
@@ -159,7 +141,7 @@
 - size_t code = p6_color_to_code(color)
 - str rgb = p6_color_name_to_rgb(name)
 
-#### stdio/dir.sh:
+### p6common/lib/stdio/dir.sh
 
 - code rc = p6_dir_exists(dir)
 - p6_dir_cd(dir)
@@ -173,7 +155,7 @@
 - words descendants = p6_dir_list_recursive(dir)
 - words entries = p6_dirs_list(dirs)
 
-#### stdio/file.sh:
+### p6common/lib/stdio/file.sh
 
 - bool rv = p6_file_executable(file)
 - bool rv = p6_file_exists(file)
@@ -200,12 +182,12 @@
 - str lines = p6_file_lines_first(file, n)
 - str lines = p6_file_lines_last(file, n)
 
-#### stdio/interactive.sh:
+### p6common/lib/stdio/interactive.sh
 
 - code 42 = p6_int_confirm_ask()
 - str PASSWORD = p6_int_password_read()
 
-#### stdio/io.sh:
+### p6common/lib/stdio/io.sh
 
 - p6_die(code)
 - p6_echo()
@@ -222,25 +204,24 @@
 - p6_msg_success()
 - p6_vertical(v)
 
-#### stdio/log-prod.sh:
+### p6common/lib/stdio/log-prod.sh
 
 - p6_log()
 - p6_log_disable()
 - p6_log_enable()
 
-#### stdio/verbose.sh:
+### p6common/lib/stdio/verbose.sh
 
 - p6_verbose(level)
 
+## stdlib
 
-### stdlib:
-
-#### stdlib/alias.sh:
+### p6common/lib/stdlib/alias.sh
 
 - p6_alias(from, to)
 - p6_alias_cd_dirs(dir)
 
-#### stdlib/ctl.sh:
+### p6common/lib/stdlib/ctl.sh
 
 - p6_ctl_cmd_build(dockerfile)
 - p6_ctl_cmd_docker_build()
@@ -250,65 +231,70 @@
 - p6_ctl_run(...)
 - p6_ctl_usage()
 
-#### stdlib/diag.sh:
+### p6common/lib/stdlib/diag.sh
 
 - p6_diagnostics()
 
-#### stdlib/dryrunning.sh:
+### p6common/lib/stdlib/dryrunning.sh
 
 - bool rv = p6_dryrunning()
 
-#### stdlib/dt.sh:
+### p6common/lib/stdlib/dt.sh
 
+- int delta = p6_dt_delta_in_seconds(d1, d2, fmt)
+- p6_dt_range_fill(start_date, end_date, file, fmt, sep)
 - size_t epoch_seconds = p6_dt_now_epoch_seconds()
 - size_t modified_epoch_seconds = p6_dt_mtime(file)
+- str absolute = p6_dt_relative_to_absolute(relative)
+- str current_date = p6_dt_move(date, amount, fmt_from, fmt_to)
 - str dt = p6_dt_now()
 - str dt = p6_dt_tomorrow()
 - str dt = p6_dt_yesterday()
+- str hours = p6_dt_seconds_to_hours(seconds)
 
-#### stdlib/edit.sh:
+### p6common/lib/stdlib/edit.sh
 
 - code ? = p6_edit_editor_run()
 - path scratch_file = p6_edit_scratch_file_create(msg)
 
-#### stdlib/env.sh:
+### p6common/lib/stdlib/env.sh
 
 - p6_env_export(var, val)
 - p6_env_export_un(var)
 - p6_env_list(glob)
 - p6_env_list_p6()
 
-#### stdlib/lang.sh:
+### p6common/lib/stdlib/lang.sh
 
 - str prefix = p6_lang_cmd_2_env(cmd)
 - str rcmd = p6_lang_env_2_cmd(prefix)
 - str v = p6_lang_version(prefix)
 - str ver = p6_lang_system_version(prefix)
 
-#### stdlib/misc.sh:
+### p6common/lib/stdlib/misc.sh
 
 - p6_pgs()
 - p6_xclean()
 - size_t len = p6_len(s)
 
-#### stdlib/os.sh:
+### p6common/lib/stdlib/os.sh
 
 - str name = p6_os_name()
 
-#### stdlib/path.sh:
+### p6common/lib/stdlib/path.sh
 
 - p6_cdpath_current()
 - p6_path_current()
 - p6_path_default()
 - true  = p6_path_if(dir)
 
-#### stdlib/retry.sh:
+### p6common/lib/stdlib/retry.sh
 
 - p6_retry_delay_doubling()
 - p6_retry_delay_log()
 - size_t i = p6_retry_delay(type, i)
 
-#### stdlib/run.sh:
+### p6common/lib/stdlib/run.sh
 
 - code rc = p6_run_code(code)
 - code rc = p6_run_read_cmd(cmd)
@@ -323,15 +309,15 @@
 - p6_run_serial(things, cmd, ...)
 - true  = p6_run_if_not_in(script, skip_list)
 
-#### stdlib/template.sh:
+### p6common/lib/stdlib/template.sh
 
 - str processed = p6_template_process(infile, ...)
 
-#### stdlib/time-prod.sh:
+### p6common/lib/stdlib/time-prod.sh
 
 - p6_time()
 
-#### stdlib/transients.sh:
+### p6common/lib/stdlib/transients.sh
 
 - code rc = p6_transient_is(dir)
 - code rc = p6_transient_persist_is(dir)
@@ -341,28 +327,31 @@
 - path file = p6_transient_create_file(file_name)
 - str  = p6_transient_create(dir_name, [len=4])
 
-#### stdlib/unroll.sh:
+### p6common/lib/stdlib/unroll.sh
 
 - p6_unroll_function(function)
 - p6_unroll_functions()
 
+## string
 
-### string:
-
-#### string/filter.sh:
+### p6common/lib/string/filter.sh
 
 - p6_filter_alnum_and_underscore_strip()
 - p6_filter_alnum_strip()
+- p6_filter_column_pluck(n, [split=])
+- p6_filter_column_pluck_to_end(n, [split= ])
+- p6_filter_column_pluck_when_row_selected(n, selector, [split=])
+- p6_filter_column_swap([sep=\t])
+- p6_filter_columns_count([sep=\t])
 - p6_filter_double_quote_strip()
 - p6_filter_exclude(selector)
 - p6_filter_first(n)
+- p6_filter_first_character()
 - p6_filter_from_end(n)
 - p6_filter_last(n)
 - p6_filter_leading_and_trailing_spaces_strip()
 - p6_filter_leading_spaces_strip()
-- p6_filter_pluck_column(n, [split=])
-- p6_filter_pluck_column_to_end(n, [split= ])
-- p6_filter_pluck_column_when_row_selected(n, selector, [split=])
+- p6_filter_map_reduce()
 - p6_filter_quotes_strip()
 - p6_filter_remove_trailing_slash()
 - p6_filter_reverse()
@@ -377,13 +366,14 @@
 - p6_filter_translate_space_to_underscore()
 - p6_filter_translate_trailing_slash_bang_to_bang()
 
-#### string/json.sh:
+### p6common/lib/string/json.sh
 
 - p6_json_eval(json, ...)
 - p6_json_from_file(file)
 
-#### string/string.sh:
+### p6common/lib/string/string.sh
 
+- bool rc = p6_string_eq_1(str)
 - bool rv = p6_string_blank(str)
 - bool rv = p6_string_eq(str, val)
 - size_t len = p6_string_len(str)
@@ -393,7 +383,7 @@
 - str str_r = p6_string_replace(str, from, to)
 - str str_uc = p6_string_uc(str)
 
-#### string/tokens.sh:
+### p6common/lib/string/tokens.sh
 
 - p6_token_encode_base64(string)
 - p6_token_sha256(string)
@@ -401,92 +391,20 @@
 - str pass = p6_token_passwd(len)
 - str token = p6_token_random(len)
 
-#### string/uri.sh:
+### p6common/lib/string/uri.sh
 
 - path name = p6_uri_name(uri)
 - path name = p6_uri_path(uri)
 
-#### string/word.sh:
+### p6common/lib/string/word.sh
 
 - true  = p6_word_in(word, ..., words)
 - words result = p6_word_not(a, b)
 - words words = p6_word_unique(...)
 
+## types
 
-### test:
-
-#### test/api.sh:
-
-- p6_test_bail(reason)
-- p6_test_diagnostic(msg)
-- p6_test_finish()
-- p6_test_not_ok(description)
-- p6_test_ok(description)
-- p6_test_setup()
-- p6_test_skip(description, reason)
-- p6_test_start(block)
-- p6_test_teardown()
-- p6_test_todo(val, const, description, reason)
-
-#### test/bench.sh:
-
-- p6_test_bench()
-
-#### test/harness.sh:
-
-- p6_test_harness_test_run()
-- p6_test_harness_tests_run(dir)
-- p6_test_harness_tests_run_bats(dir)
-- p6_test_harness_tests_run_local()
-
-
-### test/asserts:
-
-#### test/asserts/aserts.sh:
-
-- p6_test_assert_blank(val, description, reason)
-- p6_test_assert_contains(val, const, description, reason)
-- p6_test_assert_dir_exists(val, description, reason)
-- p6_test_assert_dir_not_exists(val, description, reason)
-- p6_test_assert_eq(val, const, description, reason)
-- p6_test_assert_file_exists(val, description, reason)
-- p6_test_assert_file_matches(file1, file2, description, reason)
-- p6_test_assert_file_not_exists(val, description, reason)
-- p6_test_assert_len(val, const, description, reason)
-- p6_test_assert_not_blank(val, description, reason)
-- p6_test_assert_not_contains(val, const, description, reason)
-- p6_test_assert_not_eq(val, const, description, reason)
-- p6_test_assert_run_no_output(description, reason)
-- p6_test_assert_run_no_stderr(description, reason)
-- p6_test_assert_run_no_stdout(description, reason)
-- p6_test_assert_run_not_ok(description, reason)
-- p6_test_assert_run_ok(description, [rv=0], [stdout=], [stderr=])
-- p6_test_assert_run_rc(description, rv)
-- p6_test_run()
-- p6_test_run_rc()
-- p6_test_run_stderr()
-- p6_test_run_stdout()
-
-
-### test/backends:
-
-#### test/backends/tap.sh:
-
-- p6_test_tap_bail_out(reason)
-- p6_test_tap_block(block)
-- p6_test_tap_diagnostic(msg)
-- p6_test_tap_not_ok(description, reason)
-- p6_test_tap_ok(description, reason)
-- p6_test_tap_plan()
-- p6_test_tap_shell()
-- p6_test_tap_skip(description, reason)
-- p6_test_tap_todo_bonus(description, reason)
-- p6_test_tap_todo_planned(description, reason)
-
-
-### types:
-
-#### types/return.sh:
+### p6common/lib/types/return.sh
 
 - code  = p6_return_false()
 - code  = p6_return_true()
@@ -498,90 +416,121 @@
 - p6_return_path(path)
 - p6_return_size_t(size_t)
 - p6_return_str(str)
+- p6_return_u_int(uint)
 - p6_return_void()
 - p6_return_words(words)
 - true  = p6_return(rv)
 
+## Hierarchy
 
-
-## Hier
 ```text
 .
-├── _bootstrap.sh
-├── cicd
-│   ├── build.sh
-│   ├── deploy.sh
-│   ├── doc.sh
-│   ├── release.sh
-│   └── test.sh
-├── math
-│   └── math.sh
-├── network
-│   ├── download.sh
-│   ├── network.sh
-│   ├── remote.sh
-│   └── ssh.sh
-├── openssl
-│   ├── ciphers.sh
-│   ├── debug.sh
-│   ├── req.sh
-│   ├── s_client.sh
-│   ├── s_server.sh
-│   ├── util.sh
-│   ├── verify.sh
-│   ├── version.sh
-│   └── x509.sh
-├── stdio
-│   ├── color.sh
-│   ├── debug-prod.sh
-│   ├── dir.sh
-│   ├── file.sh
-│   ├── interactive.sh
-│   ├── io.sh
-│   ├── log-prod.sh
-│   └── verbose.sh
-├── stdlib
-│   ├── alias.sh
-│   ├── const.sh
-│   ├── ctl.sh
-│   ├── diag.sh
-│   ├── dryrunning.sh
-│   ├── dt.sh
-│   ├── edit.sh
-│   ├── env.sh
-│   ├── lang.sh
-│   ├── misc.sh
-│   ├── os.sh
-│   ├── path.sh
-│   ├── retry.sh
-│   ├── run.sh
-│   ├── template.sh
-│   ├── time-prod.sh
-│   ├── transients.sh
-│   └── unroll.sh
-├── string
-│   ├── filter.sh
-│   ├── json.sh
-│   ├── string.sh
-│   ├── tokens.sh
-│   ├── uri.sh
-│   └── word.sh
-├── test
+├── Dockerfile
+├── README.md
+├── bin
+│   └── p6ctl
+├── init.zsh
+├── lib
 │   ├── _bootstrap.sh
-│   ├── _colors.sh
-│   ├── _util.sh
-│   ├── api.sh
-│   ├── asserts
-│   │   └── aserts.sh
-│   ├── backends
-│   │   └── tap.sh
-│   ├── bench.sh
-│   └── harness.sh
-└── types
-    └── return.sh
+│   ├── cicd
+│   │   ├── build.sh
+│   │   ├── deploy.sh
+│   │   ├── doc.sh
+│   │   ├── release.sh
+│   │   └── test.sh
+│   ├── math
+│   │   ├── agg.sh
+│   │   └── math.sh
+│   ├── network
+│   │   ├── download.sh
+│   │   ├── network.sh
+│   │   ├── remote.sh
+│   │   └── ssh.sh
+│   ├── openssl
+│   │   ├── ciphers.sh
+│   │   ├── debug.sh
+│   │   ├── req.sh
+│   │   ├── s_client.sh
+│   │   ├── s_server.sh
+│   │   ├── util.sh
+│   │   ├── verify.sh
+│   │   ├── version.sh
+│   │   └── x509.sh
+│   ├── stdio
+│   │   ├── color.sh
+│   │   ├── debug-prod.sh
+│   │   ├── dir.sh
+│   │   ├── file.sh
+│   │   ├── interactive.sh
+│   │   ├── io.sh
+│   │   ├── log-prod.sh
+│   │   └── verbose.sh
+│   ├── stdlib
+│   │   ├── alias.sh
+│   │   ├── const.sh
+│   │   ├── ctl.sh
+│   │   ├── diag.sh
+│   │   ├── dryrunning.sh
+│   │   ├── dt.sh
+│   │   ├── edit.sh
+│   │   ├── env.sh
+│   │   ├── lang.sh
+│   │   ├── misc.sh
+│   │   ├── os.sh
+│   │   ├── path.sh
+│   │   ├── retry.sh
+│   │   ├── run.sh
+│   │   ├── template.sh
+│   │   ├── time-prod.sh
+│   │   ├── transients.sh
+│   │   └── unroll.sh
+│   ├── string
+│   │   ├── filter.sh
+│   │   ├── json.sh
+│   │   ├── string.sh
+│   │   ├── tokens.sh
+│   │   ├── uri.sh
+│   │   └── word.sh
+│   ├── test
+│   │   ├── _bootstrap.sh
+│   │   ├── _colors.sh
+│   │   ├── _util.sh
+│   │   ├── api.sh
+│   │   ├── asserts
+│   │   │   └── aserts.sh
+│   │   ├── backends
+│   │   │   └── tap.sh
+│   │   ├── bench.sh
+│   │   └── harness.sh
+│   └── types
+│       └── return.sh
+└── t
+    ├── alias.sh
+    ├── color.sh
+    ├── const.sh
+    ├── debug.sh
+    ├── dir.sh
+    ├── dt.sh
+    ├── file.sh
+    ├── inc.sh
+    ├── interactive.sh
+    ├── io.sh
+    ├── json.sh
+    ├── lang.sh
+    ├── math.sh
+    ├── os.sh
+    ├── path.sh
+    ├── remote.sh
+    ├── retry.sh
+    ├── return.sh
+    ├── run.sh
+    ├── ssh.sh
+    ├── string.sh
+    └── tokens.sh
 
-12 directories, 61 files
+15 directories, 88 files
 ```
+
 ## Author
 
 Philip M . Gollucci <pgollucci@p6m7g8.com>
