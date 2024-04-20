@@ -277,7 +277,7 @@ p6_filter_reverse() {
 ######################################################################
 #<
 #
-# Function: p6_filter_pluck_column(n, [split=])
+# Function: p6_filter_column_pluck(n, [split=])
 #
 #  Args:
 #	n -
@@ -285,7 +285,7 @@ p6_filter_reverse() {
 #
 #>
 ######################################################################
-p6_filter_pluck_column() {
+p6_filter_column_pluck() {
     local n="$1"
     local split="${2:-}"
 
@@ -295,7 +295,7 @@ p6_filter_pluck_column() {
 ######################################################################
 #<
 #
-# Function: p6_filter_pluck_column_when_row_selected(n, selector, [split=])
+# Function: p6_filter_column_pluck_when_row_selected(n, selector, [split=])
 #
 #  Args:
 #	n -
@@ -304,7 +304,7 @@ p6_filter_pluck_column() {
 #
 #>
 ######################################################################
-p6_filter_pluck_column_when_row_selected() {
+p6_filter_column_pluck_when_row_selected() {
     local n="$1"
     local selector="$2"
     local split="${3:-}"
@@ -363,7 +363,7 @@ p6_filter_translate_space_to_underscore() {
 ######################################################################
 #<
 #
-# Function: p6_filter_pluck_column_to_end(n, [split= ])
+# Function: p6_filter_column_pluck_to_end(n, [split= ])
 #
 #  Args:
 #	n -
@@ -371,9 +371,65 @@ p6_filter_translate_space_to_underscore() {
 #
 #>
 ######################################################################
-p6_filter_pluck_column_to_end() {
+p6_filter_column_pluck_to_end() {
     local n="$1"
     local split="${2:- }"
 
     cut -d"$split" -f "${n}-"
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_column_swap([sep=\t])
+#
+#  Args:
+#	OPTIONAL sep - [\t]
+#
+#>
+######################################################################
+p6_filter_column_swap() {
+    local sep="${1:-\t}"
+
+    awk "{ print $2 \"$sep\" $1}"
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_map_reduce()
+#
+#>
+######################################################################
+p6_filter_map_reduce() {
+
+    sort | uniq -c
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_first_character()
+#
+#>
+######################################################################
+p6_filter_first_character() {
+
+    cut -c 1
+}
+
+######################################################################
+#<
+#
+# Function: p6_filter_columns_count([sep=\t])
+#
+#  Args:
+#	OPTIONAL sep - [\t]
+#
+#>
+######################################################################
+p6_filter_columns_count() {
+    local sep="${1:-\t}"
+
+    awk -F"$sep" '{print NF; exit}'
 }

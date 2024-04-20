@@ -131,19 +131,45 @@ p6_return_size_t() {
 #  Environment:	 P6_EXIT_ARGS
 #>
 #/ Synopsis
-#/    Any Positive Integer
-#/    No blanks
+#/    Any Integer Positive or Negative
 #/
 ######################################################################
 p6_return_int() {
     local int="$1"
 
     case $int in
+    -[0-9]*) ;;
     [0-9]*) ;;
     *) p6_die "$P6_EXIT_ARGS" "[$int] is not a number" ;;
     esac
 
     p6_return "$int"
+}
+
+######################################################################
+#<
+#
+# Function: p6_return_u_int(uint)
+#
+#  Args:
+#	uint -
+#
+#  Environment:	 P6_EXIT_ARGS
+#>
+######################################################################
+p6_return_u_int() {
+    local uint="$1"
+
+    case $uint in
+    [0-9]*) ;;
+    *) p6_die "$P6_EXIT_ARGS" "[$uint] is not a number" ;;
+    esac
+
+    if [ "$uint" -lt 0 ]; then
+        p6_die "$P6_EXIT_ARGS" "[$unit] is < 0"
+    fi
+
+    p6_return "$uint"
 }
 
 ######################################################################
