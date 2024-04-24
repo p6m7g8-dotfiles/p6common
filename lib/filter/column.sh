@@ -21,11 +21,11 @@ p6_filter_column_pluck() {
 
     local action
     if p6_string_eq "$n" "0"; then
-        action='{ print $0 }' 
+        action='{ print $0 }'
     elif p6_string_blank "$n"; then
         action="{ for (i = $n; i <= NF; i++) printf \"%s%s\", \$$i, (i < NF ? OFS : ORS) }"
     else
-        action="{ print \$$n }" 
+        action="{ print \$$n }"
     fi
 
     if ! p6_string_blank "$selector"; then
