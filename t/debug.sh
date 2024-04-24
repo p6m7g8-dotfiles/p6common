@@ -5,14 +5,14 @@ main() {
 	. ../p6common/lib/_bootstrap.sh
 	p6_bootstrap "../p6common"
 
-	p6_test_setup "58"
+	p6_test_setup "71"
 
 	p6_test_start "p6_debugging"
 	(
 		p6_test_run "p6_debugging"
 		p6_test_assert_run_ok "default" 1
 
-		p6_test_skip "environment variable issue"
+		#		p6_test_skip "environment variable issue"
 
 		p6_test_assert_run_ok "undef P6_DEBUG"
 

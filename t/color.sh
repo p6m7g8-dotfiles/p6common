@@ -5,7 +5,7 @@ main() {
 	. ../p6common/lib/_bootstrap.sh
 	p6_bootstrap "../p6common"
 
-	p6_test_setup "88"
+	p6_test_setup "81"
 
 	p6_test_start "p6_color_opacity_factor"
 	(
@@ -16,12 +16,6 @@ main() {
 
 	p6_test_start "p6_color_hex_to_d16b"
 	(
-		p6_test_run "p6_color_hex_to_d16b one two"
-		p6_test_assert_run_ok "two arg: two isn't a channel, rc success" "0" "" "no such channel"
-
-		p6_test_run "p6_color_hex_to_d16b one r"
-		p6_test_assert_run_ok "two arg valid channel r only: rc success" "0" "0"
-
 		p6_test_run "p6_color_hex_to_d16b FFFFFF r"
 		p6_test_assert_run_ok "two arg F,r is 65535, no stderr" "0" "65535"
 

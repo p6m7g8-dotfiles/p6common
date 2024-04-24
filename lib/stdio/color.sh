@@ -225,7 +225,7 @@ p6_color_hex_to_d16b() {
 p6_color_hext_to_rgb() {
     local h="$1"
 
-    local channel=$(awk "BEGIN { print strtonum(\"0x$i\") }")
+    local channel=$((16#$(printf "%s\n" $i)))
 
     p6_return_size_t "$channel"
 }

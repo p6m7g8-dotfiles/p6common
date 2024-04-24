@@ -9,7 +9,7 @@
 ######################################################################
 p6_date_point_now_epoch_seconds() {
 
-    local epoch_seconds=$(p6_date__date "+%s")
+    local epoch_seconds=$(p6_date__date "%s")
 
     p6_return_date "$epoch_seconds"
 }
@@ -23,7 +23,7 @@ p6_date_point_now_epoch_seconds() {
 ######################################################################
 p6_date_point_now_ymd() {
 
-    local dt=$(p6_date__date "+%Y%m%d")
+    local dt=$(p6_date__date "%Y%m%d")
 
     p6_return_date "$dt"
 }
