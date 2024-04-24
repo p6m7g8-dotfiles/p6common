@@ -22,7 +22,6 @@
 
 ### Aliases
 
-
 ### Functions
 
 ## cicd
@@ -39,11 +38,85 @@
 
 - code  = p6_cicd_release_make()
 
+## date
+
+### p6common/lib/date/convert.sh
+
+- p6_date_convert_seconds_to_hours()
+
+### p6common/lib/date/fmt.sh
+
+- p6_date_fmt_relative_to_absolute(relative)
+
+### p6common/lib/date/math.sh
+
+- int delta = p6_date_math_delta(d1, d2, in_fmt, [out_fmt=%s])
+- p6_date_math_move()
+
+### p6common/lib/date/point.sh
+
+- p6_date_point_now_epoch_seconds()
+- p6_date_point_now_ymd()
+- p6_date_point_tomorrow_ymd()
+- p6_date_point_yesterday_ymd()
+
+### p6common/lib/date/range.sh
+
+- p6_date_range_fill()
+
+## filter
+
+### p6common/lib/filter/agg.sh
+
+- p6_filter_aggregrate_map_reduce()
+- p6_filter_aggregrate_table_by_group([sep=\t])
+
+### p6common/lib/filter/column.sh
+
+- p6_filter_column_pluck()
+- p6_filter_column_swap([sep=\t])
+- p6_filter_columns_count([sep=\t])
+
+### p6common/lib/filter/row.sh
+
+- p6_filter_row_exclude(selector)
+- p6_filter_row_first(n)
+- p6_filter_row_from_end(n)
+- p6_filter_row_last(n)
+- p6_filter_row_n(n)
+- p6_filter_row_select()
+- p6_filter_row_select_and_after(selector, count)
+
+### p6common/lib/filter/sort.sh
+
+- p6_filter_sort()
+- p6_filter_sort_reverse()
+
+### p6common/lib/filter/string.sh
+
+- p6_filter_string_first_character()
+
+### p6common/lib/filter/strip.sh
+
+- p6_filter_alnum_and_underscore_strip()
+- p6_filter_alnum_strip()
+- p6_filter_double_quote_strip()
+- p6_filter_leading_and_trailing_spaces_strip()
+- p6_filter_leading_spaces_strip()
+- p6_filter_quotes_strip()
+- p6_filter_single_quote_strip()
+- p6_filter_spaces_strip()
+- p6_filter_trailing_slash_strip()
+- p6_filter_trailing_spaces_strip()
+
+### p6common/lib/filter/translate.sh
+
+- p6_filter_translate_glob_to_underscore()
+- p6_filter_translate_parens_to_slash()
+- p6_filter_translate_space_to_underscore()
+- p6_filter_translate_trailing_slash_bang_to_bang()
+
 ## math
-
-### p6common/lib/math/agg.sh
-
-- p6_filter_aggregrate_table_by_group()
 
 ### p6common/lib/math/math.sh
 
@@ -53,6 +126,7 @@
 - code rc = p6_math_lte(a, b)
 - int result = p6_math_dec(a, [b=1])
 - int result = p6_math_inc(a, [b=1])
+- int result = p6_math_multiply(a, b)
 - int rv = p6_math_sub(a, b)
 
 ## network
@@ -124,6 +198,30 @@
 
 - p6df::modules::p6common::init(_module, dir)
 
+## p6common/conf/debug
+
+### p6common/conf/debug/log-debug.sh
+
+- p6_log(msg)
+- p6_log_disable()
+- p6_log_enable()
+
+### p6common/conf/debug/time-debug.sh
+
+- p6_time(t0, t1, msg)
+
+## p6common/conf/prod
+
+### p6common/conf/prod/log-prod.sh
+
+- p6_log(msg)
+- p6_log_disable()
+- p6_log_enable()
+
+### p6common/conf/prod/time-prod.sh
+
+- p6_time(t0, t1, msg)
+
 ## p6common/lib
 
 ### p6common/lib/_bootstrap.sh
@@ -138,6 +236,7 @@
 - p6_color_ize(color_fg, color_bg, msg)
 - p6_color_opacity_factor()
 - p6_color_say(color_fg, color_bg, msg)
+- size_t channel = p6_color_hext_to_rgb(h)
 - size_t code = p6_color_to_code(color)
 - str rgb = p6_color_name_to_rgb(name)
 
@@ -177,6 +276,7 @@
 - p6_file_unlink(file)
 - p6_file_write(file, contents)
 - path path/$cmd = p6_file_cascade(cmd, exts, ...)
+- size_t modified_epoch_seconds = p6_file_mtime(file)
 - str line = p6_file_line_first(file)
 - str lines = p6_file_lines_except_first(file)
 - str lines = p6_file_lines_first(file, n)
@@ -203,12 +303,6 @@
 - p6_msg_no_nl(msg)
 - p6_msg_success()
 - p6_vertical(v)
-
-### p6common/lib/stdio/log-prod.sh
-
-- p6_log()
-- p6_log_disable()
-- p6_log_enable()
 
 ### p6common/lib/stdio/verbose.sh
 
@@ -238,19 +332,6 @@
 ### p6common/lib/stdlib/dryrunning.sh
 
 - bool rv = p6_dryrunning()
-
-### p6common/lib/stdlib/dt.sh
-
-- int delta = p6_dt_delta_in_seconds(d1, d2, fmt)
-- p6_dt_range_fill(start_date, end_date, file, fmt, sep)
-- size_t epoch_seconds = p6_dt_now_epoch_seconds()
-- size_t modified_epoch_seconds = p6_dt_mtime(file)
-- str absolute = p6_dt_relative_to_absolute(relative)
-- str current_date = p6_dt_move(date, amount, fmt_from, fmt_to)
-- str dt = p6_dt_now()
-- str dt = p6_dt_tomorrow()
-- str dt = p6_dt_yesterday()
-- str hours = p6_dt_seconds_to_hours(seconds)
 
 ### p6common/lib/stdlib/edit.sh
 
@@ -313,10 +394,6 @@
 
 - str processed = p6_template_process(infile, ...)
 
-### p6common/lib/stdlib/time-prod.sh
-
-- p6_time()
-
 ### p6common/lib/stdlib/transients.sh
 
 - code rc = p6_transient_is(dir)
@@ -333,38 +410,6 @@
 - p6_unroll_functions()
 
 ## string
-
-### p6common/lib/string/filter.sh
-
-- p6_filter_alnum_and_underscore_strip()
-- p6_filter_alnum_strip()
-- p6_filter_column_pluck(n, [split=])
-- p6_filter_column_pluck_to_end(n, [split= ])
-- p6_filter_column_pluck_when_row_selected(n, selector, [split=])
-- p6_filter_column_swap([sep=\t])
-- p6_filter_columns_count([sep=\t])
-- p6_filter_double_quote_strip()
-- p6_filter_exclude(selector)
-- p6_filter_first(n)
-- p6_filter_first_character()
-- p6_filter_from_end(n)
-- p6_filter_last(n)
-- p6_filter_leading_and_trailing_spaces_strip()
-- p6_filter_leading_spaces_strip()
-- p6_filter_map_reduce()
-- p6_filter_quotes_strip()
-- p6_filter_remove_trailing_slash()
-- p6_filter_reverse()
-- p6_filter_select(selector, [flag_case=])
-- p6_filter_select_and_after(selector, count)
-- p6_filter_single_quote_strip()
-- p6_filter_sort()
-- p6_filter_spaces_strip()
-- p6_filter_to_underscore(glob)
-- p6_filter_trailing_spaces_strip()
-- p6_filter_translate_parens_to_slash()
-- p6_filter_translate_space_to_underscore()
-- p6_filter_translate_trailing_slash_bang_to_bang()
 
 ### p6common/lib/string/json.sh
 
@@ -411,12 +456,12 @@
 - code bool = p6_return_bool(bool)
 - code rc = p6_return_code_as_code(rc)
 - code rc = p6_return_code_as_value(rc)
+- p6_return_date(date)
 - p6_return_float(float)
 - p6_return_int(int)
 - p6_return_path(path)
 - p6_return_size_t(size_t)
 - p6_return_str(str)
-- p6_return_u_int(uint)
 - p6_return_void()
 - p6_return_words(words)
 - true  = p6_return(rv)
@@ -429,6 +474,16 @@
 ├── README.md
 ├── bin
 │   └── p6ctl
+├── conf
+│   ├── debug
+│   │   ├── debug-debug.sh
+│   │   ├── log-debug.sh
+│   │   ├── time-debug.sh
+│   │   └── trace-debug.sh
+│   └── prod
+│       ├── debug-prod.sh
+│       ├── log-prod.sh
+│       └── time-prod.sh
 ├── init.zsh
 ├── lib
 │   ├── _bootstrap.sh
@@ -438,8 +493,24 @@
 │   │   ├── doc.sh
 │   │   ├── release.sh
 │   │   └── test.sh
-│   ├── math
+│   ├── date
+│   │   ├── convert.sh
+│   │   ├── debug.sh
+│   │   ├── fmt.sh
+│   │   ├── math.sh
+│   │   ├── point.sh
+│   │   └── range.sh
+│   ├── debug -> ../conf/debug
+│   ├── filter
 │   │   ├── agg.sh
+│   │   ├── column.sh
+│   │   ├── debug.sh
+│   │   ├── row.sh
+│   │   ├── sort.sh
+│   │   ├── string.sh
+│   │   ├── strip.sh
+│   │   └── translate.sh
+│   ├── math
 │   │   └── math.sh
 │   ├── network
 │   │   ├── download.sh
@@ -458,12 +529,10 @@
 │   │   └── x509.sh
 │   ├── stdio
 │   │   ├── color.sh
-│   │   ├── debug-prod.sh
 │   │   ├── dir.sh
 │   │   ├── file.sh
 │   │   ├── interactive.sh
 │   │   ├── io.sh
-│   │   ├── log-prod.sh
 │   │   └── verbose.sh
 │   ├── stdlib
 │   │   ├── alias.sh
@@ -471,7 +540,6 @@
 │   │   ├── ctl.sh
 │   │   ├── diag.sh
 │   │   ├── dryrunning.sh
-│   │   ├── dt.sh
 │   │   ├── edit.sh
 │   │   ├── env.sh
 │   │   ├── lang.sh
@@ -481,11 +549,9 @@
 │   │   ├── retry.sh
 │   │   ├── run.sh
 │   │   ├── template.sh
-│   │   ├── time-prod.sh
 │   │   ├── transients.sh
 │   │   └── unroll.sh
 │   ├── string
-│   │   ├── filter.sh
 │   │   ├── json.sh
 │   │   ├── string.sh
 │   │   ├── tokens.sh
@@ -528,7 +594,7 @@
     ├── string.sh
     └── tokens.sh
 
-15 directories, 88 files
+21 directories, 103 files
 ```
 
 ## Author

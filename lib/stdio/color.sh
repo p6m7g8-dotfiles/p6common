@@ -178,9 +178,9 @@ p6_color_hex_to_d16b() {
     local j=$(p6_echo "$hex" | sed 's/../&,/g' | awk -F "," '{ print $2 }')
     local k=$(p6_echo "$hex" | sed 's/../&,/g' | awk -F "," '{ print $3 }')
 
-    local r=$(p6_echo "ibase=16; $i" | bc -q)
-    local g=$(p6_echo "ibase=16; $j" | bc -q)
-    local b=$(p6_echo "ibase=16; $k" | bc -q)
+    local r=$(p6_color_hext_to_rgb "$i")
+    local g=$(p6_color_hext_to_rgb "$j")
+    local b=$(p6_color_hext_to_rgb "$k")
 
     if p6_string_blank "$r"; then
         r=0
@@ -194,9 +194,9 @@ p6_color_hex_to_d16b() {
         b=0
     fi
 
-    local dr=$(($r * 257))
-    local dg=$(($g * 257))
-    local db=$(($b * 257))
+    local dr=$(p6_math_multiply "$r" "257")
+    local dg=$(p6_math_multiply "$g" "257")
+    local db=$(p6_math_multiply "$b" "257")
 
     p6_color__debug "hex_to_d16b(): [hex=$hex] [ord=$ord] -> [dr=$dr] [dg=$dg] [db=$db]"
 
@@ -206,4 +206,26 @@ p6_color_hex_to_d16b() {
     b) p6_return_str "$db" ;;
     *) p6_error "no such channel" ;;
     esac
+}
+
+######################################################################
+#<
+#
+# Function: size_t channel = p6_color_hext_to_rgb(h)
+#
+#  Args:
+#	h -
+#
+#  Returns:
+#	size_t - channel
+#
+#  Environment:	 BEGIN
+#>
+######################################################################
+p6_color_hext_to_rgb() {
+    local h="$1"
+
+    local channel=$(awk "BEGIN { print strtonum(\"0x$i\") }")
+
+    p6_return_size_t "$channel"
 }

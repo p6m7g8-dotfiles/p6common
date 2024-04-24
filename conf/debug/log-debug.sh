@@ -29,7 +29,8 @@ p6_log() {
 ######################################################################
 p6_log_disable() {
 
-    export P6_DFZ_LOG_DISABLED=1
+    p6_env_export "P6_DFZ_LOG_DISABLED" "1"
+    p6_env_export "P6_DEBUG" ""
 }
 
 ######################################################################
@@ -42,5 +43,6 @@ p6_log_disable() {
 ######################################################################
 p6_log_enable() {
 
-    unset P6_DFZ_LOG_DISABLED
+    p6_env_export_un "P6_DFZ_LOG_DISABLED"
+    p6_env_export "P6_DEBUG" "all"
 }

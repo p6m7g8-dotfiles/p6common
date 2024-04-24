@@ -18,6 +18,27 @@ p6_file__debug() {
 ######################################################################
 #<
 #
+# Function: size_t modified_epoch_seconds = p6_file_mtime(file)
+#
+#  Args:
+#	file -
+#
+#  Returns:
+#	size_t - modified_epoch_seconds
+#
+#>
+######################################################################
+p6_file_mtime() {
+    local file="$1"
+
+    local modified_epoch_seconds=$(stat -f "%m" $file)
+
+    p6_return_size_t "$modified_epoch_seconds"
+}
+
+######################################################################
+#<
+#
 # Function: p6_file_load(file)
 #
 #  Args:

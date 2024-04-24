@@ -13,7 +13,7 @@ p6_bootstrap() {
   local islocal="${2:-}"
 
   local file
-  for file in $(find "$dir/lib" -type f -a \( -name "*.sh" -o -name "*.zsh" \)); do
+  for file in $(find -L "$dir/lib" -type f -a \( -name "*.sh" -o -name "*.zsh" \)); do
     . "$file"
   done
 

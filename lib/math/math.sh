@@ -160,3 +160,26 @@ p6_math_dec() {
 
     p6_return_int "$result"
 }
+
+######################################################################
+#<
+#
+# Function: int result = p6_math_multiply(a, b)
+#
+#  Args:
+#	a -
+#	b -
+#
+#  Returns:
+#	int - result
+#
+#>
+######################################################################
+p6_math_multiply() {
+    local a="$1"
+    local b="$2"
+
+    local result=$(($a * $b))
+
+    p6_return_int "$result"
+}

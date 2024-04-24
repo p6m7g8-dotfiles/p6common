@@ -16,7 +16,7 @@
 #
 # Function: p6_test_harness_test_run()
 #
-#  Environment:	 EDITOR IFS P6_TEST_COLOR_OFF P6_TEST_DIR SKIP TODO
+#  Environment:	 BEGIN EDITOR IFS P6_TEST_COLOR_OFF P6_TEST_DIR SKIP TODO
 #>
 ######################################################################
 p6_test_harness_test_run() {
@@ -51,46 +51,46 @@ p6_test_harness_test_run() {
 
     local line
     for line in $(cat $log_file); do
-	case $line in
-	    1..*)
-		Tt=$(echo $line | sed -e 's,^1..,,' -e 's, *,,')
-		;;
-	    ok\ *SKIP*\ *)
-		TS=$(($TS+1))
-		;;
-	    not\ *TODO\ *)
-		TT=$(($TT+1))
-		;;
-	    ok\ *TODO\ *)
-		TB=$(($TB+1))
-		Ts=$(($Ts+1))
-		;;
-	    not\ ok*)
-		TF=$(($TF+1))
-		;;
-	    ok\ *)
-		Ts=$(($Ts+1))
-		;;
-	esac
+        case $line in
+        1..*)
+            Tt=$(echo $line | sed -e 's,^1..,,' -e 's, *,,')
+            ;;
+        ok\ *SKIP*\ *)
+            TS=$(($TS + 1))
+            ;;
+        not\ *TODO\ *)
+            TT=$(($TT + 1))
+            ;;
+        ok\ *TODO\ *)
+            TB=$(($TB + 1))
+            Ts=$(($Ts + 1))
+            ;;
+        not\ ok*)
+            TF=$(($TF + 1))
+            ;;
+        ok\ *)
+            Ts=$(($Ts + 1))
+            ;;
+        esac
     done
 
     if [ $TF -eq 0 ]; then
-	rm -f $log_file
+        rm -f $log_file
     fi
 
-    local Tr=$(($TS+$TT+$TF+$Ts))
-    local TP=$(($TS+$Ts+$TT))
+    local Tr=$(($TS + $TT + $TF + $Ts))
+    local TP=$(($TS + $Ts + $TT))
 
     local Tp
     case $Tt in
-	0) Tp=0.00 ;;
-	*) Tp=$(echo "scale=3; ($TP/$Tt)*100" | bc -lq) ;;
+    0) Tp=0.00 ;;
+    *) Tp=$(awk -v TP="$TP" -v Tt="$Tt" 'BEGIN { printf "%.3f\n", (TP / Tt) * 100 }') ;;
     esac
 
     # 0m0.330s
     local Td=$(awk '/real/ { print $1 }' $log_file_times | sed -e 's,^0m,,' -e 's/s//')
     if [ -z "$Td" ]; then
-      Td=0
+        Td=0
     fi
 
     echo "Tt=$Tt Ts=$Ts TS=$TS TT=$TT TB=$TB TF=$TF Tr=$Tr Tp=$Tp TP=$TP Td=$Td"
@@ -110,8 +110,8 @@ p6_test_harness_tests_run() {
     local dir="$1"
 
     case $dir in
-    *bats) p6_test_harness_tests_run_bats  "$dir" ;;
-    *t)     p6_test_harness_tests_run_local "$dir" ;;
+    *bats) p6_test_harness_tests_run_bats "$dir" ;;
+    *t) p6_test_harness_tests_run_local "$dir" ;;
     esac
 }
 
@@ -126,9 +126,9 @@ p6_test_harness_tests_run() {
 #>
 ######################################################################
 p6_test_harness_tests_run_bats() {
-  local dir="$1"
+    local dir="$1"
 
-  bats "$dir"
+    bats "$dir"
 }
 
 ######################################################################
@@ -136,7 +136,7 @@ p6_test_harness_tests_run_bats() {
 #
 # Function: p6_test_harness_tests_run_local()
 #
-#  Environment:	 FAIL P6_TEST_DIR PASS PROVISIONAL ___
+#  Environment:	 BEGIN FAIL P6_TEST_DIR PASS PROVISIONAL ___
 #>
 ######################################################################
 p6_test_harness_tests_run_local() {
@@ -158,46 +158,49 @@ p6_test_harness_tests_run_local() {
 
     local file
     if [ -d $dir ]; then
-    for file in $(cd $dir ; ls -1); do
-	local vals="$(p6_test_harness_test_run "$dir/$file")"
+        for file in $(
+            cd $dir
+            ls -1
+        ); do
+            local vals="$(p6_test_harness_test_run "$dir/$file")"
 
-	local ti=$(echo $vals | sed -e 's,.*Tt=,,' -e 's, .*,,')
-	local pi=$(echo $vals | sed -e 's,.*Tp=,,' -e 's, .*,,')
-	local Pi=$(echo $vals | sed -e 's,.*TP=,,' -e 's, .*,,')
-	local Si=$(echo $vals | sed -e 's,.*TS=,,' -e 's, .*,,')
-	local Ti=$(echo $vals | sed -e 's,.*TT=,,' -e 's, .*,,')
-	local Bi=$(echo $vals | sed -e 's,.*TB=,,' -e 's, .*,,')
-	local di=$(echo $vals | sed -e 's,.*Td=,,' -e 's, .*,,')
+            local ti=$(echo $vals | sed -e 's,.*Tt=,,' -e 's, .*,,')
+            local pi=$(echo $vals | sed -e 's,.*Tp=,,' -e 's, .*,,')
+            local Pi=$(echo $vals | sed -e 's,.*TP=,,' -e 's, .*,,')
+            local Si=$(echo $vals | sed -e 's,.*TS=,,' -e 's, .*,,')
+            local Ti=$(echo $vals | sed -e 's,.*TT=,,' -e 's, .*,,')
+            local Bi=$(echo $vals | sed -e 's,.*TB=,,' -e 's, .*,,')
+            local di=$(echo $vals | sed -e 's,.*Td=,,' -e 's, .*,,')
 
-	t=$(($t+$ti))
-	P=$(($P+$Pi))
-	B=$(($B+$Bi))
-	S=$(($S+$Si))
-	T=$(($T+$Ti))
-	p=$(echo "$p+$pi" | bc -q)
-	d=$(echo "$d+$di" | bc -lq)
+            t=$(($t + $ti))
+            P=$(($P + $Pi))
+            B=$(($B + $Bi))
+            S=$(($S + $Si))
+            T=$(($T + $Ti))
+            p=$(awk -v p="$p" -v pi="$pi" 'BEGIN { print p + pi }')
+            d=$(awk -v d="$d" -v di="$di" 'BEGIN { print d + di }')
 
-	p6_test_harness___results "$dir/$file" "$di" "$pi" "$Pi" "$ti" "$Bi" "$Ti" "$Si" >&2
-	f=$(($f+1))
-    done
+            p6_test_harness___results "$dir/$file" "$di" "$pi" "$Pi" "$ti" "$Bi" "$Ti" "$Si" >&2
+            f=$(($f + 1))
+        done
     fi
     local result
     local msg
     local rc
 
     if [ x"$P" != x"$t" ]; then
-	msg=$(egrep '^not ok|^#' $P6_TEST_DIR/tests/*.txt)
-	result=FAIL
-	rc=2
+        msg=$(egrep '^not ok|^#' $P6_TEST_DIR/tests/*.txt)
+        result=FAIL
+        rc=2
     else
-	msg=ok
-	if [ $B -gt 0 ]; then
-	    result=PROVISIONAL
-	    rc=1
-	else
-	    result=PASS
-	    rc=0
-	fi
+        msg=ok
+        if [ $B -gt 0 ]; then
+            result=PROVISIONAL
+            rc=1
+        else
+            result=PASS
+            rc=0
+        fi
     fi
 
     echo "$msg"
@@ -240,8 +243,8 @@ p6_test_harness___results() {
     local line=$name
     local i=$len
     while [ $i -lt 48 ]; do
-	line="$line."
-	i=$(($i+1))
+        line="$line."
+        i=$(($i + 1))
     done
 
     passed=$(p6_test_harness__zero_lpad "3" "$passed")
@@ -249,25 +252,25 @@ p6_test_harness___results() {
 
     line="$line ${duration}s $passed/$total $prcnt_passed%"
     if [ $bonus -gt 0 ]; then
-	line="$line [$bonus now pass]"
+        line="$line [$bonus now pass]"
     else
-	if [ $todo -gt 0 ]; then
-	    line="$line, todo=$todo"
-	fi
+        if [ $todo -gt 0 ]; then
+            line="$line, todo=$todo"
+        fi
     fi
     if [ $skipped -gt 0 ]; then
-	line="$line, skipped=$skipped"
+        line="$line, skipped=$skipped"
     fi
 
     local color
     if [ $passed -eq $total ]; then
-	if [ $bonus -gt 0 ]; then
-	    color=yellow
-	else
-	    color=green
-	fi
+        if [ $bonus -gt 0 ]; then
+            color=yellow
+        else
+            color=green
+        fi
     else
-	color=red
+        color=red
     fi
     p6_test_colorize__say "$color" "black" "$line"
 }
@@ -291,8 +294,8 @@ p6_test_harness__zero_lpad() {
 
     local i=$str_len
     while [ $i -lt $len ]; do
-	str="0$str"
-	i=$(($i+1))
+        str="0$str"
+        i=$(($i + 1))
     done
 
     echo "$str"

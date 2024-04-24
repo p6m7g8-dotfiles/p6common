@@ -1,16 +1,24 @@
 # shellcheck shell=bash
+#
+######################################################################
+#<
+#
+# Function: p6_filter_aggregrate_map_reduce()
+#
+#>
+######################################################################
+p6_filter_aggregrate_map_reduce() {
 
-# This is a math filter like string filters
-#
-# Filters
-#  Filters expect to process stdin and send output to stdout
-#  aka someone will say ..... | p6_filter_* | ...
-#
+	sort | uniq -c
+}
 
 ######################################################################
 #<
 #
-# Function: p6_filter_aggregrate_table_by_group()
+# Function: p6_filter_aggregrate_table_by_group([sep=\t])
+#
+#  Args:
+#	OPTIONAL sep - [\t]
 #
 #  Environment:	 IFS
 #>
@@ -31,16 +39,14 @@ p6_filter_aggregrate_table_by_group() {
 		# first column is the group
 		local i=2
 		while p6_math_lte "$i" "$column_count"; do
-		        local col=$(p6_echo "$line" | p6_filter_column_pluck "$i")
+			local col=$(p6_echo "$line" | p6_filter_column_pluck "$i")
 
-			
 			# Find or Create Group
 			# Find or Create Col
-			# Update Col=Previous+Col		
+			# Update Col=Previous+Col
 			i=$(p6_math_inc "$i" "1")
 		done
 	done
 
 	# Output all unique groups with col totals
 }
-
