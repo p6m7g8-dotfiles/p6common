@@ -432,7 +432,7 @@ p6_file_cascade() {
 p6_file_line_first() {
     local file="$1"
 
-    local line=$(p6_file_display "$file" | p6_filter_first "1")
+    local line=$(p6_file_display "$file" | p6_filter_row_first "1")
 
     p6_return_str "$line"
 }
@@ -455,7 +455,7 @@ p6_file_lines_last() {
     local file="$1"
     local n="$2"
 
-    local lines=$(p6_file_display "$file" | p6_filter_last "$n")
+    local lines=$(p6_file_display "$file" | p6_filter_row_last "$n")
 
     p6_return_str "$lines"
 }
@@ -523,7 +523,7 @@ p6_file_lines_first() {
     local file="$1"
     local n="$2"
 
-    local lines=$(p6_file_display "$file" | p6_filter_first "$n")
+    local lines=$(p6_file_display "$file" | p6_filter_row_first "$n")
 
     p6_return_str "$lines"
 }

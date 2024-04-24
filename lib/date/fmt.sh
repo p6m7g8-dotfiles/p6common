@@ -50,7 +50,7 @@ p6_date_fmt_relative_to_absolute() {
 
     local number=$(p6_echo "$relative" | p6_filter_column_pluck "1")
     local unit=$(p6_echo "$relative" | p6_filter_column_pluck "2")
-    local unit_abbr=$(p6_echo "$unit" | p6_filter_first_character)
+    local unit_abbr=$(p6_echo "$unit" | p6_filter_string_first_character)
 
     local absolute=$(p6_date__date "%Y-%m-%d" "-${number}${unit_abbr}")
 
