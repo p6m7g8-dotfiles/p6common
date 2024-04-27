@@ -56,9 +56,9 @@ END {
             key = group SUBSEP i
             if (key in tallies) {
                 average = (counts[key] > 0) ? tallies[key] / counts[key] : 0
-                printf "\t%.2f", average
+                printf "\t%.3f", average
             } else {
-                printf "\t0.00"  # No data for this column in any record
+                printf "\t0.000"  # No data for this column in any record
             }
         }
         printf "\n"
@@ -102,7 +102,7 @@ END {
     # Calculate and print average for each field starting from the second
     for (i = 3; i <= NF; i++) {
         average = totalSum[i] / totalCount
-        printf "\t%.2f", average
+        printf "\t%.3f", average
     }
     printf "\n"
 }
