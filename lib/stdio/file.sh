@@ -96,7 +96,7 @@ p6_file_copy() {
     local src="$1"
     local dst="$2"
 
-    p6_file__debug "copy(): $src $dst"
+    p6_file__debug "copy(): $src -> $dst"
     cp $src $dst
 
     p6_return_void
@@ -432,7 +432,7 @@ p6_file_cascade() {
 p6_file_line_first() {
     local file="$1"
 
-    local line=$(p6_file_display "$file" | p6_filter_row_first "1")
+    local line=$(p6_filter_row_first "1" <"$file")
 
     p6_return_str "$line"
 }
@@ -455,7 +455,7 @@ p6_file_lines_last() {
     local file="$1"
     local n="$2"
 
-    local lines=$(p6_file_display "$file" | p6_filter_row_last "$n")
+    local lines=$(p6_filter_row_last "$n" <"$file")
 
     p6_return_str "$lines"
 }
@@ -476,7 +476,7 @@ p6_file_lines_last() {
 p6_file_lines() {
     local file="$1"
 
-    local count=$(wc -l "$file" | awk '{print $1}')
+    local count=$(p6_filter_rows_count <"$file" | p6_filter_leading_and_trailing_spaces_strip)
 
     p6_return_int "$count"
 }
@@ -523,7 +523,7 @@ p6_file_lines_first() {
     local file="$1"
     local n="$2"
 
-    local lines=$(p6_file_display "$file" | p6_filter_row_first "$n")
+    local lines=$(p6_filter_row_first "$n" <"$file")
 
     p6_return_str "$lines"
 }
