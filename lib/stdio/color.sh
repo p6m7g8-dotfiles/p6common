@@ -110,7 +110,10 @@ p6_color_to_code() {
 ######################################################################
 #<
 #
-# Function: p6_color_opacity_factor()
+# Function: float 0.0 = p6_color_opacity_factor()
+#
+#  Returns:
+#	float - 0.0
 #
 #>
 ######################################################################
@@ -219,7 +222,6 @@ p6_color_hex_to_d16b() {
 #  Returns:
 #	size_t - channel
 #
-#  Environment:	 BEGIN
 #>
 ######################################################################
 p6_color_hext_to_rgb() {

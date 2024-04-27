@@ -12,7 +12,7 @@ p6_date_range_fill() {
     local end_date="$2"
     local file="$3"
     local fmt="$4"
-    local sep="$5"
+    local sep="${5:-\t}"
 
     local dates_file=$(p6_transient_create_file "p6.dates-fill")
 
@@ -25,13 +25,14 @@ p6_date_range_fill() {
     local current_date="$start_date"
 
     while ! p6_string_eq "$current_date" "$end_date"; do
-        local line=$(p6_dt_range_fill__process "$current_date" "$dates_file")
-        p6_echo "$line"
+        local line=$(p6_date_range_fill__process "$current_date" "$dates_file" "$sep")
+        p6_echo -e "$line"
 
-        current_date=$(p6_dt_move "$current_date" "+1d")
+        current_date=$(p6_date_math_move "$current_date" "+1d" "%Y-%m-%d" "%Y-%m-%d")
     done
 
-    p6_date_range_fill__process "$end_date" "$dates_file" "$sep"
+    local last_line=$(p6_date_range_fill__process "$end_date" "$dates_file" "$sep")
+    p6_echo -e "$last_line"
 
     p6_transient_delete "$dates_file"
 }
@@ -39,12 +40,12 @@ p6_date_range_fill() {
 ######################################################################
 #<
 #
-# Function: str line = p6_date_range_fill__process(current_date, dates_file, sep)
+# Function: str line = p6_date_range_fill__process(date, dates_file, [sep=\t])
 #
 #  Args:
-#	current_date -
+#	date -
 #	dates_file -
-#	sep -
+#	OPTIONAL sep - [\t]
 #
 #  Returns:
 #	str - line
@@ -52,17 +53,17 @@ p6_date_range_fill() {
 #>
 ######################################################################
 p6_date_range_fill__process() {
-    local current_date="$1"
+    local date="$1"
     local dates_file="$2"
-    local sep="$3"
+    local sep="${3:-\t}"
 
     local value=0
-    local line=$(p6_file_contains "$current_data" "$dates_file")
+    local line=$(p6_file_contains "$date" "$dates_file")
     if ! p6_string_blank "$line"; then
         value=$(p6_echo "$line" | p6_filter_column_pluck "2")
     fi
 
-    local line="$current_date${sep}$value"
+    local line="$date${sep}$value"
 
     p6_return_str "$line"
 }

@@ -55,7 +55,7 @@ p6_retry_delay_log() {
 #  Returns:
 #	size_t - i
 #
-#  Environment:	 FATAL
+#  Environment:	 P6_EXIT_FATAL
 #>
 ######################################################################
 p6_retry_delay() {
@@ -70,7 +70,7 @@ p6_retry_delay() {
     esac
 
     if [ $i -gt 300 ]; then
-        p6_die "25" "FATAL"
+        p6_die "$P6_EXIT_FATAL" "FATAL"
     fi
 
     p6_return_size_t "$i"

@@ -48,3 +48,15 @@ p6_filter_translate_space_to_underscore() {
 
     sed -e 's, ,_,g'
 }
+
+######################################################################
+#<
+#
+# Function: p6_filter_translate_space_to_tab()
+#
+#>
+######################################################################
+p6_filter_translate_space_to_tab() {
+
+    sed -e "s, ,\t,g"
+}

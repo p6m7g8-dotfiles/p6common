@@ -42,7 +42,7 @@
 
 ### p6common/lib/date/convert.sh
 
-- p6_date_convert_seconds_to_hours()
+- float hours = p6_date_convert_seconds_to_hours()
 
 ### p6common/lib/date/fmt.sh
 
@@ -50,13 +50,15 @@
 
 ### p6common/lib/date/math.sh
 
-- int delta = p6_date_math_delta(d1, d2, in_fmt, [out_fmt=%s])
+- float delta_hours = p6_date_math_delta_in_hours(d1, d2, fmt)
+- int delta = p6_date_math_delta_in_seconds(d1, d2, in_fmt)
 - p6_date_math_move()
 
 ### p6common/lib/date/point.sh
 
 - p6_date_point_now_epoch_seconds()
 - p6_date_point_now_ymd()
+- p6_date_point_today_ymd()
 - p6_date_point_tomorrow_ymd()
 - p6_date_point_yesterday_ymd()
 
@@ -66,14 +68,15 @@
 
 ## filter
 
-### p6common/lib/filter/agg.sh
+### p6common/lib/filter/aggregate.sh
 
 - p6_filter_aggregrate_map_reduce()
-- p6_filter_aggregrate_table_by_group([sep=\t])
+- p6_filter_aggregrate_table_by_group_with_count([sep=\t])
+- p6_filter_aggregrate_table_with_count([sep=\t])
 
 ### p6common/lib/filter/column.sh
 
-- p6_filter_column_pluck()
+- p6_filter_column_pluck(columns, [split= ], [selector=])
 - p6_filter_column_swap([sep=\t])
 - p6_filter_columns_count([sep=\t])
 
@@ -86,6 +89,7 @@
 - p6_filter_row_n(n)
 - p6_filter_row_select()
 - p6_filter_row_select_and_after(selector, count)
+- p6_filter_rows_count()
 
 ### p6common/lib/filter/sort.sh
 
@@ -113,6 +117,7 @@
 
 - p6_filter_translate_glob_to_underscore()
 - p6_filter_translate_parens_to_slash()
+- p6_filter_translate_space_to_tab()
 - p6_filter_translate_space_to_underscore()
 - p6_filter_translate_trailing_slash_bang_to_bang()
 
@@ -232,9 +237,9 @@
 
 ### p6common/lib/stdio/color.sh
 
+- float 0.0 = p6_color_opacity_factor()
 - p6_color_hex_to_d16b(hex, ord)
 - p6_color_ize(color_fg, color_bg, msg)
-- p6_color_opacity_factor()
 - p6_color_say(color_fg, color_bg, msg)
 - size_t channel = p6_color_hext_to_rgb(h)
 - size_t code = p6_color_to_code(color)
@@ -483,7 +488,8 @@
 │   └── prod
 │       ├── debug-prod.sh
 │       ├── log-prod.sh
-│       └── time-prod.sh
+│       ├── time-prod.sh
+│       └── trace-debug.sh
 ├── init.zsh
 ├── lib
 │   ├── _bootstrap.sh
@@ -500,9 +506,9 @@
 │   │   ├── math.sh
 │   │   ├── point.sh
 │   │   └── range.sh
-│   ├── debug -> ../conf/debug
+│   ├── debug -> ../conf/prod
 │   ├── filter
-│   │   ├── agg.sh
+│   │   ├── aggregate.sh
 │   │   ├── column.sh
 │   │   ├── debug.sh
 │   │   ├── row.sh
@@ -574,9 +580,9 @@
     ├── alias.sh
     ├── color.sh
     ├── const.sh
+    ├── date.sh
     ├── debug.sh
     ├── dir.sh
-    ├── dt.sh
     ├── file.sh
     ├── inc.sh
     ├── interactive.sh
@@ -594,7 +600,7 @@
     ├── string.sh
     └── tokens.sh
 
-21 directories, 103 files
+21 directories, 104 files
 ```
 
 ## Author
