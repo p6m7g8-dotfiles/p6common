@@ -175,6 +175,93 @@ p6_return_float() {
 ######################################################################
 #<
 #
+# Function: code rc = p6_return_filter(rc)
+#
+#  Args:
+#	rc -
+#
+#  Returns:
+#	code - rc
+#
+#>
+#/ Synopsis
+#/  Filters return this for syntaxtic sugar
+#/  Maintains the filters $? rc code for pipe chain short circuits
+#/
+######################################################################
+p6_return_filter() {
+    local rc=$?
+
+    p6_return_code_as_code "$rc"
+}
+
+######################################################################
+#<
+#
+# Function: p6_return_ipv4(ip)
+#
+#  Args:
+#	ip -
+#
+#  Environment:	 EOF IFS P6_EXIT_ARGS _IFS
+#>
+#/ Synopsis
+#/  Any IP v4 address
+#/
+######################################################################
+p6_return_ipv4() {
+    local ip="$1"
+
+    local valid=false
+    if p6_echo "$ip" | grep -qE '^([0-9]{1,3}\.){3}[0-9]{1,3}$'; then
+        local octet1
+        local octet2
+        local octet3
+        local octet4
+        local old_IFS=$IFS
+        IFS='.' read -r octet1 octet2 octet3 octet4 <<EOF
+$ip
+EOF
+        IFS=$old_IFS
+
+        local octet
+        for octet in $octet1 $octet2 $octet3 $octet4; do
+            if [ "$octet" -gt 255 ] || [ "$octet" -lt 0 ]; then
+                valid=false
+                break
+            fi
+        done
+        valid=true
+    fi
+
+    if p6_string_eq "$valid" "false"; then
+        p6_die "$P6_EXIT_ARGS" "[$ip] is not an IPv4"
+    fi
+
+    p6_return "$ip"
+}
+
+######################################################################
+#<
+#
+# Function: true  = p6_return_stream()
+#
+#  Returns:
+#	true - 
+#
+#>
+#/ Synopsis
+#/  Function emits arbitrary text
+#/
+######################################################################
+p6_return_stream() {
+
+    p6_return_true
+}
+
+######################################################################
+#<
+#
 # Function: p6_return_str(str)
 #
 #  Args:
@@ -229,6 +316,10 @@ p6_return_path() {
 #
 #  Environment:	 ISO ISO8601 P6_EXIT_ARGS
 #>
+#/ Synopsis
+#/  Only the listed dates are allowed
+#/  Think twice before adding more
+#/
 ######################################################################
 p6_return_date() {
     local date="$1"

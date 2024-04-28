@@ -183,15 +183,17 @@ p6_file_line_delete_last() {
 ######################################################################
 #<
 #
-# Function: p6_file_repalce(file, sed_cmd)
+# Function: p6_file_replace(file, sed_cmd, file, sed_cmd)
 #
 #  Args:
+#	file -
+#	sed_cmd -
 #	file -
 #	sed_cmd -
 #
 #>
 ######################################################################
-p6_file_repalce() {
+p6_file_replace() {
     local file="$1"
     local sed_cmd="$2"
 
@@ -531,9 +533,11 @@ p6_file_lines_first() {
 ######################################################################
 #<
 #
-# Function: p6_file_replace(file, sed_cmd)
+# Function: p6_file_replace(file, sed_cmd, file, sed_cmd)
 #
 #  Args:
+#	file -
+#	sed_cmd -
 #	file -
 #	sed_cmd -
 #

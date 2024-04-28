@@ -43,7 +43,7 @@ p6_template_process() {
         local k=$(p6_echo "$pair" | cut -d '=' -f 1)
         local v=$(p6_echo "$pair" | cut -d '=' -f 2-)
 
-        p6_file_repalce "$outfile" "s^$k^$v^g"
+        p6_file_replace "$outfile" "s^$k^$v^g"
     done
 
     local processed=$(p6_file_display "$outfile")

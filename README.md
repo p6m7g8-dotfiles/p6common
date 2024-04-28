@@ -64,62 +64,67 @@
 
 ### p6common/lib/date/range.sh
 
-- p6_date_range_fill()
+- stream  = p6_date_range_fill()
 
 ## filter
 
 ### p6common/lib/filter/aggregate.sh
 
-- p6_filter_aggregrate_map_reduce()
-- p6_filter_aggregrate_table_by_group_with_count([sep=\t])
-- p6_filter_aggregrate_table_with_count([sep=\t])
+- filter  = p6_filter_aggregrate_map_reduce()
+- filter  = p6_filter_aggregrate_table_by_group_with_count([sep=\t])
+- filter  = p6_filter_aggregrate_table_with_count([sep=\t])
 
 ### p6common/lib/filter/column.sh
 
-- p6_filter_column_pluck(columns, [split= ], [selector=])
-- p6_filter_column_swap([sep=\t])
-- p6_filter_columns_count([sep=\t])
+- filter  = p6_filter_column_pluck(columns, [split= ], [selector=])
+- filter  = p6_filter_column_swap([sep=\t])
+- filter  = p6_filter_columns_count([sep=\t])
+
+### p6common/lib/filter/escape.sh
+
+- filter  = p6_filter_sql_escape_single_quote()
 
 ### p6common/lib/filter/row.sh
 
-- p6_filter_row_exclude(selector)
-- p6_filter_row_first(n)
-- p6_filter_row_from_end(n)
-- p6_filter_row_last(n)
-- p6_filter_row_n(n)
-- p6_filter_row_select()
-- p6_filter_row_select_and_after(selector, count)
-- p6_filter_rows_count()
+- filter  = p6_filter_row_exclude(selector)
+- filter  = p6_filter_row_first(n)
+- filter  = p6_filter_row_from_end(n)
+- filter  = p6_filter_row_last(n)
+- filter  = p6_filter_row_n(n)
+- filter  = p6_filter_row_select()
+- filter  = p6_filter_row_select_and_after(selector, count)
+- filter  = p6_filter_rows_count()
 
 ### p6common/lib/filter/sort.sh
 
-- p6_filter_sort()
-- p6_filter_sort_reverse()
+- filter  = p6_filter_sort()
+- filter  = p6_filter_sort_reverse()
 
 ### p6common/lib/filter/string.sh
 
-- p6_filter_string_first_character()
+- filter  = p6_filter_string_first_character()
 
 ### p6common/lib/filter/strip.sh
 
-- p6_filter_alnum_and_underscore_strip()
-- p6_filter_alnum_strip()
-- p6_filter_double_quote_strip()
-- p6_filter_leading_and_trailing_spaces_strip()
-- p6_filter_leading_spaces_strip()
-- p6_filter_quotes_strip()
-- p6_filter_single_quote_strip()
-- p6_filter_spaces_strip()
-- p6_filter_trailing_slash_strip()
-- p6_filter_trailing_spaces_strip()
+- filter  = p6_filter_alnum_and_underscore_strip()
+- filter  = p6_filter_alnum_strip()
+- filter  = p6_filter_double_quote_strip()
+- filter  = p6_filter_leading_and_trailing_spaces_strip()
+- filter  = p6_filter_leading_spaces_strip()
+- filter  = p6_filter_quotes_strip()
+- filter  = p6_filter_single_quote_strip()
+- filter  = p6_filter_spaces_strip()
+- filter  = p6_filter_trailing_slash_strip()
+- filter  = p6_filter_trailing_spaces_strip()
 
 ### p6common/lib/filter/translate.sh
 
-- p6_filter_translate_glob_to_underscore()
-- p6_filter_translate_parens_to_slash()
-- p6_filter_translate_space_to_tab()
-- p6_filter_translate_space_to_underscore()
-- p6_filter_translate_trailing_slash_bang_to_bang()
+- filter  = p6_filter_translate_glob_to_underscore()
+- filter  = p6_filter_translate_parens_to_slash()
+- filter  = p6_filter_translate_space_to_tab()
+- filter  = p6_filter_translate_space_to_underscore()
+- filter  = p6_filter_translate_trailing_slash_bang_to_bang()
+- filter  = p6_filter_translate_words_to_sql_list([sep=|])
 
 ## math
 
@@ -142,7 +147,7 @@
 
 ### p6common/lib/network/network.sh
 
-- str ip = p6_network_ip_public()
+- ipv4 ip = p6_network_ip_public()
 
 ### p6common/lib/network/remote.sh
 
@@ -274,8 +279,8 @@
 - p6_file_ma_sync(from, to)
 - p6_file_marker_delete_to_end(file, marker)
 - p6_file_move(src, dst)
-- p6_file_repalce(file, sed_cmd)
-- p6_file_replace(file, sed_cmd)
+- p6_file_replace(file, sed_cmd, file, sed_cmd)
+- p6_file_replace(file, sed_cmd, file, sed_cmd)
 - p6_file_rmf(file)
 - p6_file_symlink(to, from)
 - p6_file_unlink(file)
@@ -361,7 +366,6 @@
 
 - p6_pgs()
 - p6_xclean()
-- size_t len = p6_len(s)
 
 ### p6common/lib/stdlib/os.sh
 
@@ -461,15 +465,18 @@
 - code bool = p6_return_bool(bool)
 - code rc = p6_return_code_as_code(rc)
 - code rc = p6_return_code_as_value(rc)
+- code rc = p6_return_filter(rc)
 - p6_return_date(date)
 - p6_return_float(float)
 - p6_return_int(int)
+- p6_return_ipv4(ip)
 - p6_return_path(path)
 - p6_return_size_t(size_t)
 - p6_return_str(str)
 - p6_return_void()
 - p6_return_words(words)
 - true  = p6_return(rv)
+- true  = p6_return_stream()
 
 ## Hierarchy
 
@@ -511,6 +518,7 @@
 │   │   ├── aggregate.sh
 │   │   ├── column.sh
 │   │   ├── debug.sh
+│   │   ├── escape.sh
 │   │   ├── row.sh
 │   │   ├── sort.sh
 │   │   ├── string.sh
@@ -600,7 +608,7 @@
     ├── string.sh
     └── tokens.sh
 
-21 directories, 104 files
+21 directories, 105 files
 ```
 
 ## Author
