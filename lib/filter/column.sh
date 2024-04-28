@@ -107,13 +107,17 @@ p6_filter_column_pluck__column_to_action() {
 ######################################################################
 #<
 #
-# Function: p6_filter_column_pluck(columns, [split= ], [selector=])
+# Function: filter  = p6_filter_column_pluck(columns, [split= ], [selector=])
 #
 #  Args:
 #	columns -
 #	OPTIONAL split - [ ]
 #	OPTIONAL selector - []
 #
+#  Returns:
+#	filter - 
+#
+#  Environment:	 P6_EXIT_ARGS
 #>
 ######################################################################
 p6_filter_column_pluck() {
@@ -136,15 +140,20 @@ p6_filter_column_pluck() {
     else
         awk -F"$split" -v k="$selector" "\$0 ~ k $action"
     fi
+
+    p6_return_filter
 }
 
 ######################################################################
 #<
 #
-# Function: p6_filter_column_swap([sep=\t])
+# Function: filter  = p6_filter_column_swap([sep=\t])
 #
 #  Args:
 #	OPTIONAL sep - [\t]
+#
+#  Returns:
+#	filter - 
 #
 #>
 ######################################################################
@@ -152,15 +161,20 @@ p6_filter_column_swap() {
     local sep="${1:-\t}"
 
     awk -v sep="$sep" '{print $2, sep, $1}'
+
+    p6_return_filter
 }
 
 ######################################################################
 #<
 #
-# Function: p6_filter_columns_count([sep=\t])
+# Function: filter  = p6_filter_columns_count([sep=\t])
 #
 #  Args:
 #	OPTIONAL sep - [\t]
+#
+#  Returns:
+#	filter - 
 #
 #>
 ######################################################################
@@ -168,4 +182,6 @@ p6_filter_columns_count() {
     local sep="${1:-\t}"
 
     awk -F"$sep" '{print NF; exit}'
+
+    p6_return_filter
 }

@@ -3,17 +3,16 @@
 ######################################################################
 #<
 #
-# Function: ipv4 ip = p6_network_ip_public()
+# Function: filter  = p6_filter_sql_escape_single_quote()
 #
 #  Returns:
-#	ipv4 - ip
+#	filter - 
 #
 #>
 ######################################################################
-p6_network_ip_public() {
+p6_filter_sql_escape_single_quote() {
 
-  local ip
-  ip=$(curl -fsS http://ifconfig.me)
+	sed -e "s/'/''/g"
 
-  p6_return_ipv4 "$ip"
+	p6_return_filter
 }

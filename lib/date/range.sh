@@ -3,7 +3,10 @@
 ######################################################################
 #<
 #
-# Function: p6_date_range_fill()
+# Function: stream  = p6_date_range_fill()
+#
+#  Returns:
+#	stream - 
 #
 #>
 ######################################################################
@@ -35,6 +38,8 @@ p6_date_range_fill() {
     p6_echo -e "$last_line"
 
     p6_transient_delete "$dates_file"
+
+    p6_return_stream
 }
 
 ######################################################################

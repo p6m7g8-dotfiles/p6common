@@ -1,26 +1,34 @@
 # shellcheck shell=bash
-#
+
 ######################################################################
 #<
 #
-# Function: p6_filter_aggregrate_map_reduce()
+# Function: filter  = p6_filter_aggregrate_map_reduce()
+#
+#  Returns:
+#	filter - 
 #
 #>
 ######################################################################
 p6_filter_aggregrate_map_reduce() {
 
-	sort | uniq -c
+    sort | uniq -c
+
+    p6_return_filter
 }
 
 ######################################################################
 #<
 #
-# Function: p6_filter_aggregrate_table_by_group_with_count([sep=\t])
+# Function: filter  = p6_filter_aggregrate_table_by_group_with_count([sep=\t])
 #
 #  Args:
 #	OPTIONAL sep - [\t]
 #
-#  Environment:	 BEGIN END SUBSEP
+#  Returns:
+#	filter - 
+#
+#  Environment:	 END SUBSEP
 #>
 #/  Synopsis:
 #/	Input
@@ -29,10 +37,9 @@ p6_filter_aggregrate_map_reduce() {
 #/ 	  We're aggregrating group lines here
 ######################################################################
 p6_filter_aggregrate_table_by_group_with_count() {
-	local sep="${1:-\t}"
+    local sep="${1:-\t}"
 
-	awk 'BEGIN { FS="\t" }
-
+    awk -F"$sep" '
 {
     group = $1
 
@@ -63,27 +70,30 @@ END {
         }
         printf "\n"
     }
-}'
+}
+'
 
+    p6_return_filter
 }
 
 ######################################################################
 #<
 #
-# Function: p6_filter_aggregrate_table_with_count([sep=\t])
+# Function: filter  = p6_filter_aggregrate_table_with_count([sep=\t])
 #
 #  Args:
 #	OPTIONAL sep - [\t]
 #
-#  Environment:	 BEGIN END
+#  Returns:
+#	filter - 
+#
+#  Environment:	 END
 #>
 ######################################################################
 p6_filter_aggregrate_table_with_count() {
-	local sep="${1:-\t}"
+    local sep="${1:-\t}"
 
-	awk '
-BEGIN { FS="\t" }
-
+    awk -F"$sep" '
 {
     group = $1
 
@@ -106,7 +116,7 @@ END {
     }
     printf "\n"
 }
-
 '
 
+    p6_return_filter
 }
