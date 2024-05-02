@@ -107,3 +107,41 @@ p6_filter_translate_words_to_sql_list() {
 
     p6_return_filter
 }
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_translate_tab_to_pipe()
+#
+#  Returns:
+#	filter - 
+#
+#>
+######################################################################
+p6_filter_translate_tab_to_pipe() {
+
+    sed -e 's,\t,|,g'
+
+    p6_return_filter
+}
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_translate_start_to_arg(arg)
+#
+#  Args:
+#	arg -
+#
+#  Returns:
+#	filter - 
+#
+#>
+######################################################################
+p6_filter_translate_start_to_arg() {
+    local arg="$1"
+
+    sed -e "s,^,$arg,g"
+
+    p6_return_filter
+}

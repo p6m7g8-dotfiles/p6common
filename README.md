@@ -80,6 +80,10 @@
 - filter  = p6_filter_column_swap([sep=\t])
 - filter  = p6_filter_columns_count([sep=\t])
 
+### p6common/lib/filter/date.sh
+
+- filter  = p6_filter_translate_date_to_iso8601_utc()
+
 ### p6common/lib/filter/escape.sh
 
 - filter  = p6_filter_sql_escape_single_quote()
@@ -123,6 +127,8 @@
 - filter  = p6_filter_translate_parens_to_slash()
 - filter  = p6_filter_translate_space_to_tab()
 - filter  = p6_filter_translate_space_to_underscore()
+- filter  = p6_filter_translate_start_to_arg(arg)
+- filter  = p6_filter_translate_tab_to_pipe()
 - filter  = p6_filter_translate_trailing_slash_bang_to_bang()
 - filter  = p6_filter_translate_words_to_sql_list([sep=|])
 
@@ -307,6 +313,7 @@
 - p6_h3(header)
 - p6_h4(header)
 - p6_h5(header)
+- p6_h6(header)
 - p6_msg(msg)
 - p6_msg_fail()
 - p6_msg_h3()
@@ -517,6 +524,7 @@
 │   ├── filter
 │   │   ├── aggregate.sh
 │   │   ├── column.sh
+│   │   ├── date.sh
 │   │   ├── debug.sh
 │   │   ├── escape.sh
 │   │   ├── row.sh
@@ -608,7 +616,7 @@
     ├── string.sh
     └── tokens.sh
 
-21 directories, 105 files
+21 directories, 106 files
 ```
 
 ## Author
