@@ -567,7 +567,7 @@ p6_file_marker_delete_to_end() {
     local file="$1"
     local marker="$2"
 
-    p6_file_repalce "$file" "/^$marker/,\$d"
+    p6_file_replace "$file" "/^$marker/,\$d"
 
     p6_return_void
 }
