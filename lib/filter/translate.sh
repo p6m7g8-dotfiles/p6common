@@ -145,3 +145,22 @@ p6_filter_translate_start_to_arg() {
 
     p6_return_filter
 }
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_translate_blank_to_null()
+#
+#  Returns:
+#	filter - 
+#
+#  Environment:	 NULL
+#>
+######################################################################
+p6_filter_translate_blank_to_null() {
+  
+  sed -e "s,'',NULL,g"
+
+  p6_return_filter
+}
+

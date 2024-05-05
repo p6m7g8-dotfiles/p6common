@@ -123,6 +123,7 @@
 
 ### p6common/lib/filter/translate.sh
 
+- filter  = p6_filter_translate_blank_to_null()
 - filter  = p6_filter_translate_glob_to_underscore()
 - filter  = p6_filter_translate_parens_to_slash()
 - filter  = p6_filter_translate_space_to_tab()
