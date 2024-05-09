@@ -238,6 +238,20 @@ p6_string_init_cap() {
     p6_return_str "$str_ic"
 }
 
+######################################################################
+#<
+#
+# Function: str padded = p6_string_zero_pad(str, pad)
+#
+#  Args:
+#	str -
+#	pad -
+#
+#  Returns:
+#	str - padded
+#
+#>
+######################################################################
 p6_string_zero_pad() {
     local str="$1"
     local pad="$2"

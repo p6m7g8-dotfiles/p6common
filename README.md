@@ -73,9 +73,9 @@
 
 ### p6common/lib/filter/aggregate.sh
 
-- filter  = p6_filter_aggregrate_map_reduce()
-- filter  = p6_filter_aggregrate_table_by_group_with_count([sep=\t])
-- filter  = p6_filter_aggregrate_table_with_count([sep=\t])
+- filter  = p6_filter_aggregate_map_reduce()
+- filter  = p6_filter_aggregate_table_by_group_with_count([sep=\t])
+- filter  = p6_filter_aggregate_table_with_count([sep=\t])
 
 ### p6common/lib/filter/column.sh
 
@@ -447,6 +447,7 @@
 - bool rv = p6_string_blank(str)
 - bool rv = p6_string_eq(str, val)
 - size_t len = p6_string_len(str)
+- str padded = p6_string_zero_pad(str, pad)
 - str str_a = p6_string_append(str, add, [sep= ])
 - str str_ic = p6_string_init_cap(str)
 - str str_lc = p6_string_lc(str)
