@@ -56,6 +56,9 @@
 
 ### p6common/lib/date/point.sh
 
+- int day = p6_date_point_last_day_of_ym(year, month)
+- int end_month = p6_date_point_last_month_of_quarter(start_month)
+- int first_month = p6_date_point_first_month_of_quarter(quarter)
 - p6_date_point_now_epoch_seconds()
 - p6_date_point_now_ymd()
 - p6_date_point_today_ymd()
@@ -126,6 +129,7 @@
 - filter  = p6_filter_translate_blank_to_null()
 - filter  = p6_filter_translate_glob_to_underscore()
 - filter  = p6_filter_translate_parens_to_slash()
+- filter  = p6_filter_translate_quoted_null_to_null()
 - filter  = p6_filter_translate_space_to_tab()
 - filter  = p6_filter_translate_space_to_underscore()
 - filter  = p6_filter_translate_start_to_arg(arg)
@@ -135,7 +139,7 @@
 
 ## math
 
-### p6common/lib/math/math.sh
+### p6common/lib/math/arithmetic.sh
 
 - code rc = p6_math_gt(a, b)
 - code rc = p6_math_gte(a, b)
@@ -145,6 +149,10 @@
 - int result = p6_math_inc(a, [b=1])
 - int result = p6_math_multiply(a, b)
 - int rv = p6_math_sub(a, b)
+
+### p6common/lib/math/range.sh
+
+- words elements = p6_math_range_generate()
 
 ## network
 
@@ -534,7 +542,8 @@
 │   │   ├── strip.sh
 │   │   └── translate.sh
 │   ├── math
-│   │   └── math.sh
+│   │   ├── arithmetic.sh
+│   │   └── range.sh
 │   ├── network
 │   │   ├── download.sh
 │   │   ├── network.sh
@@ -617,7 +626,7 @@
     ├── string.sh
     └── tokens.sh
 
-21 directories, 106 files
+21 directories, 107 files
 ```
 
 ## Author

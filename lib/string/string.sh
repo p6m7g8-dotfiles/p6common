@@ -237,3 +237,12 @@ p6_string_init_cap() {
 
     p6_return_str "$str_ic"
 }
+
+p6_string_zero_pad() {
+    local str="$1"
+    local pad="$2"
+
+    local padded=$(printf "%0${pad}d" $str)
+
+    p6_return_str "$padded"
+}
