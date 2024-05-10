@@ -98,12 +98,22 @@ p6_filter_translate_space_to_tab() {
 #  Returns:
 #	filter - 
 #
+#  Environment:	 NULL
 #>
 ######################################################################
 p6_filter_translate_words_to_sql_list() {
     local sep="${1:-|}"
 
-    sed -e "s/|/','/g"
+    awk -v sep="$sep" -F"$sep" '{
+        printf "(";
+        for (i=1; i<=NF; i++) {
+            if ($i == "NULL" || $i == "")
+                printf (i==NF ? "NULL" : "NULL, ");
+            else
+                printf (i==NF ? "'\''%s'\''" : "'\''%s'\'', ", $i);
+        }
+        printf ")\n";
+    }'
 
     p6_return_filter
 }
@@ -159,9 +169,9 @@ p6_filter_translate_start_to_arg() {
 ######################################################################
 p6_filter_translate_blank_to_null() {
 
-  sed -e 's,||,|NULL|,g'
+    sed -e ':a' -e 's/||/|NULL|/g; t a' -e 's/^|/NULL|/' -e 's/|$/|NULL/'
 
-  p6_return_filter
+    p6_return_filter
 }
 
 ######################################################################
@@ -177,7 +187,7 @@ p6_filter_translate_blank_to_null() {
 ######################################################################
 p6_filter_translate_quoted_null_to_null() {
 
-  sed -e "s,'NULL',NULL,g"
+    sed -e "s,'NULL',NULL,g"
 
-  p6_return_filter
+    p6_return_filter
 }

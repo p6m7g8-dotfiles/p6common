@@ -82,13 +82,14 @@ p6_date_point_tomorrow_ymd() {
 #  Returns:
 #	int - day
 #
+#  Environment:	 END
 #>
 ######################################################################
 p6_date_point_last_day_of_ym() {
     local year="$1"
     local month="$2"
 
-    local day=$(cal "$year" "$month" | tail -2 | grep "[0-9]" | awk '{print $NF}')
+    local day=$(cal "$month" "$year" | awk 'NF {day=$NF} END {print day}')
 
     p6_return_int "$day"
 }
