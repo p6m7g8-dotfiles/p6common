@@ -26,6 +26,7 @@ p6_filter_translate_date_to_iso8601_utc() {
 
             # convert to utc
             local date_utc=$(p6_date_fmt__date "$input_date" "$input_fmt" "%Y-%m-%dT%H:%M:%SZ")
+
             p6_echo "$line" | awk -v c="$column" -v v="$date_utc" -v OFS="$ofs" -v FS="$fs" '{ $c = v; print;}'
         fi
     done
