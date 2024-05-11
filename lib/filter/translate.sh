@@ -191,3 +191,59 @@ p6_filter_translate_quoted_null_to_null() {
 
     p6_return_filter
 }
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_convert_multispace_delimited_columns_to_pipes()
+#
+#  Returns:
+#	filter - 
+#
+#>
+######################################################################
+p6_filter_convert_multispace_delimited_columns_to_pipes() {
+
+    sed 's/\([[:alnum:]\/-]*\) \{1,\}\([^ ]*\) \{1,\}\(.*severity\) \{1,\}\(.*\)$/\1|\2|\3|\4/'
+
+    p6_return_filter
+}
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_translate_first_field_slash_to_pipe()
+#
+#  Returns:
+#	filter - 
+#
+#>
+######################################################################
+p6_filter_translate_first_field_slash_to_pipe() {
+
+    sed 's/\([^|]*\)\/\([^|]*\)|/\1|\2|/'
+
+    p6_return_filter
+}
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_insert_null_at_position(position)
+#
+#  Args:
+#	position -
+#
+#  Returns:
+#	filter - 
+#
+#  Environment:	 BEGIN
+#>
+######################################################################
+p6_filter_insert_null_at_position() {
+    local position=$1
+
+    awk -v pos="$position" -F'|' 'BEGIN {OFS=FS} {if (NF < pos) for (i=NF+1; i<=pos; i++) $i="NULL"; print}'
+
+    p6_return_filter
+}
