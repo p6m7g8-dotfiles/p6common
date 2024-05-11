@@ -126,7 +126,10 @@
 
 ### p6common/lib/filter/translate.sh
 
+- filter  = p6_filter_convert_multispace_delimited_columns_to_pipes()
+- filter  = p6_filter_insert_null_at_position(position)
 - filter  = p6_filter_translate_blank_to_null()
+- filter  = p6_filter_translate_first_field_slash_to_pipe()
 - filter  = p6_filter_translate_glob_to_underscore()
 - filter  = p6_filter_translate_parens_to_slash()
 - filter  = p6_filter_translate_quoted_null_to_null()
