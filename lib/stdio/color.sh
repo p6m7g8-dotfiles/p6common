@@ -227,7 +227,7 @@ p6_color_hex_to_d16b() {
 p6_color_hext_to_rgb() {
     local h="$1"
 
-    local channel=$((16#$(printf "%s\n" $i)))
+    local channel=$((16#$(printf "%s\n" $h)))
 
     p6_return_size_t "$channel"
 }
