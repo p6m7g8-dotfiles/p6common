@@ -1,0 +1,157 @@
+# shellcheck shell=bash
+
+######################################################################
+#<
+#
+# Function: p6_usage(..., flag_debug, cmd, ...)
+#
+#  Args:
+#	... -
+#	flag_debug -
+#	cmd -
+#	... -
+#
+#  Environment:	 EOF LC_ALL OPTIND
+#>
+#/ Synopsis
+#/    bin/p6install [-D|-d] [cmd]
+#/
+######################################################################
+p6_usage() {
+  local rc="${1:-0}"
+  local msg="${2:-}"
+
+  if [ -n "$msg" ]; then
+    echo "=======> $msg"
+  fi
+  cat <<EOF
+Usage: bin/p6install [-D|-d] [cmd]
+
+Options:
+  -D    debeug off
+  -d	debug on
+EOF
+
+  exit "$rc"
+}
+
+######################################################################
+#<
+#
+# Function: p6main()
+#
+#>
+#/ Synopsis
+#/    The entry point for bin/p6install
+#/
+######################################################################
+p6main() {
+  shift 0
+
+  # sanitize env
+  LC_ALL=C
+
+  # default options
+  local flag_debug=0
+
+  # parse options
+  local flag
+  while getopts "dD" flag; do
+    case $flag in
+    D) flag_debug=0 ;;
+    d) flag_debug=1 ;;
+    *) p6_usage 1 "invalid flag" ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  local cmd="$1"
+  shift 1
+
+  # security 101: only allow valid comamnds
+  case $cmd in
+  help) p6_usage ;;
+  "") ;;
+  *) p6_usage 1 "invalid cmd" ;;
+  esac
+
+  # setup -x based on flag_debug
+  [ ${flag_debug} = 1 ] && set -x
+
+  # exit if any cli errors with > 0 return code
+  set -e
+  cmd="install"
+  echo "=============> $cmd"
+  p6_cmd_"${cmd}" "$@"
+  echo "✅: $cmd"
+  set +e
+
+  # stop debugging if it was enabled
+  [ ${flag_debug} = 1 ] && set +x
+
+  return 0
+}
+
+######################################################################
+#<
+#
+# Function: p6_cmd_install(home=pgollucci/home)
+#
+#  Args:
+# OPTIONAL home - [pgollucci/home]
+#
+#  Depends:	 p6_cmd p6_diagnostics
+#>
+######################################################################
+p6_cmd_install() {
+  local home="${1:-pgollucci/home}"
+
+  local root
+  local gh_dir
+  gh_dir="$HOME/.p6"
+  root="$gh_dir"
+
+  # Hier
+  echo "==> making $root"
+  mkdir -p "$root"
+
+  # Clone
+  local p6_org
+  p6_org="p6m7g8-dotfiles"
+  local repos="$p6_org/p6common $p6_org/p6df-core $p6_org/p6df-zsh $p6_org/p6ctl $home"
+  local repo
+  for repo in $(echo "$repos"); do
+    echo "==> cloning $repo -> $root/$repo"
+    git clone -q "https://github.com/$repo" "$root/$repo"
+  done
+
+  # Connect
+  echo "==> linking"
+  (
+    cd ~
+
+    # connect p6df-core init files
+    echo "rm -f .zlogin .zlogout .zprofile .zshrc .zshenv"
+    echo "ln -fs "$gh_dir/$p6_org"/p6df-core/conf/zshenv-xdg .zshenv"
+    echo "ln -fs "$gh_dir/$p6_org"/p6df-core/conf/zshrc .zshrc"
+
+    rm -f .zlogin .zlogout .zprofile .zshrc .zshenv
+    ln -fs "$gh_dir/$p6_org"/p6df-core/conf/zshenv-xdg .zshenv
+    ln -fs "$gh_dir/$p6_org"/p6df-core/conf/zshrc .zshrc
+
+    # setup prod not debug
+    echo ln -fs "$gh_dir/$p6_org/p6common/conf/prod" "$gh_dir/$p6_org/p6common/lib/prod"
+    ln -fs "$gh_dir/$p6_org/p6common/conf/prod" "$gh_dir/$p6_org/p6common/lib/prod"
+
+    # connect "my" config
+    ln -fs "$gh_dir/$home/.zsh-me" .
+    echo "ln -fs $gh_dir/$home/.zsh-me ."
+  )
+
+  # Reload
+  echo "reloading...."
+  echo "exec $SHELL -li"
+  exec "$SHELL" -li
+}
+
+p6main "$@"
