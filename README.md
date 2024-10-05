@@ -43,6 +43,7 @@
 ### p6common/lib/date/convert.sh
 
 - float hours = p6_date_convert_seconds_to_hours()
+- str str = p6_date_convert_ms_epoch_to_local(ms_epoch)
 
 ### p6common/lib/date/fmt.sh
 
@@ -85,7 +86,8 @@
 
 ### p6common/lib/filter/date.sh
 
-- filter  = p6_filter_translate_date_to_iso8601_utc()
+- filter  = p6_filter_translate_date_to_iso8601_utc(column, input_fmt, ofs, fs)
+- filter  = p6_filter_translate_ms_epoch_to_iso8601_local()
 
 ### p6common/lib/filter/escape.sh
 
@@ -317,7 +319,7 @@
 
 ### p6common/lib/stdio/io.sh
 
-- p6_die(code)
+- $code  = p6_die(code)
 - p6_echo()
 - p6_error(msg)
 - p6_h1(header)
@@ -346,13 +348,13 @@
 
 ### p6common/lib/stdlib/ctl.sh
 
+- "$rc" rc = p6_ctl_usage()
 - p6_ctl_cmd_build(dockerfile)
 - p6_ctl_cmd_docker_build()
 - p6_ctl_cmd_docker_test()
 - p6_ctl_cmd_install([home=pgollucci/home])
 - p6_ctl_cmd_test()
 - p6_ctl_run(...)
-- p6_ctl_usage()
 
 ### p6common/lib/stdlib/diag.sh
 
