@@ -22,3 +22,25 @@ p6_date_convert_seconds_to_hours() {
 
     p6_return_float "$hours"
 }
+
+######################################################################
+#<
+#
+# Function: str str = p6_date_convert_ms_epoch_to_local(ms_epoch)
+#
+#  Args:
+#	ms_epoch -
+#
+#  Returns:
+#	str - str
+#
+#>
+######################################################################
+p6_date_convert_ms_epoch_to_local() {
+    local ms_epoch="$1"
+
+    local str=$(p6_echo "$ms_epoch" | p6_filter_translate_ms_epoch_to_iso8601_local)
+
+    p6_return_str "$str"
+}
+

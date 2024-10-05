@@ -3,7 +3,31 @@
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_translate_date_to_iso8601_utc()
+# Function: filter  = p6_filter_translate_ms_epoch_to_iso8601_local()
+#
+#  Returns:
+#	filter - 
+#
+#  Environment:	 MPOSIX
+#>
+######################################################################
+p6_filter_translate_ms_epoch_to_iso8601_local() {
+
+   perl -MPOSIX -pe 'if (/(\d+)/) { $t = $1 / 1000; s/\d+/strftime("%Y-%m-%d %H:%M:%S %Z", localtime($t))/e }'
+
+   p6_return_filter
+}
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_translate_date_to_iso8601_utc(column, input_fmt, ofs, fs)
+#
+#  Args:
+#	column -
+#	input_fmt -
+#	ofs -
+#	fs -
 #
 #  Returns:
 #	filter - 
