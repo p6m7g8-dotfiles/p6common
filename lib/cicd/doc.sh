@@ -19,7 +19,7 @@ p6_cicd_doc_gen() {
 	(
 		cd ..
 		set -x
-		perl p6perl/bin/doc_inline.pl --module "$module"
-		perl p6perl/bin/doc_readme.pl --module "$module" >$module/README.md
+		doc_inline.pl --module "$module"
+		doc_readme.pl --module "$module" >$module/README.md
 	)
 }
