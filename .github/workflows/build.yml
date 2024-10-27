@@ -1,0 +1,18 @@
+name: Build
+
+on:
+  pull_request: {}
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+      - name: Install zsh
+        run: sudo apt-get update; sudo apt-get install time zsh -y
+      - name: Test
+        env:
+          P6_DFZ_SRC_P6M7G8_DOTFILES_DIR: ..
+        run: zsh -e bin/p6ctl test
