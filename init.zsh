@@ -21,3 +21,34 @@ p6df::modules::p6common::init() {
 
   p6_return_void
 }
+
+######################################################################
+#<
+#
+# Function: p6df::modules::p6common::gha::ModuleDeps(module)
+#
+#  Args:
+#	module -
+#
+#>
+######################################################################
+p6df::modules::p6common::gha::ModuleDeps() {
+  local module="$1"
+
+  . ./init.zsh
+  p6df::modules::${module}::deps
+  local dep
+  local deps=$(
+    for dep in $ModuleDeps; do
+      echo $dep | cut -d: -f 1
+    done | sort -u
+  )
+
+  local repo
+  for repo in $deps; do
+      git clone https://github.com/$repo
+  done
+
+  p6_return_void
+}
+

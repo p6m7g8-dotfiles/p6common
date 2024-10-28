@@ -226,6 +226,7 @@
 
 ### p6common/init.zsh
 
+- p6df::modules::p6common::gha::ModuleDeps(module)
 - p6df::modules::p6common::init(_module, dir)
 
 ## p6common/conf/debug
@@ -535,7 +536,6 @@
 │   │   ├── math.sh
 │   │   ├── point.sh
 │   │   └── range.sh
-│   ├── debug -> ../conf/prod
 │   ├── filter
 │   │   ├── aggregate.sh
 │   │   ├── column.sh
@@ -565,6 +565,7 @@
 │   │   ├── verify.sh
 │   │   ├── version.sh
 │   │   └── x509.sh
+│   ├── prod -> ../conf/prod
 │   ├── stdio
 │   │   ├── color.sh
 │   │   ├── dir.sh
@@ -612,7 +613,6 @@
     ├── alias.sh
     ├── color.sh
     ├── const.sh
-    ├── date.sh
     ├── debug.sh
     ├── dir.sh
     ├── file.sh
@@ -632,7 +632,7 @@
     ├── string.sh
     └── tokens.sh
 
-21 directories, 107 files
+21 directories, 106 files
 ```
 
 ## Author
