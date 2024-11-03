@@ -5,7 +5,7 @@ pull_request_rules:
       - status-success=build
     actions:
       queue:
-        name: default
+        name: mine
 queue_rules:
   - queue_branch_merge_method: fast-forward
     merge_method: squash
