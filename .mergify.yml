@@ -1,12 +1,35 @@
+queue_rules:
+  - name: default
+    commit_message_template: |-
+      {{ title }} (#{{ number }})
+
+      {{ body }}
+    merge_method: squash
 pull_request_rules:
-  - name: Add to default queue
+  - name: put PRs in queue (squash)
     conditions:
-      - base=main
+      - base = main
+      - "#approved-reviews-by>=1"
+      - -label~=(do-not-merge)
       - status-success=build
     actions:
       queue:
-        name: mine
-queue_rules:
-  - name: mine
-    merge_method: squash
-    update_method: rebase
+        merge_method: squash
+  - name: Label core contributions
+    actions:
+      label:
+        add:
+          - contribution/core
+    conditions:
+      - author~=^(pgollucci)$
+      - label!=contribution/core
+  - name: Label auto-merge for core
+    actions:
+      label:
+        add:
+          - auto-merge
+    conditions:
+      - label=contribution/core
+      - label!=auto-merge
+merge_queue:
+  max_parallel_checks: 1
