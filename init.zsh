@@ -45,10 +45,8 @@ p6df::modules::p6common::gha::ModuleDeps() {
   )
 
   local repo
-  for repo in $deps; do
+  for repo in $(echo $deps); do
       git clone https://github.com/$repo
   done
-
-  p6_return_void
 }
 
