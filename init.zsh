@@ -41,7 +41,7 @@ p6df::modules::p6common::gha::ModuleDeps() {
   local deps=$(
     for dep in $ModuleDeps; do
       echo $dep | cut -d: -f 1
-    done | sort -u
+    done | sort -u | grep -v p6common
   )
 
   local repo
