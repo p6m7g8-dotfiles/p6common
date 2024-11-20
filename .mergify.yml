@@ -1,20 +1,18 @@
 queue_rules:
   - name: default
+    queue_conditions:
+      - base = main
+      - "#approved-reviews-by>=1"
+      - -label~=(do-not-merge)
+      - status-success=build
+    merge_conditions: []
     commit_message_template: |-
       {{ title }} (#{{ number }})
 
       {{ body }}
     merge_method: squash
+
 pull_request_rules:
-  - name: put PRs in queue (squash)
-    conditions:
-      - base = main
-      - "#approved-reviews-by>=1"
-      - -label~=(do-not-merge)
-      - status-success=build
-    actions:
-      queue:
-        merge_method: squash
   - name: Label core contributions
     actions:
       label:
@@ -31,5 +29,9 @@ pull_request_rules:
     conditions:
       - label=contribution/core
       - label!=auto-merge
+  - name: refactored queue action rule
+    conditions: []
+    actions:
+      queue:
 merge_queue:
   max_parallel_checks: 1
