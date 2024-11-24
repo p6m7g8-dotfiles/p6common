@@ -144,7 +144,7 @@ p6_ssh_key_pub_from_priv() {
 p6_ssh_key_make() {
     local key_file_priv="$1"
 
-    p6_run_write_cmd ssh-keygen -t rsa -b 4096 -f $key_file_priv -N "''"
+    p6_run_write_cmd ssh-keygen -t ed25519 -f $key_file_priv -N "''"
 
     p6_return_void
 }
