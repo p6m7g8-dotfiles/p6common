@@ -31,24 +31,29 @@ p6_lang__debug() {
 p6_lang_version() {
     local prefix="$1"
 
-    local cmd="${prefix}env"
-    cmd=$(p6_echo "$cmd" | sed -e 's,nodeenv,nodenv,')
-
-    local ver
-
-    if p6_run_code "command -v $cmd > /dev/null"; then
-        ver="$(p6_run_code $cmd version-name 2>/dev/null)"
-
-        local v=$(p6_echo "$ver" | sed -e "s,$prefix,," -e 's,^-,,')
-
-        if [ x"$v" = x"system" ]; then
-            p6_lang_system_version "$prefix"
-        else
-            p6_return_str "$v"
-        fi
+    if p6_string_eq "$prefix" "py"; then
+        local ver=$(uv python pin 2>/dev/null)
+        p6_return_str "$ver"
     else
-        p6_lang_system_version "$prefix"
-    fi
+      local cmd="${prefix}env"
+      cmd=$(p6_echo "$cmd" | sed -e 's,nodeenv,nodenv,')
+
+      local ver
+
+      if p6_run_code "command -v $cmd > /dev/null"; then
+          ver="$(p6_run_code $cmd version-name 2>/dev/null)"
+
+          local v=$(p6_echo "$ver" | sed -e "s,$prefix,," -e 's,^-,,')
+
+          if [ x"$v" = x"system" ]; then
+              p6_lang_system_version "$prefix"
+          else
+              p6_return_str "$v"
+          fi
+      else
+          p6_lang_system_version "$prefix"
+      fi
+  fi
 }
 
 ######################################################################
@@ -75,7 +80,7 @@ p6_lang_system_version() {
     if p6_run_code "command -v $rcmd > /dev/null"; then
         local ver
         case $prefix in
-        py) ver=$($rcmd -V 2>&1 | awk '{print $2}') ;;
+        py) ver=$(uv python pin 2>/dev/null) ;;
         rb) ver=$($rcmd -v | awk '{print $2}') ;;
         pl) ver=$($rcmd -v | sed -e 's,.*(,,' -e 's,).*,,' | grep ^v5 | sed -e 's,^v,,') ;;
         go) ver=$($rcmd version | awk '{print $3}' | sed -e 's,^go,,') ;;
