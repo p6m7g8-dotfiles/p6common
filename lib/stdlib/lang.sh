@@ -18,12 +18,13 @@ p6_lang__debug() {
 ######################################################################
 #<
 #
-# Function: str v = p6_lang_version(prefix)
+# Function: str ver = p6_lang_version(prefix)
 #
 #  Args:
 #	prefix -
 #
 #  Returns:
+#	str - ver
 #	str - v
 #
 #>
