@@ -169,16 +169,12 @@
 
 - ipv4 ip = p6_network_ip_public()
 
-### p6common/lib/network/remote.sh
-
-- p6_remote_ssh_do(cmd)
-
 ### p6common/lib/network/ssh.sh
 
 - code rc = p6_ssh_key_check(priv, test_pub)
 - p6_ssh_key_add(key_file_priv)
 - p6_ssh_key_delete(key_file_priv)
-- p6_ssh_key_fingerprint()
+- p6_ssh_key_fingerprint(key_file_pub)
 - p6_ssh_key_make(key_file_priv)
 - p6_ssh_key_pub_from_priv(key_file_priv, [key_file_pub=${key_file_priv])
 - p6_ssh_key_remove(key_file_priv, [key_file_pub=${key_file_priv])
@@ -320,7 +316,7 @@
 
 ### p6common/lib/stdio/io.sh
 
-- $code  = p6_die(code)
+- p6_die(code)
 - p6_echo()
 - p6_error(msg)
 - p6_h1(header)
@@ -349,13 +345,13 @@
 
 ### p6common/lib/stdlib/ctl.sh
 
-- "$rc" rc = p6_ctl_usage()
 - p6_ctl_cmd_build(dockerfile)
 - p6_ctl_cmd_docker_build()
 - p6_ctl_cmd_docker_test()
 - p6_ctl_cmd_install([home=pgollucci/home])
 - p6_ctl_cmd_test()
 - p6_ctl_run(...)
+- p6_ctl_usage()
 
 ### p6common/lib/stdlib/diag.sh
 
@@ -381,8 +377,8 @@
 
 - str prefix = p6_lang_cmd_2_env(cmd)
 - str rcmd = p6_lang_env_2_cmd(prefix)
-- str v = p6_lang_version(prefix)
 - str ver = p6_lang_system_version(prefix)
+- str ver = p6_lang_version(prefix)
 
 ### p6common/lib/stdlib/misc.sh
 
@@ -505,8 +501,6 @@
 
 ```text
 .
-├── Dockerfile
-├── README.md
 ├── bin
 │   └── p6ctl
 ├── conf
@@ -520,6 +514,7 @@
 │       ├── log-prod.sh
 │       ├── time-prod.sh
 │       └── trace-debug.sh
+├── Dockerfile
 ├── init.zsh
 ├── lib
 │   ├── _bootstrap.sh
@@ -553,7 +548,6 @@
 │   ├── network
 │   │   ├── download.sh
 │   │   ├── network.sh
-│   │   ├── remote.sh
 │   │   └── ssh.sh
 │   ├── openssl
 │   │   ├── ciphers.sh
@@ -609,6 +603,7 @@
 │   │   └── harness.sh
 │   └── types
 │       └── return.sh
+├── README.md
 └── t
     ├── alias.sh
     ├── color.sh
@@ -632,10 +627,9 @@
     ├── string.sh
     └── tokens.sh
 
-21 directories, 106 files
+21 directories, 105 files
 ```
 
 ## Author
 
 Philip M . Gollucci <pgollucci@p6m7g8.com>
-

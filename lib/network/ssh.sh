@@ -51,7 +51,10 @@ p6_ssh_key_check() {
 ######################################################################
 #<
 #
-# Function: p6_ssh_key_fingerprint()
+# Function: p6_ssh_key_fingerprint(key_file_pub)
+#
+#  Args:
+#	key_file_pub -
 #
 #>
 ######################################################################

@@ -3,10 +3,7 @@
 ######################################################################
 #<
 #
-# Function: "$rc" rc = p6_ctl_usage()
-#
-#  Returns:
-#	"$rc" - rc
+# Function: p6_ctl_usage()
 #
 #  Environment:	 EOF P6_DFZ_SRC_P6M7G8_DOTFILES_DIR
 #>
