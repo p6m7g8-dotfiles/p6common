@@ -6,8 +6,8 @@
 # T - number of tests TODO (currently correctly failing as its TODO)
 # B - GOOD NEWS, number of tests accidentally passing, REMOVE TODO.
 # F - BAD NEWS, you have bugs, number of tests not ok
-# r - number of tests run (S+T+F+s)
-# P - number of tests ok (S+s+T)
+# r - number of tests run (S+s+T+F)
+# P - number of tests ok  (S+s+T)
 # p - percentage of tests passing (P/t)*100
 # d - time delta
 
@@ -89,7 +89,7 @@ p6_test_harness_test_run() {
 
     # 0m0.330s
     local Td=0
-    Td$(awk '/real/ { print $1 }' $log_file_times | sed -e 's,^0m,,' -e 's/s//')
+    Td=$(awk '/real/ { print $1 }' $log_file_times | sed -e 's,^0m,,' -e 's/s//')
     if [ -z "$Td" ]; then
         Td=0
     fi
@@ -150,7 +150,6 @@ p6_test_harness_tests_run_local() {
     local T=0
     local B=0
     local F=0
-    local r=
     local p=0
     local P=0
     local d=0
