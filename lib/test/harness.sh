@@ -177,7 +177,7 @@ p6_test_harness_tests_run_local() {
             local Bi=0
             Bi=$(echo $vals | sed -e 's,.*TB=,,' -e 's, .*,,')
             local di=0
-            dii=$(echo $vals | sed -e 's,.*Td=,,' -e 's, .*,,')
+            di=$(echo $vals | sed -e 's,.*Td=,,' -e 's, .*,,')
 
             t=$(($t + $ti))
             P=$(($P + $Pi))
