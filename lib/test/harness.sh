@@ -94,6 +94,7 @@ p6_test_harness_test_run() {
         Td=0
     fi
 
+    echo >2 "Tt=$Tt Ts=$Ts TS=$TS TT=$TT TB=$TB TF=$TF Tr=$Tr Tp=$Tp TP=$TP Td=$Td"
     echo "Tt=$Tt Ts=$Ts TS=$TS TT=$TT TB=$TB TF=$TF Tr=$Tr Tp=$Tp TP=$TP Td=$Td"
 }
 
