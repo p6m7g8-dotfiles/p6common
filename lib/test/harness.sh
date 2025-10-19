@@ -166,19 +166,19 @@ p6_test_harness_tests_run_local() {
             local vals="$(p6_test_harness_test_run "$dir/$file")"
 
             local ti=0
-            ti$(echo $vals | sed -e 's,.*Tt=,,' -e 's, .*,,')
+            ti=$(echo $vals | sed -e 's,.*Tt=,,' -e 's, .*,,')
             local pi=0
-            pi$(echo $vals | sed -e 's,.*Tp=,,' -e 's, .*,,')
+            pi=$(echo $vals | sed -e 's,.*Tp=,,' -e 's, .*,,')
             local Pi=0
-            Pi$(echo $vals | sed -e 's,.*TP=,,' -e 's, .*,,')
+            Pi=$(echo $vals | sed -e 's,.*TP=,,' -e 's, .*,,')
             local Si=0
-            Si$(echo $vals | sed -e 's,.*TS=,,' -e 's, .*,,')
+            Si=$(echo $vals | sed -e 's,.*TS=,,' -e 's, .*,,')
             local Ti=0
-            Ti$(echo $vals | sed -e 's,.*TT=,,' -e 's, .*,,')
+            Ti=$(echo $vals | sed -e 's,.*TT=,,' -e 's, .*,,')
             local Bi=0
             Bi=$(echo $vals | sed -e 's,.*TB=,,' -e 's, .*,,')
             local di=0
-            di$(echo $vals | sed -e 's,.*Td=,,' -e 's, .*,,')
+            dii=$(echo $vals | sed -e 's,.*Td=,,' -e 's, .*,,')
 
             t=$(($t + $ti))
             P=$(($P + $Pi))
