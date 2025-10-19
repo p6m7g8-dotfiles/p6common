@@ -88,7 +88,8 @@ p6_test_harness_test_run() {
     esac
 
     # 0m0.330s
-    local Td=$(awk '/real/ { print $1 }' $log_file_times | sed -e 's,^0m,,' -e 's/s//')
+    local Td=0
+    Td$(awk '/real/ { print $1 }' $log_file_times | sed -e 's,^0m,,' -e 's/s//')
     if [ -z "$Td" ]; then
         Td=0
     fi
@@ -164,13 +165,20 @@ p6_test_harness_tests_run_local() {
         ); do
             local vals="$(p6_test_harness_test_run "$dir/$file")"
 
-            local ti=$(echo $vals | sed -e 's,.*Tt=,,' -e 's, .*,,')
-            local pi=$(echo $vals | sed -e 's,.*Tp=,,' -e 's, .*,,')
-            local Pi=$(echo $vals | sed -e 's,.*TP=,,' -e 's, .*,,')
-            local Si=$(echo $vals | sed -e 's,.*TS=,,' -e 's, .*,,')
-            local Ti=$(echo $vals | sed -e 's,.*TT=,,' -e 's, .*,,')
-            local Bi=$(echo $vals | sed -e 's,.*TB=,,' -e 's, .*,,')
-            local di=$(echo $vals | sed -e 's,.*Td=,,' -e 's, .*,,')
+            local ti=0
+            ti$(echo $vals | sed -e 's,.*Tt=,,' -e 's, .*,,')
+            local pi=0
+            pi$(echo $vals | sed -e 's,.*Tp=,,' -e 's, .*,,')
+            local Pi=0
+            Pi$(echo $vals | sed -e 's,.*TP=,,' -e 's, .*,,')
+            local Si=0
+            Si$(echo $vals | sed -e 's,.*TS=,,' -e 's, .*,,')
+            local Ti=0
+            Ti$(echo $vals | sed -e 's,.*TT=,,' -e 's, .*,,')
+            local Bi=0
+            Bi=$(echo $vals | sed -e 's,.*TB=,,' -e 's, .*,,')
+            local di=0
+            di$(echo $vals | sed -e 's,.*Td=,,' -e 's, .*,,')
 
             t=$(($t + $ti))
             P=$(($P + $Pi))
