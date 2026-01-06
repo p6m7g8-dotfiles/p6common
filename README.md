@@ -255,6 +255,11 @@
 
 - p6_bootstrap()
 
+### p6common/lib/yml.sh
+
+- p6_yml_eval(yml, ...)
+- p6_yml_from_file(file)
+
 ## stdio
 
 ### p6common/lib/stdio/color.sh
@@ -394,7 +399,7 @@
 - p6_cdpath_current()
 - p6_path_current()
 - p6_path_default()
-- true  = p6_path_if(dir)
+- true  = p6_path_if(dir, [where=append])
 
 ### p6common/lib/stdlib/retry.sh
 
@@ -451,6 +456,7 @@
 - size_t len = p6_string_len(str)
 - str padded = p6_string_zero_pad(str, pad)
 - str str_a = p6_string_append(str, add, [sep= ])
+- str str_a = p6_string_prepend(str, add, [sep= ])
 - str str_ic = p6_string_init_cap(str)
 - str str_lc = p6_string_lc(str)
 - str str_r = p6_string_replace(str, from, to)
@@ -601,8 +607,9 @@
 │   │   │   └── tap.sh
 │   │   ├── bench.sh
 │   │   └── harness.sh
-│   └── types
-│       └── return.sh
+│   ├── types
+│   │   └── return.sh
+│   └── yml.sh
 ├── README.md
 └── t
     ├── alias.sh
@@ -627,7 +634,7 @@
     ├── string.sh
     └── tokens.sh
 
-21 directories, 105 files
+21 directories, 106 files
 ```
 
 ## Author

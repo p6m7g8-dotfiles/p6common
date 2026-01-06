@@ -144,6 +144,33 @@ p6_string_append() {
 ######################################################################
 #<
 #
+# Function: str str_a = p6_string_prepend(str, add, [sep= ])
+#
+#  Args:
+#	str -
+#	add -
+#	OPTIONAL sep - [ ]
+#
+#  Returns:
+#	str - str_a
+#
+#>
+######################################################################
+p6_string_prepend() {
+    local str="$1"
+    local add="$2"
+    local sep="${3:- }"
+
+    local str_a="${add}${sep}${str}"
+
+    p6_string__debug "prepend(): [$add] + [$str] by [$sep] -> [$str_a]"
+
+    p6_return_str "$str_a"
+}
+
+######################################################################
+#<
+#
 # Function: str str_lc = p6_string_lc(str)
 #
 #  Args:
