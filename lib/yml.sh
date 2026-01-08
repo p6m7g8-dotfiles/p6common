@@ -46,7 +46,7 @@ p6_yml_eval() {
 p6_yml_from_file() {
     local file="$1"
 
-    jq <"$file"
+    yq <"$file"
 
     p6_return_void
 }
