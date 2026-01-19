@@ -5,7 +5,7 @@
 #
 # Function: p6_test_dir()
 #
-#  Environment:	 LC_ALL P6_TEST_DIR_ROOT
+#  Environment:	 P6_TEST_DIR_ROOT
 #>
 ######################################################################
 p6_test_dir() {
@@ -29,7 +29,7 @@ p6_test_dir() {
 #
 # Function: p6_test__init()
 #
-#  Environment:	 P6_DIR P6_LF P6_TEST_BAIL_FILE P6_TEST_DIR P6_TEST_DIR_ORIG P6_TEST_DIR_ROOT TMPDIR
+#  Environment:	 P6_DIR P6_TEST_DIR TMPDIR
 #>
 ######################################################################
 p6_test__init() {
@@ -74,7 +74,7 @@ p6_test__initialize() {
 #
 # Function: p6_test__prep()
 #
-#  Environment:	 P6_TEST_DIR_ORIG P6_TEST_DIR_ROOT
+#  Environment:	 P6_TEST_DIR P6_TEST_DIR_ORIG P6_TEST_DIR_ROOT
 #>
 ######################################################################
 p6_test__prep() {

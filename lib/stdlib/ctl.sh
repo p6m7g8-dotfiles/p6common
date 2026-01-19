@@ -5,7 +5,7 @@
 #
 # Function: p6_ctl_usage()
 #
-#  Environment:	 EOF P6_DFZ_SRC_P6M7G8_DOTFILES_DIR
+#  Environment:	 P6_DFZ_SRC_P6M7G8_DOTFILES_DIR
 #>
 ######################################################################
 p6_ctl_usage() {
@@ -39,7 +39,6 @@ EOF
 #  Args:
 #	... - 
 #
-#  Environment:	 LC_ALL OPTIND
 #>
 #/ Synopsis
 #/    bin/p6ctl [-D|-d] [cmd]

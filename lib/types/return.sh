@@ -175,10 +175,7 @@ p6_return_float() {
 ######################################################################
 #<
 #
-# Function: code rc = p6_return_filter(rc)
-#
-#  Args:
-#	rc -
+# Function: code rc = p6_return_filter()
 #
 #  Returns:
 #	code - rc
@@ -203,7 +200,7 @@ p6_return_filter() {
 #  Args:
 #	ip -
 #
-#  Environment:	 EOF IFS P6_EXIT_ARGS _IFS
+#  Environment:	 IFS P6_EXIT_ARGS
 #>
 #/ Synopsis
 #/  Any IP v4 address
@@ -299,8 +296,9 @@ p6_return_path() {
     local path="$1"
 
     case $path in
-    [a-zA-Z0-9/-_@+~.,][a-zA-Z0-9/-_@+~.,]*) ;;
-    *) p6_die "$P6_EXIT_ARGS" "[$path] is not a path" ;;
+    ''|*[!a-zA-Z0-9/_@+~.,-]*)
+        p6_die "$P6_EXIT_ARGS" "[$path] is not a path"
+        ;;
     esac
 
     p6_return "$path"
@@ -314,7 +312,7 @@ p6_return_path() {
 #  Args:
 #	date -
 #
-#  Environment:	 ISO ISO8601 P6_EXIT_ARGS
+#  Environment:	 P6_EXIT_ARGS
 #>
 #/ Synopsis
 #/  Only the listed dates are allowed
@@ -432,10 +430,7 @@ p6_return() {
 ######################################################################
 #<
 #
-# Function: p6_return_code__validate(rc)
-#
-#  Args:
-#	rc -
+# Function: p6_return_code__validate()
 #
 #  Environment:	 P6_EXIT_ARGS
 #>

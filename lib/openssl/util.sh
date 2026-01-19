@@ -5,7 +5,6 @@
 #
 # Function: p6_openssl_certificate_create()
 #
-#  Environment:	 P6M7G8
 #>
 #/ Synopsis
 #/   Geenrates key_file, csr_file, and outputs certificate to stdout

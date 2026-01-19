@@ -16,7 +16,7 @@
 #
 # Function: p6_test_harness_test_run()
 #
-#  Environment:	 BEGIN EDITOR IFS P6_TEST_COLOR_OFF P6_TEST_DIR SKIP TODO
+#  Environment:	 P6_TEST_DIR T TB TF TP TS TT
 #>
 ######################################################################
 p6_test_harness_test_run() {
@@ -137,7 +137,7 @@ p6_test_harness_tests_run_bats() {
 #
 # Function: p6_test_harness_tests_run_local()
 #
-#  Environment:	 BEGIN FAIL P6_TEST_DIR PASS PROVISIONAL ___
+#  Environment:	 B P P6_TEST_DIR S T
 #>
 ######################################################################
 p6_test_harness_tests_run_local() {
@@ -232,7 +232,6 @@ p6_test_harness_tests_run_local() {
 #	todo -
 #	skipped -
 #
-#  Environment:	 ___
 #>
 ######################################################################
 p6_test_harness___results() {

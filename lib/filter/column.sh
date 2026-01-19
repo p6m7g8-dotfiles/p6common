@@ -34,7 +34,7 @@ p6_filter_column_pluck__all_to_action() {
 #  Returns:
 #	str - action
 #
-#  Environment:	 IFS _IFS
+#  Environment:	 IFS
 #>
 ######################################################################
 p6_filter_column_pluck__list_to_action() {

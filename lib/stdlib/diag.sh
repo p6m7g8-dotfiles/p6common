@@ -3,7 +3,6 @@
 #
 # Function: p6_diagnostics()
 #
-#  Environment:	 GIT
 #>
 #/ Synopsis
 #/    Add this to a Jenkins Job to see stuff

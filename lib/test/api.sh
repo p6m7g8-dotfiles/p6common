@@ -211,7 +211,6 @@ p6_test_finish() {
 #
 # Function: p6_test_teardown()
 #
-#  Environment:	 P6_TEST_DIR
 #>
 ######################################################################
 p6_test_teardown() {

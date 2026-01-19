@@ -23,7 +23,7 @@ p6_int__debug() {
 #  Returns:
 #	code - 42
 #
-#  Environment:	 P6_EXIT_ASKED TEST_MODE
+#  Environment:	 TEST_MODE
 #>
 ######################################################################
 p6_int_confirm_ask() {

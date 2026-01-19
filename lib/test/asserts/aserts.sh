@@ -463,7 +463,6 @@ p6_test_assert_not_blank() {
 #	description -
 #	reason -
 #
-#  Environment:	 DNE
 #>
 ######################################################################
 p6_test_assert_dir_exists() {
@@ -524,7 +523,6 @@ p6_test_assert_dir_not_exists() {
 #	description -
 #	reason -
 #
-#  Environment:	 DNE
 #>
 ######################################################################
 p6_test_assert_file_exists() {

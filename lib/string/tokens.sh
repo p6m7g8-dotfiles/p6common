@@ -54,7 +54,6 @@ p6_token_hash() {
 #  Returns:
 #	str - token
 #
-#  Environment:	 LC_ALL
 #>
 ######################################################################
 p6_token_random() {

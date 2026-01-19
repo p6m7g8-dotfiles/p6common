@@ -98,7 +98,6 @@ p6_filter_translate_space_to_tab() {
 #  Returns:
 #	filter - 
 #
-#  Environment:	 NULL
 #>
 ######################################################################
 p6_filter_translate_words_to_sql_list() {
@@ -164,7 +163,6 @@ p6_filter_translate_start_to_arg() {
 #  Returns:
 #	filter - 
 #
-#  Environment:	 NULL
 #>
 ######################################################################
 p6_filter_translate_blank_to_null() {
@@ -182,7 +180,6 @@ p6_filter_translate_blank_to_null() {
 #  Returns:
 #	filter - 
 #
-#  Environment:	 NULL
 #>
 ######################################################################
 p6_filter_translate_quoted_null_to_null() {
@@ -237,7 +234,6 @@ p6_filter_translate_first_field_slash_to_pipe() {
 #  Returns:
 #	filter - 
 #
-#  Environment:	 BEGIN
 #>
 ######################################################################
 p6_filter_insert_null_at_position() {
