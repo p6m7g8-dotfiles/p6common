@@ -515,7 +515,6 @@ TODO: Add a short summary of this module.
 - `true  = p6_return(rv)`
 - `true  = p6_return_stream()`
 
-
 ## Hierarchy
 
 ```text
