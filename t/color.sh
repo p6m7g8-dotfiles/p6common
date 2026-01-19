@@ -5,7 +5,24 @@ main() {
 	. ../p6common/lib/_bootstrap.sh
 	p6_bootstrap "../p6common"
 
-	p6_test_setup "82"
+	p6_test_setup "91"
+
+	p6_test_start "p6_color__debug"
+	(
+		p6_test_run "p6_color__debug ping"
+		p6_test_assert_run_ok "debug"
+	)
+	p6_test_finish
+
+	p6_test_start "p6_color_ize"
+	(
+		P6_TEST_COLOR_OFF=1
+		p6_test_run "P6_TEST_COLOR_OFF=1 p6_color_ize red blue hello"
+		p6_test_assert_run_rc "color_ize: rc" 0
+		p6_test_assert_not_blank "$(p6_test_run_stdout)" "color_ize: stdout"
+		p6_test_assert_blank "$(p6_test_run_stderr)" "color_ize: stderr blank"
+	)
+	p6_test_finish
 
 	p6_test_start "p6_color_opacity_factor"
 	(
@@ -28,6 +45,13 @@ main() {
 		# lower case does not convert intentionally
 		p6_test_run "p6_color_hex_to_d16b ffffff b"
 		p6_test_assert_run_ok "two arg f,b is 0, no stderr" "0" "65535"
+	)
+	p6_test_finish
+
+	p6_test_start "p6_color_hext_to_rgb"
+	(
+		p6_test_run "p6_color_hext_to_rgb FF"
+		p6_test_assert_run_ok "hext_to_rgb" 0 "255"
 	)
 	p6_test_finish
 

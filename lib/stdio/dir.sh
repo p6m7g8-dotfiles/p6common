@@ -52,7 +52,6 @@ p6_dir_load() {
 #  Returns:
 #	words - children
 #
-#  Environment:	 DNE
 #>
 ######################################################################
 p6_dir_list() {

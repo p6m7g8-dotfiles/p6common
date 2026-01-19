@@ -5,7 +5,6 @@
 #
 # Function: p6_openssl_s_client_connect()
 #
-#  Environment:	 FQDN TCP
 #>
 #/ Synopsis
 #/    Connects to $host on $port and returns the SSL Cert
@@ -31,7 +30,6 @@ p6_openssl_s_client_connect() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Environment:	 FQDN TCP
 #>
 ######################################################################
 p6_openssl_not_after() {
@@ -52,7 +50,6 @@ p6_openssl_not_after() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Environment:	 FQDN TCP
 #>
 ######################################################################
 p6_openssl_not_before() {
@@ -73,7 +70,6 @@ p6_openssl_not_before() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Environment:	 FQDN TCP
 #>
 ######################################################################
 p6_openssl_serial() {
@@ -94,7 +90,6 @@ p6_openssl_serial() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Environment:	 FQDN TCP
 #>
 ######################################################################
 p6_openssl_subject() {
@@ -115,7 +110,6 @@ p6_openssl_subject() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Environment:	 FQDN TCP
 #>
 ######################################################################
 p6_openssl_purpose() {
@@ -136,7 +130,6 @@ p6_openssl_purpose() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Environment:	 FQDN TCP
 #>
 ######################################################################
 p6_openssl_not_purpose() {
@@ -157,7 +150,6 @@ p6_openssl_not_purpose() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Environment:	 FQDN TCP
 #>
 ######################################################################
 p6_openssl_alias() {
@@ -178,7 +170,6 @@ p6_openssl_alias() {
 #	port - TCP port
 #	... - additional openssl options
 #
-#  Environment:	 FQDN TCP
 #>
 ######################################################################
 p6_openssl_alt_name() {

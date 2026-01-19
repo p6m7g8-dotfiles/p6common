@@ -70,7 +70,6 @@ p6_lang_version() {
 #	str - sys@$ver
 #	str - no
 #
-#  Environment:	 _2_
 #>
 ######################################################################
 p6_lang_system_version() {
@@ -114,7 +113,6 @@ p6_lang_system_version() {
 #  Returns:
 #	str - prefix
 #
-#  Environment:	 _2_
 #>
 ######################################################################
 p6_lang_cmd_2_env() {
@@ -149,7 +147,6 @@ p6_lang_cmd_2_env() {
 #  Returns:
 #	str - rcmd
 #
-#  Environment:	 _2_
 #>
 ######################################################################
 p6_lang_env_2_cmd() {

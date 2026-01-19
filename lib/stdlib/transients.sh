@@ -29,7 +29,7 @@ p6_transient__debug() {
 #	str - 
 #	str - dir_name
 #
-#  Environment:	 CREATED P6_DIR_TRANSIENTS P6_TEST_TRANSIENT_CREATE_RAND TEST_MODE
+#  Environment:	 P6_DIR_TRANSIENTS P6_TEST_TRANSIENT_CREATE_RAND
 #>
 ######################################################################
 p6_transient_create() {
@@ -203,7 +203,7 @@ p6_transient_delete() {
 #
 # Function: p6_transient__cleanup()
 #
-#  Environment:	 P6_TRANSIENT_LOG P6_TRUE
+#  Environment:	 P6_TRANSIENT_LOG
 #>
 ######################################################################
 p6_transient__cleanup() {

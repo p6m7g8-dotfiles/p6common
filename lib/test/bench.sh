@@ -5,7 +5,7 @@
 #
 # Function: p6_test_bench()
 #
-#  Environment:	 BEGIN END
+#  Environment:	 M
 #>
 ######################################################################
 p6_test_bench() {

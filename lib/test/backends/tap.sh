@@ -76,7 +76,6 @@ p6_test_tap_block() {
 #	description -
 #	reason -
 #
-#  Environment:	 SKIP
 #>
 ######################################################################
 p6_test_tap_skip() {
@@ -96,7 +95,6 @@ p6_test_tap_skip() {
 #	description -
 #	reason -
 #
-#  Environment:	 TODO
 #>
 ######################################################################
 p6_test_tap_todo_planned() {
@@ -116,7 +114,6 @@ p6_test_tap_todo_planned() {
 #	description -
 #	reason -
 #
-#  Environment:	 TODO
 #>
 ######################################################################
 p6_test_tap_todo_bonus() {
@@ -213,7 +210,6 @@ p6_test_tap__line() {
 #  Args:
 #	line -
 #
-#  Environment:	 FAIL SKIP TODO
 #>
 ######################################################################
 p6_test_tap__line_colorize() {

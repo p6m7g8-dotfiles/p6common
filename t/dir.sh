@@ -5,7 +5,7 @@ main() {
 	. ../p6common/lib/_bootstrap.sh
 	p6_bootstrap "../p6common"
 
-	p6_test_setup "154"
+	p6_test_setup "172"
 
 	p6_test_start "p6_dir_exists"
 	(
@@ -325,6 +325,54 @@ main() {
 
 		# p6_test_run "p6_dir_cd" "dir"
 		# p6_test_assert_run_ok "dir"
+	)
+	p6_test_finish
+
+	p6_test_start "p6_dir__debug"
+	(
+		p6_test_run "p6_dir__debug ping"
+		p6_test_assert_run_ok "debug"
+	)
+	p6_test_finish
+
+	p6_test_start "p6_dir_list_recursive"
+	(
+		p6_test_run "mkdir -p root/sub; echo a > root/a.txt; echo b > root/sub/b.txt; p6_dir_list_recursive root | tr ' ' '\n' | sort"
+		p6_test_assert_run_ok "list_recursive" 0 "root/a.txt
+root/sub/b.txt"
+	)
+	p6_test_finish
+
+	p6_test_start "p6_dir_cp"
+	(
+		p6_test_run "mkdir -p src; echo hi > src/file.txt; p6_dir_cp src dst"
+		p6_test_assert_run_rc "cp: rc" 0
+		p6_test_assert_file_exists "dst/file.txt" "cp: dst file exists"
+		p6_test_assert_file_exists "src/file.txt" "cp: src file exists"
+	)
+	p6_test_finish
+
+	p6_test_start "p6_dir_mv"
+	(
+		p6_test_run "mkdir -p src; echo hi > src/file.txt; p6_dir_mv src dst"
+		p6_test_assert_run_rc "mv: rc" 0
+		p6_test_assert_dir_exists "dst" "mv: dst dir exists"
+		p6_test_assert_dir_not_exists "src" "mv: src dir removed"
+	)
+	p6_test_finish
+
+	p6_test_start "p6_dir_cd"
+	(
+		local wd=$(pwd)
+		p6_test_run "mkdir -p go; p6_dir_cd go; pwd"
+		p6_test_assert_run_ok "cd" 0 "$wd/go"
+	)
+	p6_test_finish
+
+	p6_test_start "p6_dir_replace_in"
+	(
+		p6_test_run "mkdir -p work; echo foo > work/file.txt; cd work; p6_dir_replace_in . foo bar; cat file.txt"
+		p6_test_assert_run_ok "replace_in" 0 "bar"
 	)
 	p6_test_finish
 

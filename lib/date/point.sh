@@ -82,7 +82,7 @@ p6_date_point_tomorrow_ymd() {
 #  Returns:
 #	int - day
 #
-#  Environment:	 END
+#  Environment:	 NF
 #>
 ######################################################################
 p6_date_point_last_day_of_ym() {

@@ -5,7 +5,7 @@
 #
 # Function: p6_cicd_doc_gen()
 #
-#  Environment:	 README
+#  Environment:	 _
 #>
 ######################################################################
 p6_cicd_doc_gen() {

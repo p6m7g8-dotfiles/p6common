@@ -28,7 +28,6 @@ p6_filter_aggregate_map_reduce() {
 #  Returns:
 #	filter - 
 #
-#  Environment:	 END SUBSEP
 #>
 #/  Synopsis:
 #/	Input
@@ -87,7 +86,6 @@ END {
 #  Returns:
 #	filter - 
 #
-#  Environment:	 END
 #>
 ######################################################################
 p6_filter_aggregate_table_with_count() {

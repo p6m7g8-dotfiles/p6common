@@ -28,7 +28,7 @@ p6_path__debug() {
 #	true - 
 #	false - 
 #
-#  Environment:	 DNE PATH
+#  Environment:	 PATH
 #>
 ######################################################################
 p6_path_if() {
@@ -54,7 +54,7 @@ p6_path_if() {
 #
 # Function: p6_path_default()
 #
-#  Environment:	 HOME PATH X11
+#  Environment:	 HOME PATH
 #>
 ######################################################################
 p6_path_default() {

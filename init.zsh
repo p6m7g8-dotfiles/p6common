@@ -30,6 +30,7 @@ p6df::modules::p6common::init() {
 #  Args:
 #	module -
 #
+#  Environment:	 M
 #>
 ######################################################################
 p6df::modules::p6common::gha::ModuleDeps() {

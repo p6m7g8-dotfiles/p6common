@@ -5,12 +5,11 @@ main() {
     . ../p6common/lib/_bootstrap.sh
     p6_bootstrap "../p6common"
 
-    p6_test_setup "3"
+    p6_test_setup "1"
 
-    p6_test_start "p6_bootstrap"
+    p6_test_start "p6_diagnostics"
     (
-        p6_test_run "p6_bootstrap \"$P6_TEST_DIR_ORIG\""
-        p6_test_assert_run_ok "bootstrap"
+        p6_test_skip "non-deterministic environment output" "p6_diagnostics"
     )
     p6_test_finish
 

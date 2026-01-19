@@ -1,10 +1,11 @@
 ######################################################################
 #<
 #
-# Function: p6_verbose(level)
+# Function: p6_verbose(level, ...)
 #
 #  Args:
 #	level - minimum verbosity before output
+#	... - 
 #
 #  Environment:	 P6_VERBOSE
 #>

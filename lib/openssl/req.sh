@@ -5,7 +5,6 @@
 #
 # Function: p6_openssl_req_csr_create()
 #
-#  Environment:	 P6M7G8
 #>
 ######################################################################
 p6_openssl_req_csr_create() {

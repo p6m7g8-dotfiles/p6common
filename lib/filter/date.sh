@@ -8,7 +8,6 @@
 #  Returns:
 #	filter - 
 #
-#  Environment:	 MPOSIX
 #>
 ######################################################################
 p6_filter_translate_ms_epoch_to_iso8601_local() {
@@ -32,7 +31,6 @@ p6_filter_translate_ms_epoch_to_iso8601_local() {
 #  Returns:
 #	filter - 
 #
-#  Environment:	 OFS STDIN
 #>
 ######################################################################
 p6_filter_translate_date_to_iso8601_utc() {
