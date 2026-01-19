@@ -13,4 +13,3 @@ jobs:
         with:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           shellcheck: false
-          test: false
