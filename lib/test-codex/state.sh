@@ -164,3 +164,33 @@ p6_test_state_mkdir() {
   mkdir -p "$state_dir/$subdir"
   printf '%s/%s\n' "$state_dir" "$subdir"
 }
+
+######################################################################
+#<
+#
+# Function: path = p6_test_state_locate([start_dir=$PWD])
+#
+#  Args:
+#	OPTIONAL start_dir - [$PWD]
+#
+#  Returns:
+#	path -
+#
+#  Environment:	 PWD
+#>
+######################################################################
+p6_test_state_locate() {
+  local start_dir="${1:-$PWD}"
+
+  local dir="$start_dir"
+  while true; do
+    if [ -f "$dir/.p6-test-state" ]; then
+      cat "$dir/.p6-test-state"
+      return 0
+    fi
+    if [ "$dir" = "/" ] || [ -z "$dir" ]; then
+      return 1
+    fi
+    dir=$(dirname "$dir")
+  done
+}
