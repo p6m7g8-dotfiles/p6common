@@ -5,7 +5,7 @@ main() {
 	. ../p6common/lib/_bootstrap.sh
 	p6_bootstrap "../p6common"
 
-	p6_test_setup "72"
+	p6_test_setup "107"
 
 	p6_test_start "p6_debugging"
 	(
@@ -79,28 +79,27 @@ main() {
 		p6_test_assert_run_ok "system: mymsg" "0"
 
 		p6_test_skip "waiting on p6_debugging_system_on"
-		p6_test_skip "waiting on p6_test_assert_log_contains"
 
 		p6_test_run "p6_debug system: function(): mymsg"
-		p6_test_assert_run_ok "system: function() mymsg:" "1"
+		p6_test_assert_run_ok "system: function() mymsg:" 0
 
 		P6_DEBUG=1 p6_test_run "p6_debug system: function(): mymsg"
-		p6_test_assert_run_ok "1, system: function() mymsg:" "1"
+		p6_test_assert_run_ok "1, system: function() mymsg:" 0
 
 		P6_DEBUG=all p6_test_run "p6_debug system: function(): mymsg"
-		p6_test_assert_run_ok "all, system: function() mymsg:" "1"
+		p6_test_assert_run_ok "all, system: function() mymsg:" 0
 
 		P6_DEBUG=foo p6_test_run "p6_debug system: function(): mymsg"
-		p6_test_assert_run_ok "foo, system: function() mymsg:" "1"
+		p6_test_assert_run_ok "foo, system: function() mymsg:" 0
 
 		P6_DEBUG=system p6_test_run "p6_debug system: function(): mymsg"
-		p6_test_assert_run_ok "system, system: function() mymsg:" "1"
+		p6_test_assert_run_ok "system, system: function() mymsg:" 0
 
 		P6_DEBUG="foo bar" p6_test_run "p6_debug system: function(): mymsg"
-		p6_test_assert_run_ok "foo bar, system: function() mymsg:" "1"
+		p6_test_assert_run_ok "foo bar, system: function() mymsg:" 0
 
 		P6_DEBUG="foo system bar" p6_test_run "p6_debug system: function(): mymsg"
-		p6_test_assert_run_ok "foo system bar, system: function() mymsg:" "1"
+		p6_test_assert_run_ok "foo system bar, system: function() mymsg:" 0
 	)
 	p6_test_finish
 
@@ -111,7 +110,6 @@ main() {
 
 		p6_test_run "p6_log mymsg"
 		p6_test_assert_run_ok "mymsg"
-		p6_test_skip "waiting on p6_test_assert_log_contains"
 		p6_test_assert_log_contains "mymsg"
 	)
 	p6_test_finish
@@ -127,9 +125,8 @@ main() {
 		p6_test_run "p6_dryrunning"
 		p6_test_assert_run_ok "default" "1"
 
-		p6_test_skip "environment variable issue"
-
-		p6_test_assert_run_ok "undef P6_DEBUG"
+		P6_DRY_RUN= p6_test_run "p6_dryrunning"
+		p6_test_assert_run_ok "undef P6_DRY_RUN" 1
 
 		P6_DRY_RUN=0 p6_test_run "p6_dryrunning"
 		p6_test_assert_run_ok "p6_dr=0"

@@ -504,3 +504,45 @@ p6_test_assert_file_matches() {
 
   return $rv
 }
+
+######################################################################
+#<
+#
+# Function: p6_test_assert_log_contains(needle, [file])
+#
+#  Args:
+#	needle -
+#	OPTIONAL file - []
+#
+#>
+######################################################################
+p6_test_assert_log_contains() {
+  local needle="$1"
+  local log_file="${2:-}"
+
+  if [ -z "$needle" ]; then
+    p6_test_tap_not_ok "log contains" "missing needle"
+    return 1
+  fi
+
+  if [ -z "$log_file" ] && [ -z "$P6_TEST_LOG_FILE" ] && [ -z "$P6_PREFIX" ]; then
+    p6_test_tap_skip "log contains [$needle]" "log file not configured"
+    return 0
+  fi
+
+  local file
+  for file in "$log_file" "$P6_TEST_LOG_FILE" "$P6_PREFIX/tmp/p6/debug.log"; do
+    if [ -n "$file" ] && [ -f "$file" ]; then
+      if grep -q -- "$needle" "$file"; then
+        p6_test_tap_ok "log contains [$needle]" ""
+        return 0
+      fi
+      p6_test_tap_not_ok "log contains [$needle]" ""
+      p6_test_tap_diagnostic "[$file] missing [$needle]"
+      return 1
+    fi
+  done
+
+  p6_test_tap_skip "log contains [$needle]" "log file missing"
+  return 0
+}

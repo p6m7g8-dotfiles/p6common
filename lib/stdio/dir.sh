@@ -86,13 +86,13 @@ p6_dirs_list() {
 
     p6_dir__debug "list(): $dirs"
 
-    local entries
+    local entries=""
     local dir
     for dir in $dirs; do
-        local children
+        local children=""
         children=$(p6_dir_list "$dir")
         if ! p6_string_blank "$children"; then
-            p6_string_append "$entries" "$children" " "
+            entries=$(p6_string_append "$entries" "$children" " ")
         fi
     done
 

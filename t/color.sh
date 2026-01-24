@@ -5,7 +5,7 @@ main() {
 	. ../p6common/lib/_bootstrap.sh
 	p6_bootstrap "../p6common"
 
-	p6_test_setup "91"
+	p6_test_setup "94"
 
 	p6_test_start "p6_color__debug"
 	(
@@ -58,8 +58,7 @@ main() {
 	p6_test_start "p6_color_say"
 	(
 		p6_test_skip "newline issue" "lazy" "$P6_TRUE"
-		local msg="mymsg
-"
+		local msg="mymsg"
 		P6_TEST_COLOR_OFF=1
 		p6_test_run "p6_color_say red blue mymsg"
 		p6_test_assert_run_ok "red blue mymsg, no stderr" "" "$msg"

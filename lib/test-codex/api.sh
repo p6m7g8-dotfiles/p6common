@@ -22,6 +22,8 @@ p6_test_setup() {
 
   printf '%s\n' "$state_dir" >".p6-test-state"
 
+  P6_TEST_DIR_ORIG="${P6_TEST_DIR_ORIG:-$PWD}"
+
   p6_test_state_set "$state_dir" "plan" "$n"
   p6_test_state_set "$state_dir" "index" "0"
   p6_test_state_set "$state_dir" "bail" "0"

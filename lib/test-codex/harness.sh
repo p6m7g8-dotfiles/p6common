@@ -1,5 +1,37 @@
 # shellcheck shell=zsh
 
+####################################################################
+# f: files processed (f += 1)
+# t: total tests (t += ti)
+# p: percent sum (p += pi)
+# s: passed (s += Pi)
+# S: skipped (S += Si)
+# T: todo (T += Ti)
+# B: todo bonus (B += Bi)
+# F: failed (F = t - s when s != t)
+# ti: per-file total tests
+# pi: per-file percent pass
+# Pi: per-file passed
+# Si: per-file skipped
+# Ti: per-file todo
+# Bi: per-file todo bonus
+# di: per-file duration seconds
+# Tt: planned total from TAP plan line
+# Ts: passed count per run
+# TS: skipped count per run
+# TT: todo count per run
+# TB: todo bonus count per run
+# TF: failed count per run
+# Tr: total reported (TS + TT + TF + Ts)
+# TP: passable total (TS + Ts + TT)
+# Te: effective total (max of Tt, Tr)
+# Tp: percent pass (TP / Te * 100)
+# Td: duration seconds
+# result: PASS|PROVISIONAL|FAIL (based on s==t and B)
+# rc: exit code (0 ok, 1 provisional, 2 fail)
+# summary: name dur pct pass/total +bonus ~todo -skip
+######################################################################
+
 ######################################################################
 #<
 #
@@ -48,14 +80,14 @@ p6_test_harness_tests_run_bats() {
 p6_test_harness_tests_run_local() {
   local dir="$1"
 
-  local f=0
-  local t=0
-  local p=0
-  local s=0
-  local S=0
-  local T=0
-  local B=0
-  local F=0
+  local f=0 # files processed
+  local t=0 # total tests
+  local p=0 # percent sum
+  local s=0 # passed
+  local S=0 # skipped
+  local T=0 # xtodo
+  local B=0 # xtodo bonus
+  local F=0 # failed
 
   local file
   if [ -d "$dir" ]; then
@@ -66,39 +98,46 @@ p6_test_harness_tests_run_local() {
       local results
       results=$(p6_test_harness_test_run "$dir/$file")
 
-      local ti
+      local ti # total tests
       ti=$(printf '%s' "$results" | sed -e 's,.*Tt=,,' -e 's, .*,,')
-      local pi
+
+      local pi # percent pass
       pi=$(printf '%s' "$results" | sed -e 's,.*Tp=,,' -e 's, .*,,')
-      local Pi
+
+      local Pi # passed
       Pi=$(printf '%s' "$results" | sed -e 's,.*TP=,,' -e 's, .*,,')
-      local Si
+
+      local Si # skipped
       Si=$(printf '%s' "$results" | sed -e 's,.*TS=,,' -e 's, .*,,')
-      local Ti
+
+      local Ti # xtodo
       Ti=$(printf '%s' "$results" | sed -e 's,.*TT=,,' -e 's, .*,,')
-      local Bi
+
+      local Bi # xtodo bonus
       Bi=$(printf '%s' "$results" | sed -e 's,.*TB=,,' -e 's, .*,,')
-      local di
+
+      local di # duration seconds
       di=$(printf '%s' "$results" | sed -e 's,.*Td=,,' -e 's, .*,,' )
 
-      t=$((t + ti))
-      s=$((s + Pi))
-      B=$((B + Bi))
-      S=$((S + Si))
-      T=$((T + Ti))
-      p=$(awk -v p="$p" -v pi="$pi" 'BEGIN { printf "%.3f\n", p + pi }')
-      f=$((f + 1))
+      t=$((t + ti)) # add per-file total tests
+      s=$((s + Pi)) # add per-file passed
+      B=$((B + Bi)) # add per-file todo bonus
+      S=$((S + Si)) # add per-file skipped
+      T=$((T + Ti)) # add per-file todo
+      p=$(awk -v p="$p" -v pi="$pi" 'BEGIN { printf "%.3f\n", p + pi }') # sum percent pass
+      f=$((f + 1)) # increment file count
 
+      # summary args: name=$dir/$file, dur=$di, pct=$pi, pass=$Pi, total=$ti, bonus=$Bi, todo=$Ti, skip=$Si
       p6_test_harness___results "$dir/$file" "$di" "$pi" "$Pi" "$ti" "$Bi" "$Ti" "$Si" >&2
     done
   fi
 
   if [ "$s" -ne "$t" ]; then
-    F=$((t - s))
+    F=$((t - s)) # failed count when pass != total
   fi
 
-  local result
-  local rc
+  local result # PASS|PROVISIONAL|FAIL
+  local rc # exit code (0 ok, 1 provisional, 2 fail)
   if [ "$s" -ne "$t" ]; then
     result=FAIL
     rc=2
@@ -130,12 +169,12 @@ p6_test_harness_tests_run_local() {
 p6_test_harness_test_run() {
   local file="$1"
 
-  local Tt=0
-  local Ts=0
-  local TS=0
-  local TT=0
-  local TB=0
-  local TF=0
+  local Tt=0 # total planned
+  local Ts=0 # passed
+  local TS=0 # skipped
+  local TT=0 # xtodo
+  local TB=0 # xtodo bonus
+  local TF=0 # failed
 
   local base
   base=$(basename "$file")
@@ -153,45 +192,51 @@ p6_test_harness_test_run() {
   local IFS=$'\n'
   for line in $(cat "$log_file"); do
     case $line in
-    1..*)
-      Tt=$(printf '%s' "$line" | sed -e 's,^1..,,' -e 's, *,,')
+    1..*) # plan line: "1..N"
+      Tt=$(printf '%s' "$line" | sed -e 's,^1..,,' -e 's, *,,') # planned total
       ;;
-    ok\ *SKIP*\ *)
-      TS=$((TS + 1))
+    ok\ *SKIP*\ *) # skipped test
+      TS=$((TS + 1)) # skipped count
       ;;
-    not\ *TODO\ *)
-      TT=$((TT + 1))
+    not\ *TODO\ *) # xtodo planned (not ok)
+      TT=$((TT + 1)) # xtodo count
       ;;
-    ok\ *TODO\ *)
-      TB=$((TB + 1))
-      Ts=$((Ts + 1))
+    ok\ *TODO\ *) # xtodo bonus (ok)
+      TB=$((TB + 1)) # xtodo bonus count
+      Ts=$((Ts + 1)) # passed count
       ;;
-    not\ ok*)
-      TF=$((TF + 1))
+    not\ ok*) # failed test
+      TF=$((TF + 1)) # failed count
       ;;
-    ok\ *)
-      Ts=$((Ts + 1))
+    ok\ *) # passed test
+      Ts=$((Ts + 1)) # passed count
       ;;
     esac
   done
 
-  local Tr=$((TS + TT + TF + Ts))
-  local TP=$((TS + Ts + TT))
+  local Tr=$((TS + TT + TF + Ts)) # total reported
+  local TP=$((TS + Ts + TT)) # pass/skip/todo total
 
-  local Tp
-  if [ "$Tt" -eq 0 ]; then
-    Tp=0.00
-  else
-    Tp=$(awk -v TP="$TP" -v Tt="$Tt" 'BEGIN { printf "%.3f\n", (TP / Tt) * 100 }')
+  local Te=$Tt # effective total
+  if [ "$Te" -lt "$Tr" ]; then
+    Te=$Tr
   fi
 
-  local Td
-  Td=$(awk '/^real/ { print $2 }' "$log_time" 2>/dev/null | sed -e 's/s//')
-  Td=${Td:-0}
+  local Tp # percent pass
+  if [ "$Te" -eq 0 ]; then # avoid divide by zero
+    Tp=0.00 # percent pass when no tests
+  else
+    Tp=$(awk -v TP="$TP" -v Te="$Te" 'BEGIN { printf "%.3f\n", (TP / Te) * 100 }') # percent pass
+  fi
+
+  local Td # duration seconds
+  Td=$(awk '/^real/ { print $2 }' "$log_time" 2>/dev/null | sed -e 's/s//') # duration secs
+  Td=${Td:-0} # default when missing
 
   p6_test_state_cleanup "$tmp_dir"
 
-  echo "Tt=$Tt Ts=$Ts TS=$TS TT=$TT TB=$TB TF=$TF Tr=$Tr Tp=$Tp TP=$TP Td=$Td Rc=$rc"
+  # summary: total=$Te pass=$Ts skip=$TS todo=$TT bonus=$TB fail=$TF seen=$Tr pct=$Tp passable=$TP dur=$Td rc=$rc
+  echo "Tt=$Te Ts=$Ts TS=$TS TT=$TT TB=$TB TF=$TF Tr=$Tr Tp=$Tp TP=$TP Td=$Td Rc=$rc"
 }
 
 ######################################################################
@@ -221,6 +266,7 @@ p6_test_harness___results() {
   local todo="$7"
   local skipped="$8"
 
+  # format: name dur pct pass/total +bonus ~todo -skip
   printf '%-30s %6ss %7s%% %4s/%-4s +%s ~%s -%s\n' \
     "$name" "$duration" "$prcnt_passed" "$passed" "$total" "$bonus" "$todo" "$skipped"
 }
