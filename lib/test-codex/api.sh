@@ -13,6 +13,10 @@
 p6_test_setup() {
   local n="$1"
 
+  if [ -n "$ZSH_VERSION" ]; then
+    setopt SH_WORD_SPLIT
+  fi
+
   local state_dir
   state_dir=$(p6_test_state_init) || return 1
 

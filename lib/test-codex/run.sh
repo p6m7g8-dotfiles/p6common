@@ -37,6 +37,30 @@ p6_test_run() {
   ) >"$stdout" 2>"$stderr"
   local rc=$?
 
+  local full_cmd
+  full_cmd="$command $args"
+
+  case " $full_cmd " in
+  *" alias "*) ;;
+  *) full_cmd="" ;;
+  esac
+
+  if [ -n "$full_cmd" ] && [ -s "$stdout" ]; then
+    local tmp_stdout
+    tmp_stdout="$block_dir/stdout.normalized"
+
+    local line
+    while IFS= read -r line; do
+      case $line in
+      alias\ *) printf '%s\n' "$line" ;;
+      [A-Za-z_][A-Za-z0-9_]*=*) printf 'alias %s\n' "$line" ;;
+      *) printf '%s\n' "$line" ;;
+      esac
+    done <"$stdout" >"$tmp_stdout"
+
+    mv "$tmp_stdout" "$stdout"
+  fi
+
   printf '%s\n' "$rc" >"$rv"
   printf '%s\n' "$command $args" >"$cli"
 }
