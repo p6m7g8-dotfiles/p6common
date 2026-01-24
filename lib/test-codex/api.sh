@@ -56,6 +56,8 @@ p6_test_start() {
   p6_test_state_set "$state_dir" "block_orig" "$PWD"
   p6_test_state_set "$state_dir" "block_name" "$block"
 
+  printf '%s\n' "$state_dir" >"$block_dir/.p6-test-state"
+
   if [ -d "$PWD/fixtures" ]; then
     cp -R "$PWD/fixtures" "$block_dir/" || return 1
   fi
