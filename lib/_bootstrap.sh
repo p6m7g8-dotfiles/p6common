@@ -14,8 +14,17 @@ p6_bootstrap() {
 
   local file
   for file in $(find -L "$dir/lib" -type f -a \( -name "*.sh" -o -name "*.zsh" \)); do
+    case "$file" in
+    */lib/test/*) continue ;;
+    */lib/test-codex/*) continue ;;
+    esac
     . "$file"
   done
+
+  if [ -f "$dir/lib/test-codex/loader.zsh" ]; then
+    . "$dir/lib/test-codex/loader.zsh"
+    p6_test_cdx_bootstrap "$dir"
+  fi
 
   p6_path_if "$dir/bin"
 

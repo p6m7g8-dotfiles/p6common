@@ -32,7 +32,7 @@ main() {
 
     p6_test_start "p6_date_range_fill__process"
     (
-        p6_test_run "printf '2024-01-02 5\n' > dates.txt; p6_date_range_fill__process 2024-01-02 dates.txt | sed 's/\\\\t/ /g' | sed 's/ $//'"
+        p6_test_run "printf '2024-01-02 5\n' > dates.txt; p6_date_range_fill__process 2024-01-02 dates.txt | tr '\\t' ' ' | sed 's/ $//'"
         p6_test_assert_run_ok "range_fill__process" 0 "2024-01-02 5"
     )
     p6_test_finish

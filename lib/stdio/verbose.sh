@@ -12,6 +12,10 @@
 ######################################################################
 p6_verbose() {
     local level="$1" # minimum verbosity before output
+    if [ -z "$level" ]; then
+        p6_return_void
+        return
+    fi
     shift
 
     if [ -n "$level" ]; then

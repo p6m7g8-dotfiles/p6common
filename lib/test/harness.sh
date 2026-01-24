@@ -81,10 +81,15 @@ p6_test_harness_test_run() {
     local Tr=$(($TS + $TT + $TF + $Ts))
     local TP=$(($TS + $Ts + $TT))
 
+    local Te=$Tt
+    if [ $Te -lt $Tr ]; then
+        Te=$Tr
+    fi
+
     local Tp
-    case $Tt in
+    case $Te in
     0) Tp=0.00 ;;
-    *) Tp=$(awk -v TP="$TP" -v Tt="$Tt" 'BEGIN { printf "%.3f\n", (TP / Tt) * 100 }') ;;
+    *) Tp=$(awk -v TP="$TP" -v Te="$Te" 'BEGIN { printf "%.3f\n", (TP / Te) * 100 }') ;;
     esac
 
     # 0m0.330s
@@ -94,7 +99,7 @@ p6_test_harness_test_run() {
         Td=0
     fi
 
-    echo "Tt=$Tt Ts=$Ts TS=$TS TT=$TT TB=$TB TF=$TF Tr=$Tr Tp=$Tp TP=$TP Td=$Td"
+    echo "Tt=$Te Ts=$Ts TS=$TS TT=$TT TB=$TB TF=$TF Tr=$Tr Tp=$Tp TP=$TP Td=$Td"
 }
 
 ######################################################################

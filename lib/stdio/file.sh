@@ -50,8 +50,19 @@ p6_file_mtime() {
 p6_file_load() {
     local file="$1"
 
-    file="$P6_PREFIX$file"
-    . $file
+    if [ -n "$P6_PREFIX" ]; then
+        case "$P6_PREFIX" in
+        */) file="${P6_PREFIX}${file}" ;;
+        *) file="${P6_PREFIX}/${file}" ;;
+        esac
+    fi
+
+    case "$file" in
+    */*) ;;
+    *) file="./$file" ;;
+    esac
+
+    . "$file"
     p6_return_void
 
     #    if p6_file_exists "$file"; then

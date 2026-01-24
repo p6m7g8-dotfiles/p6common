@@ -15,7 +15,10 @@ p6_date_range_fill() {
     local end_date="$2"
     local file="$3"
     local fmt="$4"
-    local sep="${5:-\t}"
+    local sep="${5:-}"
+    if [ -z "$sep" ]; then
+        sep=$'\t'
+    fi
 
     local dates_file=$(p6_transient_create_file "p6.dates-fill")
 
@@ -60,7 +63,10 @@ p6_date_range_fill() {
 p6_date_range_fill__process() {
     local date="$1"
     local dates_file="$2"
-    local sep="${3:-\t}"
+    local sep="${3:-}"
+    if [ -z "$sep" ]; then
+        sep=$'\t'
+    fi
 
     local value=0
     local line=$(p6_file_contains "$date" "$dates_file")
