@@ -32,7 +32,9 @@ p6_test_run() {
   local args
   args="$*"
 
-  eval "$command $args" >"$stdout" 2>"$stderr"
+  (
+    eval "$command $args"
+  ) >"$stdout" 2>"$stderr"
   local rc=$?
 
   printf '%s\n' "$rc" >"$rv"

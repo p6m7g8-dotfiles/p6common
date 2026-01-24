@@ -107,11 +107,11 @@ p6_test_state_get() {
   local key="$2"
   local default="${3:-}"
 
-  local path
-  path=$(p6_test_state_path "$state_dir" "$key")
+  local file_path
+  file_path=$(p6_test_state_path "$state_dir" "$key")
 
-  if [ -f "$path" ]; then
-    cat "$path"
+  if [ -f "$file_path" ]; then
+    cat "$file_path"
   else
     printf '%s\n' "$default"
   fi

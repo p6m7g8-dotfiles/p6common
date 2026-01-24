@@ -25,8 +25,6 @@ p6_test_setup() {
 
   p6_test_tap_plan "$n"
 
-  trap p6_test_teardown 0 1 2 3 6 14 15
-
   return 0
 }
 
