@@ -61,6 +61,21 @@ p6_test_run() {
     mv "$tmp_stdout" "$stdout"
   fi
 
+  if [ -n "$ZSH_VERSION" ] && [ -s "$stderr" ]; then
+    local tmp_stderr
+    tmp_stderr="$block_dir/stderr.normalized"
+
+    local line
+    while IFS= read -r line; do
+      case $line in
+      *"shift count must be <= $#") ;;
+      *) printf '%s\n' "$line" ;;
+      esac
+    done <"$stderr" >"$tmp_stderr"
+
+    mv "$tmp_stderr" "$stderr"
+  fi
+
   printf '%s\n' "$rc" >"$rv"
   printf '%s\n' "$command $args" >"$cli"
 }
