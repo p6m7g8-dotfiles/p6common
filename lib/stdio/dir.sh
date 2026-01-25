@@ -3,12 +3,17 @@
 ######################################################################
 #<
 #
-# Function: p6_dir__debug()
+# Function: p6_dir__debug(msg)
+#
+#  Args:
+#	msg - debug message
 #
 #>
+#/ Synopsis
+#/    Emit a namespaced debug message for dir helpers.
 ######################################################################
 p6_dir__debug() {
-    local msg="$1"
+    local msg="$1" # debug message
 
     p6_debug "p6_dir: $msg"
 
@@ -21,12 +26,14 @@ p6_dir__debug() {
 # Function: p6_dir_load(dirs)
 #
 #  Args:
-#	dirs -
+#	dirs - directory list
 #
 #>
+#/ Synopsis
+#/    Load files from each directory in the list.
 ######################################################################
 p6_dir_load() {
-    local dirs="$@"
+    local dirs="$@" # directory list
 
     p6_dir__debug "load(): $dirs"
 
@@ -47,15 +54,17 @@ p6_dir_load() {
 # Function: words children = p6_dir_list(dir)
 #
 #  Args:
-#	dir -
+#	dir - directory path
 #
 #  Returns:
 #	words - children
 #
 #>
+#/ Synopsis
+#/    List entries in a directory.
 ######################################################################
 p6_dir_list() {
-    local dir="$1"
+    local dir="$1" # directory path
 
     local children
     if p6_dir_exists "$dir"; then
@@ -74,15 +83,17 @@ p6_dir_list() {
 # Function: words entries = p6_dirs_list(dirs)
 #
 #  Args:
-#	dirs -
+#	dirs - directory list
 #
 #  Returns:
 #	words - entries
 #
 #>
+#/ Synopsis
+#/    List entries across multiple directories.
 ######################################################################
 p6_dirs_list() {
-    local dirs="$@"
+    local dirs="$@" # directory list
 
     p6_dir__debug "list(): $dirs"
 
@@ -105,15 +116,17 @@ p6_dirs_list() {
 # Function: words descendants = p6_dir_list_recursive(dir)
 #
 #  Args:
-#	dir -
+#	dir - directory path
 #
 #  Returns:
 #	words - descendants
 #
 #>
+#/ Synopsis
+#/    List files recursively under a directory.
 ######################################################################
 p6_dir_list_recursive() {
-    local dir="$1"
+    local dir="$1" # directory path
 
     p6_dir__debug "list_recursive(): $dir"
 
@@ -131,18 +144,17 @@ p6_dir_list_recursive() {
 ######################################################################
 #<
 #
-# Function: code rc = p6_dir_exists(dir)
+# Function: p6_dir_exists(dir)
 #
 #  Args:
-#	dir -
-#
-#  Returns:
-#	code - rc
+#	dir - directory path
 #
 #>
+#/ Synopsis
+#/    Return success when a directory exists.
 ######################################################################
 p6_dir_exists() {
-    local dir="$1"
+    local dir="$1" # directory path
 
     test -d "$dir"
     local rc=$?
@@ -158,14 +170,16 @@ p6_dir_exists() {
 # Function: p6_dir_rmrf(dir)
 #
 #  Args:
-#	dir -
+#	dir - directory path
 #
 #>
+#/ Synopsis
+#/    Remove a directory tree with safety checks.
 ######################################################################
 p6_dir_rmrf() {
-    local dir="$1"
+    local dir="$1" # directory path
 
-    if [ -z "$dir" -o "$dir" = "/" ]; then
+    if p6_string_blank "$dir" || p6_string_eq "$dir" "/"; then
         p6_msg "p6_dir: rmrf(): Cowardly refusing to shoot us in the foot [$dir]"
     else
         p6_dir__debug "rmrf(): rm -rf $dir"
@@ -181,12 +195,14 @@ p6_dir_rmrf() {
 # Function: p6_dir_mk(dir)
 #
 #  Args:
-#	dir -
+#	dir - directory path
 #
 #>
+#/ Synopsis
+#/    Create a directory if it does not exist.
 ######################################################################
 p6_dir_mk() {
-    local dir="$1"
+    local dir="$1" # directory path
 
     if ! p6_dir_exists "$dir"; then
         p6_dir__debug "mk(): mkdir -p $dir"
@@ -202,14 +218,16 @@ p6_dir_mk() {
 # Function: p6_dir_cp(src, dst)
 #
 #  Args:
-#	src -
-#	dst -
+#	src - source directory
+#	dst - destination directory
 #
 #>
+#/ Synopsis
+#/    Copy a directory recursively.
 ######################################################################
 p6_dir_cp() {
-    local src="$1"
-    local dst="$2"
+    local src="$1" # source directory
+    local dst="$2" # destination directory
 
     p6_dir__debug "cp(): cp -R $src $dst"
     cp -R $src $dst
@@ -223,14 +241,16 @@ p6_dir_cp() {
 # Function: p6_dir_mv(src, dst)
 #
 #  Args:
-#	src -
-#	dst -
+#	src - source directory
+#	dst - destination directory
 #
 #>
+#/ Synopsis
+#/    Move or rename a directory.
 ######################################################################
 p6_dir_mv() {
-    local src="$1"
-    local dst="$2"
+    local src="$1" # source directory
+    local dst="$2" # destination directory
 
     p6_dir__debug "mv(): mv $src $dst"
     mv $src $dst
@@ -244,12 +264,14 @@ p6_dir_mv() {
 # Function: p6_dir_cd(dir)
 #
 #  Args:
-#	dir -
+#	dir - directory path
 #
 #>
+#/ Synopsis
+#/    Change to a directory with logging.
 ######################################################################
 p6_dir_cd() {
-    local dir="$1"
+    local dir="$1" # directory path
 
     p6_dir__debug "cd(): cd $dir"
     p6_log "cd $dir"
@@ -264,19 +286,21 @@ p6_dir_cd() {
 # Function: p6_dir_replace_in(dir, from, to)
 #
 #  Args:
-#	dir -
-#	from -
-#	to -
+#	dir - directory root (unused in current implementation)
+#	from - pattern to replace
+#	to - replacement text
 #
 #>
+#/ Synopsis
+#/    Replace text in files under a directory tree.
 ######################################################################
 p6_dir_replace_in() {
-  local dir="$1"
-  local from="$2"
-  local to="$3"
+  local dir="$1"  # directory root (unused in current implementation)
+  local from="$2" # pattern to replace
+  local to="$3"   # replacement text
 
   find . -type f |
-    egrep -v '/.git/|/elpa/' |
+    p6_filter_row_exclude_regex '/.git/|/elpa/' |
     xargs grep -l $from |
     xargs perl -pi -e "s,$from,$to,g"
 

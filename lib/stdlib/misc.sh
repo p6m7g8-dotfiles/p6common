@@ -6,6 +6,8 @@
 # Function: p6_pgs()
 #
 #>
+#/ Synopsis
+#/    Find and replace a pattern across files under the current tree.
 ######################################################################
 p6_pgs() {
 
@@ -20,6 +22,8 @@ p6_pgs() {
 # Function: p6_xclean()
 #
 #>
+#/ Synopsis
+#/    Delete common editor and backup junk files under the tree.
 ######################################################################
 p6_xclean() {
 

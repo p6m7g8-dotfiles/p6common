@@ -1,67 +1,40 @@
-# shellcheck shell=bash
+# shellcheck shell=zsh
 
-#
-# #!/bin/sh
-#
-# p6_test_setup "5"
-#
-# p6_test_start "running things"
-# (
-#	p6_test_run "date" "args..."
-#	p6_test_assert_run_ok "d1" "r1"
-#	p6_test_assert_run_not_ok "d2" "r2"
-# )
-# p6_test_finish
-#
-# p6_test_start "directives 1"
-# (
-#	p6_test_skip "description" "bar" "$code"
-#	echo "should not got here"
-# )
-# p6_test_finish
-#
-# p6_test_start "directives 2"
-# (
-#	p6_test_todo "$code" "description" "bar"
-# )
-#
-# p6_test_finish
-#
-# p6_test_start "asserts"
-# (
-#     local val=1
-#     p6_test_assert_eq        "$val" "1" "description" "reason"
-#     p6_test_assert_eq        "$val" "0" "description"
-#     p6_test_diagnostic       "expected [$val], got [0]"
-#     p6_test_bail "gtfo"
-#
-#     p6_test_assert_contains   "$val" "const" "description" "reason"
-#     p6_test_assert_blank      "$val" "description" "reason"
-#     p6_test_assert_not_blank  "$val" "description" "reason"
-# )
-# p6_test_finish
-#
-# p6_test_start "should not run"
-# (
-#	local val=1
-#	p6_test_assert_eq        "$val" "1" "description" "reason"
-# )
-# p6_test_finish
-#
-# p6_test_teardown
-#
 ######################################################################
 #<
 #
-# Function: p6_test_setup()
+# Function: p6_test_setup(n)
 #
+#  Args:
+#	n -
+#
+#  Environment:	 P6_TEST_DIR_ORIG PWD ZSH_VERSION
 #>
+#/ Synopsis
+#/    Initializes test state and prints the TAP plan.
 ######################################################################
 p6_test_setup() {
-    local n="$1"
+  local n="$1" # number of planned tests
 
-    p6_test__initialize "$n"
-    p6_test_tap_plan "$n"
+  if [ -n "$ZSH_VERSION" ]; then
+    setopt SH_WORD_SPLIT
+  fi
+
+  local state_dir
+  state_dir=$(p6_test_state_init) || return 1
+
+  printf '%s\n' "$state_dir" >".p6-test-state"
+
+  P6_TEST_DIR_ORIG="${P6_TEST_DIR_ORIG:-$PWD}"
+
+  p6_test_state_set "$state_dir" "plan" "$n"
+  p6_test_state_set "$state_dir" "index" "0"
+  p6_test_state_set "$state_dir" "bail" "0"
+  p6_test_state_set "$state_dir" "orig_dir" "$PWD"
+
+  p6_test_tap_plan "$n"
+
+  return 0
 }
 
 ######################################################################
@@ -72,13 +45,121 @@ p6_test_setup() {
 #  Args:
 #	block -
 #
+#  Environment:	 PWD
 #>
+#/ Synopsis
+#/    Starts a test block, sets up fixtures, and changes into its directory.
 ######################################################################
 p6_test_start() {
-    local block="$1"
+  local block="$1" # block name
 
-    p6_test__prep
-    p6_test_tap_block "$block"
+  local state_dir
+  state_dir=$(p6_test_state_locate) || return 1
+
+  local block_index
+  block_index=$(p6_test_state_inc "$state_dir" "block_index")
+
+  local block_dir
+  block_dir=$(p6_test_state_mkdir "$state_dir" "block-$block_index") || return 1
+
+  p6_test_state_set "$state_dir" "block_dir" "$block_dir"
+  p6_test_state_set "$state_dir" "block_orig" "$PWD"
+  p6_test_state_set "$state_dir" "block_name" "$block"
+
+  printf '%s\n' "$state_dir" >"$block_dir/.p6-test-state"
+
+  if [ -d "$PWD/fixtures" ]; then
+    cp -R "$PWD/fixtures" "$block_dir/" || return 1
+  fi
+
+  cd "$block_dir" || return 1
+
+  p6_test_tap_block "$block"
+
+  return 0
+}
+
+######################################################################
+#<
+#
+# Function: p6_test_finish()
+#
+#>
+#/ Synopsis
+#/    Finishes a test block and restores the original working directory.
+######################################################################
+p6_test_finish() {
+  local state_dir
+  state_dir=$(p6_test_state_locate) || return 1
+
+  local block_orig
+  block_orig=$(p6_test_state_get "$state_dir" "block_orig" "")
+
+  local block_dir
+  block_dir=$(p6_test_state_get "$state_dir" "block_dir" "")
+
+  if [ -n "$block_orig" ]; then
+    cd "$block_orig" || return 1
+  fi
+
+  if [ -n "$block_dir" ] && [ -d "$block_dir" ]; then
+    rm -rf "$block_dir"
+  fi
+
+  p6_test_state_set "$state_dir" "block_dir" ""
+  p6_test_state_set "$state_dir" "block_orig" ""
+  p6_test_state_set "$state_dir" "block_name" ""
+
+  local bail
+  bail=$(p6_test_state_get "$state_dir" "bail" "0")
+
+  if [ "$bail" -ne 0 ]; then
+    return 1
+  fi
+
+  return 0
+}
+
+######################################################################
+#<
+#
+# Function: p6_test_teardown()
+#
+#>
+#/ Synopsis
+#/    Finalizes test run, cleans state, and reports plan mismatch.
+######################################################################
+p6_test_teardown() {
+  local state_dir
+  state_dir=$(p6_test_state_locate) || return 0
+
+  local block_orig
+  block_orig=$(p6_test_state_get "$state_dir" "block_orig" "")
+
+  if [ -n "$block_orig" ]; then
+    cd "$block_orig" || true
+  fi
+
+  local block_dir
+  block_dir=$(p6_test_state_get "$state_dir" "block_dir" "")
+  if [ -n "$block_dir" ] && [ -d "$block_dir" ]; then
+    rm -rf "$block_dir"
+  fi
+
+  local plan
+  plan=$(p6_test_state_get "$state_dir" "plan" "0")
+
+  local index
+  index=$(p6_test_state_get "$state_dir" "index" "0")
+
+  if [ "$plan" -ne 0 ] && [ "$plan" -ne "$index" ]; then
+    p6_test_tap_diagnostic "planned $plan tests but ran $index"
+  fi
+
+  p6_test_state_cleanup "$state_dir"
+  rm -f ".p6-test-state"
+
+  return 0
 }
 
 ######################################################################
@@ -91,45 +172,54 @@ p6_test_start() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Records a skipped test with a reason.
 ######################################################################
 p6_test_skip() {
-    local description="$1"
-    local reason="$2"
+  local description="$1" # test description
+  local reason="$2"      # skip reason
 
-    p6_test_tap_skip "$description" "$reason"
-    exit 0
+  p6_test_tap_skip "$description" "$reason"
 }
 
 ######################################################################
 #<
 #
-# Function: p6_test_ok(description)
+# Function: p6_test_ok(description, reason)
 #
 #  Args:
 #	description -
+#	reason -
 #
 #>
+#/ Synopsis
+#/    Records a passing test with an optional reason.
 ######################################################################
 p6_test_ok() {
-    local description="$1"
+  local description="$1" # test description
+  local reason="$2"      # success reason
 
-    p6_test_tap_ok "$description"
+  p6_test_tap_ok "$description" "$reason"
 }
 
 ######################################################################
 #<
 #
-# Function: p6_test_not_ok(description)
+# Function: p6_test_not_ok(description, reason)
 #
 #  Args:
 #	description -
+#	reason -
 #
 #>
+#/ Synopsis
+#/    Records a failing test with a reason.
 ######################################################################
 p6_test_not_ok() {
-    local description="$1"
+  local description="$1" # test description
+  local reason="$2"      # failure reason
 
-    p6_test_tap_not_ok "$description"
+  p6_test_tap_not_ok "$description" "$reason"
 }
 
 ######################################################################
@@ -144,19 +234,21 @@ p6_test_not_ok() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Records a TODO test and reports expected vs actual when failing.
 ######################################################################
 p6_test_todo() {
-    local val="$1"
-    local const="$2"
-    local description="$3"
-    local reason="$4"
+  local val="$1"         # actual value
+  local const="$2"       # expected value
+  local description="$3" # test description
+  local reason="$4"      # TODO reason
 
-    if [ x"$val" = x"$const" ]; then
-	p6_test_tap_todo_bonus "$description" "$reason"
-    else
-	p6_test_tap_todo_planned "$description" "$reason"
-	p6_test_diagnostic "expected [$const], received [$val]"
-    fi
+  if [ "$val" = "$const" ]; then
+    p6_test_tap_todo_bonus "$description" "$reason"
+  else
+    p6_test_tap_todo_planned "$description" "$reason"
+    p6_test_tap_diagnostic "expected [$const], received [$val]"
+  fi
 }
 
 ######################################################################
@@ -168,11 +260,13 @@ p6_test_todo() {
 #	msg -
 #
 #>
+#/ Synopsis
+#/    Writes a diagnostic message to TAP output.
 ######################################################################
 p6_test_diagnostic() {
-    local msg="$1"
+  local msg="$1" # diagnostic message
 
-    p6_test_tap_diagnostic "$msg"
+  p6_test_tap_diagnostic "$msg"
 }
 
 ######################################################################
@@ -184,37 +278,15 @@ p6_test_diagnostic() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Bails out of the test run with a reason.
 ######################################################################
 p6_test_bail() {
-    local reason="$1"
+  local reason="$1" # bailout reason
 
-    p6_test__bailout
-    p6_test_tap_bail_out "$reason"
-}
+  local state_dir
+  state_dir=$(p6_test_state_locate) || return 1
 
-######################################################################
-#<
-#
-# Function: p6_test_finish()
-#
-#>
-######################################################################
-p6_test_finish() {
-
-    if p6_test__cleanup; then
-	exit 1
-    fi
-}
-
-######################################################################
-#<
-#
-# Function: p6_test_teardown()
-#
-#>
-######################################################################
-p6_test_teardown() {
-
-    true
-    #rm -rf $P6_TEST_DIR
+  p6_test_state_set "$state_dir" "bail" "1"
+  p6_test_tap_bail_out "$reason"
 }

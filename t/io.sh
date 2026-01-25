@@ -129,7 +129,7 @@ main() {
 
     p6_test_start "p6_vertical"
     (
-        p6_test_run "p6_vertical a:b:c | tr '\n' ' ' | sed 's/ $//'"
+        p6_test_run "p6_vertical a:b:c | tr \"$P6_NL\" ' ' | sed 's/ $//'"
         p6_test_assert_run_ok "vertical" 0 "a b c"
     )
     p6_test_finish

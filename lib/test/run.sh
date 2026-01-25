@@ -7,13 +7,16 @@
 #
 #  Args:
 #	command -
-#	... -
+#	... - 
 #
+#  Environment:	 ZSH_VERSION
 #>
+#/ Synopsis
+#/    Runs a command, capturing stdout, stderr, rc, and normalized output.
 ######################################################################
 p6_test_run() {
-  local command="$1"
-  shift 1
+  local command="$1" # command to execute
+  shift 1            # command arguments
 
   local state_dir
   state_dir=$(p6_test_state_locate) || return 1
@@ -83,12 +86,11 @@ p6_test_run() {
 ######################################################################
 #<
 #
-# Function: str = p6_test_run_stdout()
-#
-#  Returns:
-#	str -
+# Function: p6_test_run_stdout()
 #
 #>
+#/ Synopsis
+#/    Prints stdout from the most recent p6_test_run.
 ######################################################################
 p6_test_run_stdout() {
   local state_dir
@@ -103,12 +105,11 @@ p6_test_run_stdout() {
 ######################################################################
 #<
 #
-# Function: str = p6_test_run_stderr()
-#
-#  Returns:
-#	str -
+# Function: p6_test_run_stderr()
 #
 #>
+#/ Synopsis
+#/    Prints stderr from the most recent p6_test_run.
 ######################################################################
 p6_test_run_stderr() {
   local state_dir
@@ -123,12 +124,11 @@ p6_test_run_stderr() {
 ######################################################################
 #<
 #
-# Function: int = p6_test_run_rc()
-#
-#  Returns:
-#	int -
+# Function: p6_test_run_rc()
 #
 #>
+#/ Synopsis
+#/    Prints the return code from the most recent p6_test_run.
 ######################################################################
 p6_test_run_rc() {
   local state_dir

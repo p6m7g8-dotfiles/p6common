@@ -3,12 +3,17 @@
 ######################################################################
 #<
 #
-# Function: p6_int__debug()
+# Function: p6_int__debug(msg)
+#
+#  Args:
+#	msg - debug message
 #
 #>
+#/ Synopsis
+#/    Emit a namespaced debug message for interactive helpers.
 ######################################################################
 p6_int__debug() {
-    local msg="$1"
+    local msg="$1" # debug message
 
     p6_debug "p6_int: $msg"
 
@@ -18,13 +23,12 @@ p6_int__debug() {
 ######################################################################
 #<
 #
-# Function: code 42 = p6_int_confirm_ask()
-#
-#  Returns:
-#	code - 42
+# Function: p6_int_confirm_ask()
 #
 #  Environment:	 TEST_MODE
 #>
+#/ Synopsis
+#/    Prompt for Y/n confirmation and exit on "n".
 ######################################################################
 p6_int_confirm_ask() {
 
@@ -33,12 +37,12 @@ p6_int_confirm_ask() {
         local answer
         read answer
 
-        [ x"${answer}" = x"Y" -o x"${answer}" = x"n" ] && break
+        p6_string_eq_any "$answer" "Y" "n" && break
     done
     p6_int__debug "confirm_ask(): received [$answer]"
 
-    if [ x"${answer}" = x"n" ]; then
-        if [ -n "${TEST_MODE}" ]; then
+    if p6_string_eq "$answer" "n"; then
+        if p6_string_blank_NOT "$TEST_MODE"; then
             p6_msg "Asked to Exit"
             p6_return_code_as_code "42"
         else
@@ -57,6 +61,8 @@ p6_int_confirm_ask() {
 #
 #  Environment:	 PASSWORD
 #>
+#/ Synopsis
+#/    Read a password from stdin without echo.
 ######################################################################
 p6_int_password_read() {
 

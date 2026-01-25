@@ -49,14 +49,14 @@ main() {
 
     p6_test_start "p6_token_sha256()"
     (
-        p6_test_run "p6_token_sha256 foo | tr -d '\n'"
+        p6_test_run "p6_token_sha256 foo | tr -d \"$P6_NL\""
         p6_test_assert_run_ok "sha256 foo" 0 "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
     )
     p6_test_finish
 
     p6_test_start "p6_token_encode_base64()"
     (
-        p6_test_run "p6_token_encode_base64 foo | tr -d '\n'"
+        p6_test_run "p6_token_encode_base64 foo | tr -d \"$P6_NL\""
         p6_test_assert_run_ok "base64 foo" 0 "Zm9v"
     )
     p6_test_finish

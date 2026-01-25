@@ -24,7 +24,7 @@ main() {
     p6_test_start "p6_json_from_file"
     (
         echo '{"b":2}' > data.json
-        p6_test_run "p6_json_from_file data.json | tr -d ' \n'"
+        p6_test_run "p6_json_from_file data.json | tr -d \" $P6_NL\""
         p6_test_assert_run_ok "from_file" 0 "{\"b\":2}"
     )
     p6_test_finish

@@ -3,7 +3,12 @@
 ######################################################################
 #<
 #
-# Function: p6_openssl_s_server_run()
+# Function: p6_openssl_s_server_run(key, crt, ...)
+#
+#  Args:
+#	key - path to the key file
+#	crt - path to the certificate file
+#	... - additional openssl options
 #
 #>
 #/ Synopsis

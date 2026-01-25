@@ -35,14 +35,14 @@ main() {
 
     p6_test_start "p6_path_current"
     (
-		p6_test_run "PATH='/bin:/usr/bin:a:b'; p6_path_current | tr '\n' ' ' | sed 's/ $//'"
+		p6_test_run "PATH='/bin:/usr/bin:a:b'; p6_path_current | tr \"$P6_NL\" ' ' | sed 's/ $//'"
 		p6_test_assert_run_ok "current" 0 "/bin /usr/bin a b"
     )
     p6_test_finish
 
     p6_test_start "p6_cdpath_current"
     (
-		p6_test_run "CDPATH='c:d'; p6_cdpath_current | tr '\n' ' ' | sed 's/ $//'"
+		p6_test_run "CDPATH='c:d'; p6_cdpath_current | tr \"$P6_NL\" ' ' | sed 's/ $//'"
 		p6_test_assert_run_ok "cdpath current" 0 "c d"
     )
     p6_test_finish

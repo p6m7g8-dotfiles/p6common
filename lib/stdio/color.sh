@@ -3,12 +3,17 @@
 ######################################################################
 #<
 #
-# Function: p6_color__debug()
+# Function: p6_color__debug(msg)
+#
+#  Args:
+#	msg - debug message
 #
 #>
+#/ Synopsis
+#/    Emit a namespaced debug message for color helpers.
 ######################################################################
 p6_color__debug() {
-    local msg="$1"
+    local msg="$1" # debug message
 
     p6_debug "p6_color: $msg"
 
@@ -21,29 +26,31 @@ p6_color__debug() {
 # Function: p6_color_ize(color_fg, color_bg, msg)
 #
 #  Args:
-#	color_fg -
-#	color_bg -
-#	msg -
+#	color_fg - foreground color name
+#	color_bg - background color name
+#	msg - message text
 #
 #  Environment:	 P6_TEST_COLOR_OFF
 #>
+#/ Synopsis
+#/    Print a message with foreground/background colors (no newline).
 ######################################################################
 p6_color_ize() {
-    local color_fg="$1"
-    local color_bg="$2"
-    local msg="$3"
+    local color_fg="$1" # foreground color name
+    local color_bg="$2" # background color name
+    local msg="$3"      # message text
 
     local code_fg=$(p6_color_to_code "$color_fg")
     local code_bg=$(p6_color_to_code "$color_bg")
 
-    if [ -z "$P6_TEST_COLOR_OFF" ]; then
+    if p6_string_blank "$P6_TEST_COLOR_OFF"; then
         tput setaf "$code_fg"
         tput setab "$code_bg"
     fi
 
     p6_msg "$msg\c"
 
-    if [ -z "$P6_TEST_COLOR_OFF" ]; then
+    if p6_string_blank "$P6_TEST_COLOR_OFF"; then
         tput sgr0
     fi
 
@@ -56,16 +63,18 @@ p6_color_ize() {
 # Function: p6_color_say(color_fg, color_bg, msg)
 #
 #  Args:
-#	color_fg -
-#	color_bg -
-#	msg -
+#	color_fg - foreground color name
+#	color_bg - background color name
+#	msg - message text
 #
 #>
+#/ Synopsis
+#/    Print a message with foreground/background colors and newline.
 ######################################################################
 p6_color_say() {
-    local color_fg="$1"
-    local color_bg="$2"
-    local msg="$3"
+    local color_fg="$1" # foreground color name
+    local color_bg="$2" # background color name
+    local msg="$3"      # message text
 
     p6_color_ize "$color_fg" "$color_bg" "$msg"
     p6_msg
@@ -79,15 +88,17 @@ p6_color_say() {
 # Function: size_t code = p6_color_to_code(color)
 #
 #  Args:
-#	color -
+#	color - color name
 #
 #  Returns:
 #	size_t - code
 #
 #>
+#/ Synopsis
+#/    Convert a color name to a tput color code.
 ######################################################################
 p6_color_to_code() {
-    local color="$1"
+    local color="$1" # color name
 
     local code=-1
 
@@ -116,6 +127,8 @@ p6_color_to_code() {
 #	float - 0.0
 #
 #>
+#/ Synopsis
+#/    Return the default opacity factor.
 ######################################################################
 p6_color_opacity_factor() {
 
@@ -128,15 +141,17 @@ p6_color_opacity_factor() {
 # Function: str rgb = p6_color_name_to_rgb(name)
 #
 #  Args:
-#	name -
+#	name - color name
 #
 #  Returns:
 #	str - rgb
 #
 #>
+#/ Synopsis
+#/    Convert a color name to a hex RGB string.
 ######################################################################
 p6_color_name_to_rgb() {
-    local name="$1"
+    local name="$1" # color name
 
     local rgb=-1
     case $name in
@@ -157,7 +172,7 @@ p6_color_name_to_rgb() {
     white) rgb="ffffff" ;;
     esac
 
-    rgb=$(p6_echo "$rgb" | tr '[a-z]' '[A-Z]')
+    rgb=$(p6_string_uc "$rgb")
 
     p6_return_str "$rgb"
 }
@@ -165,21 +180,28 @@ p6_color_name_to_rgb() {
 ######################################################################
 #<
 #
-# Function: p6_color_hex_to_d16b(hex, ord)
+# Function: str dr = p6_color_hex_to_d16b(hex, ord)
 #
 #  Args:
-#	hex -
-#	ord -
+#	hex - hex RGB string
+#	ord - channel selector (r/g/b)
+#
+#  Returns:
+#	str - dr
+#	str - dg
+#	str - db
 #
 #>
+#/ Synopsis
+#/    Convert hex RGB to a 16-bit channel value.
 ######################################################################
 p6_color_hex_to_d16b() {
-    local hex="$1"
-    local ord="$2"
+    local hex="$1" # hex RGB string
+    local ord="$2" # channel selector (r/g/b)
 
-    local i=$(p6_echo "$hex" | sed 's/../&,/g' | awk -F "," '{ print $1 }')
-    local j=$(p6_echo "$hex" | sed 's/../&,/g' | awk -F "," '{ print $2 }')
-    local k=$(p6_echo "$hex" | sed 's/../&,/g' | awk -F "," '{ print $3 }')
+    local i=$(p6_echo "$hex" | p6_filter_translate_hex_pairs_to_csv | p6_filter_column_pluck 1 ",")
+    local j=$(p6_echo "$hex" | p6_filter_translate_hex_pairs_to_csv | p6_filter_column_pluck 2 ",")
+    local k=$(p6_echo "$hex" | p6_filter_translate_hex_pairs_to_csv | p6_filter_column_pluck 3 ",")
 
     local r=$(p6_color_hext_to_rgb "$i")
     local g=$(p6_color_hext_to_rgb "$j")
@@ -217,15 +239,17 @@ p6_color_hex_to_d16b() {
 # Function: size_t channel = p6_color_hext_to_rgb(h)
 #
 #  Args:
-#	h -
+#	h - hex byte
 #
 #  Returns:
 #	size_t - channel
 #
 #>
+#/ Synopsis
+#/    Convert a hex byte to a numeric channel value.
 ######################################################################
 p6_color_hext_to_rgb() {
-    local h="$1"
+    local h="$1" # hex byte
 
     local channel=$((16#$(printf "%s\n" $h)))
 

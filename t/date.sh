@@ -32,14 +32,14 @@ main() {
 
     p6_test_start "p6_date_range_fill__process"
     (
-        p6_test_run "printf '2024-01-02 5\n' > dates.txt; p6_date_range_fill__process 2024-01-02 dates.txt | tr '\\t' ' ' | sed 's/ $//'"
+        p6_test_run "printf \"2024-01-02 5${P6_NL}\" > dates.txt; p6_date_range_fill__process 2024-01-02 dates.txt | tr '\\t' ' ' | sed 's/ $//'"
         p6_test_assert_run_ok "range_fill__process" 0 "2024-01-02 5"
     )
     p6_test_finish
 
     p6_test_start "p6_date_range_fill"
     (
-        p6_test_run "printf '2024-01-01 5\n2024-01-03 7\n' > dates.txt; p6_date_range_fill 2024-01-01 2024-01-03 dates.txt | tr '\t' '|' | tr '\n' ' ' | sed 's/ $//'"
+        p6_test_run "printf \"2024-01-01 5${P6_NL}2024-01-03 7${P6_NL}\" > dates.txt; p6_date_range_fill 2024-01-01 2024-01-03 dates.txt | tr '\t' '|' | tr \"$P6_NL\" ' ' | sed 's/ $//'"
         p6_test_assert_run_rc "range_fill: rc" 0
         p6_test_assert_not_blank "$(p6_test_run_stdout)" "range_fill: stdout"
         p6_test_ok "range_fill: stderr optional"

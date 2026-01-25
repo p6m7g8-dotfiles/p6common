@@ -337,7 +337,7 @@ main() {
 
 	p6_test_start "p6_dir_list_recursive"
 	(
-		p6_test_run "mkdir -p root/sub; echo a > root/a.txt; echo b > root/sub/b.txt; p6_dir_list_recursive root | tr ' ' '\n' | sort"
+		p6_test_run "mkdir -p root/sub; echo a > root/a.txt; echo b > root/sub/b.txt; p6_dir_list_recursive root | p6_filter_translate_space_to_newline | p6_filter_sort"
 		p6_test_assert_run_ok "list_recursive" 0 "root/a.txt
 root/sub/b.txt"
 	)

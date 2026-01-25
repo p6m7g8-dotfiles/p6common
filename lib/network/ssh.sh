@@ -3,12 +3,17 @@
 ######################################################################
 #<
 #
-# Function: p6_ssh__debug()
+# Function: p6_ssh__debug(msg)
+#
+#  Args:
+#	msg - debug message
 #
 #>
+#/ Synopsis
+#/    Emits a debug message scoped to SSH helpers.
 ######################################################################
 p6_ssh__debug() {
-    local msg="$1"
+    local msg="$1" # debug message
 
     p6_debug "p6_ssh: $msg"
 
@@ -18,20 +23,19 @@ p6_ssh__debug() {
 ######################################################################
 #<
 #
-# Function: code rc = p6_ssh_key_check(priv, test_pub)
+# Function: p6_ssh_key_check(priv, test_pub)
 #
 #  Args:
-#	priv -
-#	test_pub -
-#
-#  Returns:
-#	code - rc
+#	priv - private key file
+#	test_pub - public key file to compare
 #
 #>
+#/ Synopsis
+#/    Compares a private key to a public key for a match.
 ######################################################################
 p6_ssh_key_check() {
-    local priv="$1"
-    local test_pub="$2"
+    local priv="$1"     # private key file
+    local test_pub="$2" # public key file to compare
 
     local dir=$(p6_transient_create "ssh-keygen")
 
@@ -54,12 +58,14 @@ p6_ssh_key_check() {
 # Function: p6_ssh_key_fingerprint(key_file_pub)
 #
 #  Args:
-#	key_file_pub -
+#	key_file_pub - public key file
 #
 #>
+#/ Synopsis
+#/    Prints the fingerprint for a public key.
 ######################################################################
 p6_ssh_key_fingerprint() {
-    local key_file_pub="$1"
+    local key_file_pub="$1" # public key file
 
     p6_run_read_cmd ssh-keygen -lf $key_file_pub
 
@@ -72,12 +78,14 @@ p6_ssh_key_fingerprint() {
 # Function: p6_ssh_key_add(key_file_priv)
 #
 #  Args:
-#	key_file_priv -
+#	key_file_priv - private key file
 #
 #>
+#/ Synopsis
+#/    Adds a private key to the ssh-agent.
 ######################################################################
 p6_ssh_key_add() {
-    local key_file_priv="$1"
+    local key_file_priv="$1" # private key file
 
     local flag_K
     local os=$(p6_os_name)
@@ -96,12 +104,14 @@ p6_ssh_key_add() {
 # Function: p6_ssh_key_delete(key_file_priv)
 #
 #  Args:
-#	key_file_priv -
+#	key_file_priv - private key file
 #
 #>
+#/ Synopsis
+#/    Removes all keys from ssh-agent (with OS-specific flags).
 ######################################################################
 p6_ssh_key_delete() {
-    local key_file_priv="$1"
+    local key_file_priv="$1" # private key file
 
     local flag_K
     local os=$(p6_os_name)
@@ -120,14 +130,16 @@ p6_ssh_key_delete() {
 # Function: p6_ssh_key_pub_from_priv(key_file_priv, [key_file_pub=${key_file_priv])
 #
 #  Args:
-#	key_file_priv -
-#	OPTIONAL key_file_pub - [${key_file_priv]
+#	key_file_priv - private key file
+#	OPTIONAL key_file_pub - public key file [${key_file_priv]
 #
 #>
+#/ Synopsis
+#/    Derives a public key from a private key file.
 ######################################################################
 p6_ssh_key_pub_from_priv() {
-    local key_file_priv="$1"
-    local key_file_pub="${2:-${key_file_priv}.pub}"
+    local key_file_priv="$1"               # private key file
+    local key_file_pub="${2:-${key_file_priv}.pub}" # public key file
 
     p6_run_write_cmd ssh-keygen -y -f $key_file_priv >$key_file_pub
 
@@ -140,12 +152,14 @@ p6_ssh_key_pub_from_priv() {
 # Function: p6_ssh_key_make(key_file_priv)
 #
 #  Args:
-#	key_file_priv -
+#	key_file_priv - private key file
 #
 #>
+#/ Synopsis
+#/    Creates a new ed25519 SSH key pair.
 ######################################################################
 p6_ssh_key_make() {
-    local key_file_priv="$1"
+    local key_file_priv="$1" # private key file
 
     p6_run_write_cmd ssh-keygen -t ed25519 -f $key_file_priv -N "''"
 
@@ -158,14 +172,16 @@ p6_ssh_key_make() {
 # Function: p6_ssh_key_remove(key_file_priv, [key_file_pub=${key_file_priv])
 #
 #  Args:
-#	key_file_priv -
-#	OPTIONAL key_file_pub - [${key_file_priv]
+#	key_file_priv - private key file
+#	OPTIONAL key_file_pub - public key file [${key_file_priv]
 #
 #>
+#/ Synopsis
+#/    Removes a private key and its associated public key.
 ######################################################################
 p6_ssh_key_remove() {
-    local key_file_priv="$1"
-    local key_file_pub="${2:-${key_file_priv}.pub}"
+    local key_file_priv="$1"               # private key file
+    local key_file_pub="${2:-${key_file_priv}.pub}" # public key file
 
     p6_file_rmf $key_file_pub
     p6_file_rmf $key_file_priv
@@ -179,12 +195,14 @@ p6_ssh_key_remove() {
 # Function: p6_ssh_keys_chmod(key_file_priv)
 #
 #  Args:
-#	key_file_priv -
+#	key_file_priv - private key file
 #
 #>
+#/ Synopsis
+#/    Sets secure permissions on the private key and its directory.
 ######################################################################
 p6_ssh_keys_chmod() {
-    local key_file_priv="$1"
+    local key_file_priv="$1" # private key file
 
     local dir=$(p6_uri_path "$key_file_priv")
 

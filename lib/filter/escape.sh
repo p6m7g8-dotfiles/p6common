@@ -9,6 +9,8 @@
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Escape single quotes for SQL string literals.
 ######################################################################
 p6_filter_sql_escape_single_quote() {
 

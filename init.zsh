@@ -41,8 +41,8 @@ p6df::modules::p6common::gha::ModuleDeps() {
   local dep
   local deps=$(
     for dep in $ModuleDeps; do
-      echo $dep | cut -d: -f 1
-    done | sort -u | grep -v p6common
+      echo $dep | p6_filter_column_pluck 1 ":"
+    done | p6_filter_sort_unique | p6_filter_row_exclude "p6common"
   )
 
   local repo
@@ -50,4 +50,3 @@ p6df::modules::p6common::gha::ModuleDeps() {
       git clone https://github.com/$repo
   done
 }
-

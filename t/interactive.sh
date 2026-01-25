@@ -16,7 +16,7 @@ main() {
 
     p6_test_start "p6_int_confirm_ask"
     (
-        p6_test_run "printf 'Y\n' | p6_int_confirm_ask"
+        p6_test_run "printf \"Y${P6_NL}\" | p6_int_confirm_ask"
         p6_test_assert_run_rc "confirm: rc" 0
         p6_test_assert_not_blank "$(p6_test_run_stdout)" "confirm: prompt"
         p6_test_assert_blank "$(p6_test_run_stderr)" "confirm: stderr blank"

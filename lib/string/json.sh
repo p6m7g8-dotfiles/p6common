@@ -3,12 +3,17 @@
 ######################################################################
 #<
 #
-# Function: p6_json__debug()
+# Function: p6_json__debug(msg)
+#
+#  Args:
+#	msg - debug message
 #
 #>
+#/ Synopsis
+#/    Emit a namespaced debug message for JSON helpers.
 ######################################################################
 p6_json__debug() {
-    local msg="$1"
+    local msg="$1" # debug message
 
     p6_debug "p6_json: $msg"
 
@@ -21,14 +26,16 @@ p6_json__debug() {
 # Function: p6_json_eval(json, ...)
 #
 #  Args:
-#	json -
-#	... - 
+#	json - JSON input
+#	... - jq filter and options
 #
 #>
+#/ Synopsis
+#/    Run jq against a JSON string.
 ######################################################################
 p6_json_eval() {
-    local json="$1"
-    shift 1
+    local json="$1" # JSON input
+    shift 1         # jq filter and options
 
     p6_echo "$json" | jq "$@"
 }
@@ -39,12 +46,14 @@ p6_json_eval() {
 # Function: p6_json_from_file(file)
 #
 #  Args:
-#	file -
+#	file - JSON file path
 #
 #>
+#/ Synopsis
+#/    Output JSON content from a file.
 ######################################################################
 p6_json_from_file() {
-    local file="$1"
+    local file="$1" # JSON file path
 
     jq <"$file"
 

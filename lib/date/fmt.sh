@@ -3,7 +3,14 @@
 ######################################################################
 #<
 #
-# Function: p6_date_fmt__date()
+# Function: p6_date_fmt__date(input_date, input_fmt, output_fmt, offset, offset_fmt)
+#
+#  Args:
+#	input_date - input date string
+#	input_fmt - input format
+#	output_fmt - output format
+#	offset - offset expression
+#	offset_fmt - offset format suffix
 #
 #>
 #/ Synopsis
@@ -12,11 +19,11 @@
 #/    specified format.
 ######################################################################
 p6_date_fmt__date() {
-    local input_date="$1"
-    local input_fmt="$2"
-    local output_fmt="$3"
-    local offset="$4"
-    local offset_fmt="$5"
+    local input_date="$1" # input date string
+    local input_fmt="$2"  # input format
+    local output_fmt="$3" # output format
+    local offset="$4"     # offset expression
+    local offset_fmt="$5" # offset format suffix
 
     local cli_args=""
 
@@ -51,12 +58,14 @@ p6_date_fmt__date() {
 # Function: p6_date_fmt__cli(...)
 #
 #  Args:
-#	... - 
+#	... - date(1) arguments
 #
 #>
+#/ Synopsis
+#/    Executes the system date command with the provided arguments.
 ######################################################################
 p6_date_fmt__cli() {
-    shift 0
+    shift 0 # date(1) arguments
 
     p6_run_code "date" "$@"
 }
@@ -67,12 +76,14 @@ p6_date_fmt__cli() {
 # Function: p6_date_fmt_relative_to_absolute(relative)
 #
 #  Args:
-#	relative -
+#	relative - relative duration string
 #
 #>
+#/ Synopsis
+#/    Converts a relative duration (e.g. "3 days") to an absolute date.
 ######################################################################
 p6_date_fmt_relative_to_absolute() {
-    local relative="$1"
+    local relative="$1" # relative duration string
 
     local number=$(p6_echo "$relative" | p6_filter_column_pluck "1")
     local unit=$(p6_echo "$relative" | p6_filter_column_pluck "2")

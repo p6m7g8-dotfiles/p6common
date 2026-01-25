@@ -3,12 +3,17 @@
 ######################################################################
 #<
 #
-# Function: p6_path__debug()
+# Function: p6_path__debug(msg)
+#
+#  Args:
+#	msg - debug message
 #
 #>
+#/ Synopsis
+#/    Emit a namespaced debug message for PATH helpers.
 ######################################################################
 p6_path__debug() {
-    local msg="$1"
+    local msg="$1" # debug message
 
     p6_debug "p6_path: $msg"
 
@@ -21,8 +26,8 @@ p6_path__debug() {
 # Function: true  = p6_path_if(dir, [where=append])
 #
 #  Args:
-#	dir -
-#	OPTIONAL where - [append]
+#	dir - directory path
+#	OPTIONAL where - append or prepend [append]
 #
 #  Returns:
 #	true - 
@@ -30,10 +35,12 @@ p6_path__debug() {
 #
 #  Environment:	 PATH
 #>
+#/ Synopsis
+#/    Add a directory to PATH when it exists.
 ######################################################################
 p6_path_if() {
-    local dir=$1
-    local where="${2:-append}"
+    local dir=$1          # directory path
+    local where="${2:-append}" # append or prepend
 
     if p6_dir_exists "$dir"; then
       if p6_string_eq "$where" "prepend"; then
@@ -56,6 +63,8 @@ p6_path_if() {
 #
 #  Environment:	 HOME PATH
 #>
+#/ Synopsis
+#/    Reset PATH to a standard set of directories.
 ######################################################################
 p6_path_default() {
 
@@ -83,6 +92,8 @@ p6_path_default() {
 #
 #  Environment:	 PATH
 #>
+#/ Synopsis
+#/    Print the current PATH entries vertically.
 ######################################################################
 p6_path_current() {
 
@@ -98,6 +109,8 @@ p6_path_current() {
 #
 #  Environment:	 CDPATH
 #>
+#/ Synopsis
+#/    Print the current CDPATH entries vertically.
 ######################################################################
 p6_cdpath_current() {
 

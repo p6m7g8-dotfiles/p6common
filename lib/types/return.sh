@@ -3,12 +3,11 @@
 ######################################################################
 #<
 #
-# Function: code  = p6_return_true()
+# Function: true  = p6_return_true()
 #
 #  Returns:
-#	code - 
+#	true - 
 #
-#  Environment:	 P6_TRUE
 #>
 #/ Synopsis
 #/    Suitable for use in conditionals
@@ -22,12 +21,11 @@ p6_return_true() {
 ######################################################################
 #<
 #
-# Function: code  = p6_return_false()
+# Function: false  = p6_return_false()
 #
 #  Returns:
-#	code - 
+#	false - 
 #
-#  Environment:	 P6_FALSE
 #>
 #/ Synopsis
 #/    Suitable for use in conditionals
@@ -59,13 +57,13 @@ p6_return_void() {
 ######################################################################
 #<
 #
-# Function: code bool = p6_return_bool(bool)
+# Function: bool  = p6_return_bool(bool)
 #
 #  Args:
-#	bool -
+#	bool - boolean value (0 or 1)
 #
 #  Returns:
-#	code - bool
+#	bool - 
 #
 #  Environment:	 P6_EXIT_ARGS
 #>
@@ -76,7 +74,7 @@ p6_return_void() {
 #/
 ######################################################################
 p6_return_bool() {
-    local bool="$1"
+    local bool="$1" # boolean value (0 or 1)
 
     case $bool in
     0 | 1) ;;
@@ -93,10 +91,13 @@ p6_return_bool() {
 ######################################################################
 #<
 #
-# Function: p6_return_size_t(size_t)
+# Function: size_t  = p6_return_size_t(size_t)
 #
 #  Args:
-#	size_t -
+#	size_t - non-negative integer
+#
+#  Returns:
+#	size_t - 
 #
 #  Environment:	 P6_EXIT_ARGS
 #>
@@ -106,7 +107,7 @@ p6_return_bool() {
 #/
 ######################################################################
 p6_return_size_t() {
-    local size_t="$1"
+    local size_t="$1" # non-negative integer
 
     case $size_t in
     [0-9]*) ;;
@@ -123,10 +124,13 @@ p6_return_size_t() {
 ######################################################################
 #<
 #
-# Function: p6_return_int(int)
+# Function: int  = p6_return_int(int)
 #
 #  Args:
-#	int -
+#	int - integer (positive or negative)
+#
+#  Returns:
+#	int - 
 #
 #  Environment:	 P6_EXIT_ARGS
 #>
@@ -135,7 +139,7 @@ p6_return_size_t() {
 #/
 ######################################################################
 p6_return_int() {
-    local int="$1"
+    local int="$1" # integer (positive or negative)
 
     case $int in
     -[0-9]*) ;;
@@ -149,10 +153,13 @@ p6_return_int() {
 ######################################################################
 #<
 #
-# Function: p6_return_float(float)
+# Function: float  = p6_return_float(float)
 #
 #  Args:
-#	float -
+#	float - floating-point number
+#
+#  Returns:
+#	float - 
 #
 #  Environment:	 P6_EXIT_ARGS
 #>
@@ -162,7 +169,7 @@ p6_return_int() {
 #/
 ######################################################################
 p6_return_float() {
-    local float="$1"
+    local float="$1" # floating-point number
 
     case $float in
     *.*) ;;
@@ -175,10 +182,10 @@ p6_return_float() {
 ######################################################################
 #<
 #
-# Function: code rc = p6_return_filter()
+# Function: filter  = p6_return_filter()
 #
 #  Returns:
-#	code - rc
+#	filter - 
 #
 #>
 #/ Synopsis
@@ -195,10 +202,13 @@ p6_return_filter() {
 ######################################################################
 #<
 #
-# Function: p6_return_ipv4(ip)
+# Function: ipv4  = p6_return_ipv4(ip)
 #
 #  Args:
-#	ip -
+#	ip - IPv4 address string
+#
+#  Returns:
+#	ipv4 - 
 #
 #  Environment:	 IFS P6_EXIT_ARGS
 #>
@@ -207,10 +217,10 @@ p6_return_filter() {
 #/
 ######################################################################
 p6_return_ipv4() {
-    local ip="$1"
+    local ip="$1" # IPv4 address string
 
     local valid=false
-    if p6_echo "$ip" | grep -qE '^([0-9]{1,3}\.){3}[0-9]{1,3}$'; then
+    if p6_string_match_regex "$ip" '^([0-9]{1,3}\.){3}[0-9]{1,3}$'; then
         local octet1
         local octet2
         local octet3
@@ -241,9 +251,10 @@ EOF
 ######################################################################
 #<
 #
-# Function: true  = p6_return_stream()
+# Function: stream  = p6_return_stream()
 #
 #  Returns:
+#	stream - 
 #	true - 
 #
 #>
@@ -259,10 +270,13 @@ p6_return_stream() {
 ######################################################################
 #<
 #
-# Function: p6_return_str(str)
+# Function: str  = p6_return_str(str)
 #
 #  Args:
-#	str -
+#	str - string value (blanks allowed)
+#
+#  Returns:
+#	str - 
 #
 #>
 #/ Synopsis
@@ -271,7 +285,7 @@ p6_return_stream() {
 #/
 ######################################################################
 p6_return_str() {
-    local str="$1"
+    local str="$1" # string value (blanks allowed)
 
     p6_return "$str"
 }
@@ -279,10 +293,13 @@ p6_return_str() {
 ######################################################################
 #<
 #
-# Function: p6_return_path(path)
+# Function: path  = p6_return_path(path)
 #
 #  Args:
-#	path -
+#	path - unix-like path string
+#
+#  Returns:
+#	path - 
 #
 #  Environment:	 P6_EXIT_ARGS
 #>
@@ -293,7 +310,7 @@ p6_return_str() {
 #/
 ######################################################################
 p6_return_path() {
-    local path="$1"
+    local path="$1" # unix-like path string
 
     case $path in
     ''|*[!a-zA-Z0-9/_@+~.,-]*)
@@ -310,7 +327,7 @@ p6_return_path() {
 # Function: p6_return_date(date)
 #
 #  Args:
-#	date -
+#	date - date string in accepted formats
 #
 #  Environment:	 P6_EXIT_ARGS
 #>
@@ -320,7 +337,7 @@ p6_return_path() {
 #/
 ######################################################################
 p6_return_date() {
-    local date="$1"
+    local date="$1" # date string in accepted formats
 
     case $date in
     [0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]) ;;  # Full ISO8601 with time  # %Y-%m-%dT%H:%M:%S
@@ -343,10 +360,13 @@ p6_return_date() {
 ######################################################################
 #<
 #
-# Function: p6_return_words(words)
+# Function: words  = p6_return_words(words)
 #
 #  Args:
-#	words -
+#	words - words list (preserves splits)
+#
+#  Returns:
+#	words - 
 #
 #>
 #/ Synopsis
@@ -356,7 +376,7 @@ p6_return_date() {
 #/
 ######################################################################
 p6_return_words() {
-    local words="$@"
+    local words="$@" # words list (preserves splits)
 
     p6_return "$words"
 }
@@ -364,18 +384,17 @@ p6_return_words() {
 ######################################################################
 #<
 #
-# Function: code rc = p6_return_code_as_code(rc)
+# Function: p6_return_code_as_code(rc)
 #
 #  Args:
-#	rc -
-#
-#  Returns:
-#	code - rc
+#	rc - return code (0..255)
 #
 #>
+#/ Synopsis
+#/    Validates rc and returns it as the function exit code.
 ######################################################################
 p6_return_code_as_code() {
-    local rc="$1"
+    local rc="$1" # return code (0..255)
 
     p6_return_code__validate "$rc"
 
@@ -385,18 +404,17 @@ p6_return_code_as_code() {
 ######################################################################
 #<
 #
-# Function: code rc = p6_return_code_as_value(rc)
+# Function: p6_return_code_as_value(rc)
 #
 #  Args:
-#	rc -
-#
-#  Returns:
-#	code - rc
+#	rc - return code (0..255)
 #
 #>
+#/ Synopsis
+#/    Validates rc and prints it to stdout.
 ######################################################################
 p6_return_code_as_value() {
-    local rc="$1"
+    local rc="$1" # return code (0..255)
 
     p6_return_code__validate "$rc"
 
@@ -409,15 +427,17 @@ p6_return_code_as_value() {
 # Function: true  = p6_return(rv)
 #
 #  Args:
-#	rv -
+#	rv - value to echo
 #
 #  Returns:
 #	true - 
 #
 #>
+#/ Synopsis
+#/    Prints rv to stdout and returns success.
 ######################################################################
 p6_return() {
-    local rv="$1"
+    local rv="$1" # value to echo
 
     p6_echo "$rv"
 
@@ -434,9 +454,11 @@ p6_return() {
 #
 #  Environment:	 P6_EXIT_ARGS
 #>
+#/ Synopsis
+#/    Ensures rc is a numeric return code between 0 and 255.
 ######################################################################
 p6_return_code__validate() {
-    local rc="$rc"
+    local rc="$rc" # return code (0..255)
 
     if [ -z "$rc" ]; then
         p6_error "p6_return: code(): rc is blank, caller is wrong"

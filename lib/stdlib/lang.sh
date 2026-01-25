@@ -3,12 +3,17 @@
 ######################################################################
 #<
 #
-# Function: p6_lang__debug()
+# Function: p6_lang__debug(msg)
+#
+#  Args:
+#	msg - debug message
 #
 #>
+#/ Synopsis
+#/    Emit a namespaced debug message for language helpers.
 ######################################################################
 p6_lang__debug() {
-    local msg="$1"
+    local msg="$1" # debug message
 
     p6_debug "p6_langs: $msg"
 
@@ -21,32 +26,36 @@ p6_lang__debug() {
 # Function: str ver = p6_lang_version(prefix)
 #
 #  Args:
-#	prefix -
+#	prefix - language prefix (py, rb, node, etc.)
 #
 #  Returns:
 #	str - ver
 #	str - v
 #
 #>
+#/ Synopsis
+#/    Return the active version for a language prefix.
 ######################################################################
 p6_lang_version() {
-    local prefix="$1"
+    local prefix="$1" # language prefix (py, rb, node, etc.)
 
     if p6_string_eq "$prefix" "py"; then
         local ver=$(uv python pin 2>/dev/null)
         p6_return_str "$ver"
     else
       local cmd="${prefix}env"
-      cmd=$(p6_echo "$cmd" | sed -e 's,nodeenv,nodenv,')
+      cmd=$(p6_string_nodeenv_to_nodenv "$cmd")
 
       local ver
 
       if p6_run_code "command -v $cmd > /dev/null"; then
           ver="$(p6_run_code $cmd version-name 2>/dev/null)"
 
-          local v=$(p6_echo "$ver" | sed -e "s,$prefix,," -e 's,^-,,')
+          local v
+          v=$(p6_string_strip_prefix "$ver" "$prefix")
+          v=$(p6_string_strip_prefix "$v" "-")
 
-          if [ x"$v" = x"system" ]; then
+          if p6_string_eq "$v" "system"; then
               p6_lang_system_version "$prefix"
           else
               p6_return_str "$v"
@@ -63,7 +72,7 @@ p6_lang_version() {
 # Function: str ver = p6_lang_system_version(prefix)
 #
 #  Args:
-#	prefix -
+#	prefix - language prefix
 #
 #  Returns:
 #	str - ver
@@ -71,9 +80,11 @@ p6_lang_version() {
 #	str - no
 #
 #>
+#/ Synopsis
+#/    Return the system version for a language prefix.
 ######################################################################
 p6_lang_system_version() {
-    local prefix="$1"
+    local prefix="$1" # language prefix
 
     local rcmd=$(p6_lang_env_2_cmd "$prefix")
 
@@ -81,16 +92,16 @@ p6_lang_system_version() {
         local ver
         case $prefix in
         py) ver=$(uv python pin 2>/dev/null) ;;
-        rb) ver=$($rcmd -v | awk '{print $2}') ;;
-        pl) ver=$($rcmd -v | sed -e 's,.*(,,' -e 's,).*,,' | grep ^v5 | sed -e 's,^v,,') ;;
-        go) ver=$($rcmd version | awk '{print $3}' | sed -e 's,^go,,') ;;
-        node) ver=$($rcmd -v | sed -e 's,v,,') ;;
-        j) ver=$($rcmd -version 2>&1 | grep Environment | sed -e 's,.*(build ,,' -e 's,).*,,') ;;
-        jl) ver=$($rcmd -v | awk '{print $3}') ;;
-        R) ver=$($rcmd --version | awk '/ version / { print $3}') ;;
-        scala) ver=$($rcmd -nc -version 2>&1 | awk '{print $5}') ;;
-        lua) ver=$($rcmd -v | awk '{print $2}') ;;
-        rust) ver=$($rcmd -V | awk '{print $2}') ;;
+        rb) ver=$($rcmd -v | p6_filter_column_pluck 2) ;;
+        pl) ver=$($rcmd -v | p6_filter_extract_between "(" ")" | p6_filter_row_select "^v5" | p6_filter_strip_leading_v) ;;
+        go) ver=$($rcmd version | p6_filter_column_pluck 3 | p6_filter_strip_leading_go) ;;
+        node) ver=$($rcmd -v | p6_filter_strip_leading_v) ;;
+        j) ver=$($rcmd -version 2>&1 | p6_filter_row_select "Environment" | p6_filter_extract_between "(build " ")") ;;
+        jl) ver=$($rcmd -v | p6_filter_column_pluck 3) ;;
+        R) ver=$($rcmd --version | p6_filter_row_select " version " | p6_filter_column_pluck 3) ;;
+        scala) ver=$($rcmd -nc -version 2>&1 | p6_filter_column_pluck 5) ;;
+        lua) ver=$($rcmd -v | p6_filter_column_pluck 2) ;;
+        rust) ver=$($rcmd -V | p6_filter_column_pluck 2) ;;
         esac
         if p6_string_eq "rust" "$prefix"; then
             p6_return_str "$ver"
@@ -108,15 +119,17 @@ p6_lang_system_version() {
 # Function: str prefix = p6_lang_cmd_2_env(cmd)
 #
 #  Args:
-#	cmd -
+#	cmd - command name
 #
 #  Returns:
 #	str - prefix
 #
 #>
+#/ Synopsis
+#/    Map a language command to its prefix.
 ######################################################################
 p6_lang_cmd_2_env() {
-    local cmd="$1"
+    local cmd="$1" # command name
 
     local prefix
     case $cmd in
@@ -142,15 +155,17 @@ p6_lang_cmd_2_env() {
 # Function: str rcmd = p6_lang_env_2_cmd(prefix)
 #
 #  Args:
-#	prefix -
+#	prefix - language prefix
 #
 #  Returns:
 #	str - rcmd
 #
 #>
+#/ Synopsis
+#/    Map a language prefix to its command name.
 ######################################################################
 p6_lang_env_2_cmd() {
-    local prefix="$1"
+    local prefix="$1" # language prefix
 
     local rcmd
     case $prefix in
