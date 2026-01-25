@@ -37,7 +37,7 @@ main() {
 
     p6_test_start "p6_env_list_p6"
     (
-        p6_test_run "P6_TEST_ENV=1; export P6_TEST_ENV; p6_env_list_p6 | grep '^P6_TEST_ENV=1$'"
+        p6_test_run "P6_TEST_ENV=1; export P6_TEST_ENV; p6_env_list_p6 | p6_filter_row_select_regex '^P6_TEST_ENV=1$'"
         p6_test_assert_run_ok "env_list_p6" 0 "P6_TEST_ENV=1"
     )
     p6_test_finish

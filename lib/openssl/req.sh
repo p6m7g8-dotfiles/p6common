@@ -3,9 +3,16 @@
 ######################################################################
 #<
 #
-# Function: p6_openssl_req_csr_create()
+# Function: p6_openssl_req_csr_create(key_file, csr_file, subject)
+#
+#  Args:
+#	key_file - name of Key File (created)
+#	csr_file - name of Certificate Signing Request file (created)
+#	subject - I.E:  "/C=US/ST=Maryland/L=Bowie/O=P6M7G8/OU=Technology/CN=p6m7g8.net"
 #
 #>
+#/ Synopsis
+#/    Generates a new RSA key and CSR with the provided subject.
 ######################################################################
 p6_openssl_req_csr_create() {
     local key_file="$1" # name of Key File (created)

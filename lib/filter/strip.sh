@@ -3,16 +3,18 @@
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_single_quote_strip()
+# Function: filter  = p6_filter_dos2unix()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Convert CRLF line endings to LF.
 ######################################################################
-p6_filter_single_quote_strip() {
+p6_filter_dos2unix() {
 
-    sed -e "s,',,g"
+    dos2unix
 
     p6_return_filter
 }
@@ -20,16 +22,18 @@ p6_filter_single_quote_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_double_quote_strip()
+# Function: filter  = p6_filter_strip_single_quote()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Strip single quotes from each line.
 ######################################################################
-p6_filter_double_quote_strip() {
+p6_filter_strip_single_quote() {
 
-    sed -e 's,",,g'
+    p6_filter__string_apply p6_string_strip_single_quote
 
     p6_return_filter
 }
@@ -37,16 +41,18 @@ p6_filter_double_quote_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_quotes_strip()
+# Function: filter  = p6_filter_strip_double_quote()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Strip double quotes from each line.
 ######################################################################
-p6_filter_quotes_strip() {
+p6_filter_strip_double_quote() {
 
-    sed -e "s,[\"\'],,g"
+    p6_filter__string_apply p6_string_strip_double_quote
 
     p6_return_filter
 }
@@ -54,16 +60,18 @@ p6_filter_quotes_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_leading_spaces_strip()
+# Function: filter  = p6_filter_strip_quotes()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Strip both single and double quotes from each line.
 ######################################################################
-p6_filter_leading_spaces_strip() {
+p6_filter_strip_quotes() {
 
-    sed -e 's,^ *,,g'
+    p6_filter__string_apply p6_string_strip_quotes
 
     p6_return_filter
 }
@@ -71,16 +79,22 @@ p6_filter_leading_spaces_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_trailing_spaces_strip()
+# Function: filter  = p6_filter_strip_chars(chars)
+#
+#  Args:
+#	chars - characters to remove
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Strip the specified characters from each line.
 ######################################################################
-p6_filter_trailing_spaces_strip() {
+p6_filter_strip_chars() {
+    local chars="$1" # characters to remove
 
-    sed -e 's, *$,,g'
+    p6_filter__string_apply p6_string_strip_chars "$chars"
 
     p6_return_filter
 }
@@ -88,16 +102,18 @@ p6_filter_trailing_spaces_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_leading_and_trailing_spaces_strip()
+# Function: filter  = p6_filter_strip_leading_spaces()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Strip leading spaces from each line.
 ######################################################################
-p6_filter_leading_and_trailing_spaces_strip() {
+p6_filter_strip_leading_spaces() {
 
-    p6_filter_trailing_spaces_strip | p6_filter_leading_spaces_strip
+    p6_filter__string_apply p6_string_strip_leading_spaces
 
     p6_return_filter
 }
@@ -105,16 +121,18 @@ p6_filter_leading_and_trailing_spaces_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_spaces_strip()
+# Function: filter  = p6_filter_strip_trailing_spaces()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Strip trailing spaces from each line.
 ######################################################################
-p6_filter_spaces_strip() {
+p6_filter_strip_trailing_spaces() {
 
-    sed -e 's, *,,g'
+    p6_filter__string_apply p6_string_strip_trailing_spaces
 
     p6_return_filter
 }
@@ -122,16 +140,18 @@ p6_filter_spaces_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_alnum_strip()
+# Function: filter  = p6_filter_strip_leading_and_trailing_spaces()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Strip leading and trailing spaces from each line.
 ######################################################################
-p6_filter_alnum_strip() {
+p6_filter_strip_leading_and_trailing_spaces() {
 
-    sed -e 's,[a-zA-Z0-9],,g'
+    p6_filter__string_apply p6_string_strip_leading_and_trailing_spaces
 
     p6_return_filter
 }
@@ -139,16 +159,18 @@ p6_filter_alnum_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_alnum_and_underscore_strip()
+# Function: filter  = p6_filter_strip_spaces()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Remove all spaces from each line.
 ######################################################################
-p6_filter_alnum_and_underscore_strip() {
+p6_filter_strip_spaces() {
 
-    sed -e 's,[a-zA-Z0-9_],,g'
+    p6_filter__string_apply p6_string_strip_spaces
 
     p6_return_filter
 }
@@ -156,16 +178,56 @@ p6_filter_alnum_and_underscore_strip() {
 ######################################################################
 #<
 #
-# Function: filter  = p6_filter_trailing_slash_strip()
+# Function: filter  = p6_filter_strip_alum()
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Remove alphanumeric characters from each line.
 ######################################################################
-p6_filter_trailing_slash_strip() {
+p6_filter_strip_alum() {
 
-    sed -e 's,/$,,'
+    p6_filter__string_apply p6_string_strip_alum
+
+    p6_return_filter
+}
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_strip_alum_and_underscore()
+#
+#  Returns:
+#	filter - 
+#
+#>
+#/ Synopsis
+#/    Remove alphanumerics and underscores from each line.
+######################################################################
+p6_filter_strip_alum_and_underscore() {
+
+    p6_filter__string_apply p6_string_strip_alum_and_underscore
+
+    p6_return_filter
+}
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_strip_trailing_slash()
+#
+#  Returns:
+#	filter - 
+#
+#>
+#/ Synopsis
+#/    Strip a trailing slash from each line.
+######################################################################
+p6_filter_strip_trailing_slash() {
+
+    p6_filter__string_apply p6_string_strip_trailing_slash
 
     p6_return_filter
 }

@@ -3,19 +3,18 @@
 ######################################################################
 #<
 #
-# Function: path = p6_test_state_init([base_dir=${TMPDIR:-/tmp}])
+# Function: p6_test_state_init([base_dir=${TMPDIR:-/tmp])
 #
 #  Args:
-#	OPTIONAL base_dir - [${TMPDIR:-/tmp}]
-#
-#  Returns:
-#	path - state dir
+#	OPTIONAL base_dir - [${TMPDIR:-/tmp]
 #
 #  Environment:	 TMPDIR
 #>
+#/ Synopsis
+#/    Creates a temporary test state directory and prints its path.
 ######################################################################
 p6_test_state_init() {
-  local base_dir="${1:-${TMPDIR:-/tmp}}"
+  local base_dir="${1:-${TMPDIR:-/tmp}}" # base temp directory
 
   local base
   base="${base_dir%/}"
@@ -35,9 +34,11 @@ p6_test_state_init() {
 #	state_dir -
 #
 #>
+#/ Synopsis
+#/    Removes a test state directory if it exists.
 ######################################################################
 p6_test_state_cleanup() {
-  local state_dir="$1"
+  local state_dir="$1" # state directory
 
   if [ -n "$state_dir" ] && [ -d "$state_dir" ]; then
     rm -rf "$state_dir"
@@ -49,20 +50,19 @@ p6_test_state_cleanup() {
 ######################################################################
 #<
 #
-# Function: path = p6_test_state_path(state_dir, key)
+# Function: p6_test_state_path(state_dir, key)
 #
 #  Args:
 #	state_dir -
 #	key -
 #
-#  Returns:
-#	path -
-#
 #>
+#/ Synopsis
+#/    Builds the path for a state key file.
 ######################################################################
 p6_test_state_path() {
-  local state_dir="$1"
-  local key="$2"
+  local state_dir="$1" # state directory
+  local key="$2"       # state key
 
   printf '%s/%s\n' "$state_dir" "$key"
 }
@@ -78,11 +78,13 @@ p6_test_state_path() {
 #	value -
 #
 #>
+#/ Synopsis
+#/    Writes a state value to its key file.
 ######################################################################
 p6_test_state_set() {
-  local state_dir="$1"
-  local key="$2"
-  local value="$3"
+  local state_dir="$1" # state directory
+  local key="$2"       # state key
+  local value="$3"     # value to store
 
   printf '%s\n' "$value" >"$(p6_test_state_path "$state_dir" "$key")"
 }
@@ -90,22 +92,21 @@ p6_test_state_set() {
 ######################################################################
 #<
 #
-# Function: str = p6_test_state_get(state_dir, key, [default=])
+# Function: p6_test_state_get(state_dir, key, [default=])
 #
 #  Args:
 #	state_dir -
 #	key -
 #	OPTIONAL default - []
 #
-#  Returns:
-#	str -
-#
 #>
+#/ Synopsis
+#/    Reads a state value, returning default when missing.
 ######################################################################
 p6_test_state_get() {
-  local state_dir="$1"
-  local key="$2"
-  local default="${3:-}"
+  local state_dir="$1"   # state directory
+  local key="$2"         # state key
+  local default="${3:-}" # fallback value
 
   local file_path
   file_path=$(p6_test_state_path "$state_dir" "$key")
@@ -120,20 +121,19 @@ p6_test_state_get() {
 ######################################################################
 #<
 #
-# Function: int = p6_test_state_inc(state_dir, key)
+# Function: p6_test_state_inc(state_dir, key)
 #
 #  Args:
 #	state_dir -
 #	key -
 #
-#  Returns:
-#	int -
-#
 #>
+#/ Synopsis
+#/    Increments a numeric state value and prints it.
 ######################################################################
 p6_test_state_inc() {
-  local state_dir="$1"
-  local key="$2"
+  local state_dir="$1" # state directory
+  local key="$2"       # state key
 
   local current
   current=$(p6_test_state_get "$state_dir" "$key" "0")
@@ -146,20 +146,19 @@ p6_test_state_inc() {
 ######################################################################
 #<
 #
-# Function: path = p6_test_state_mkdir(state_dir, subdir)
+# Function: p6_test_state_mkdir(state_dir, subdir)
 #
 #  Args:
 #	state_dir -
 #	subdir -
 #
-#  Returns:
-#	path -
-#
 #>
+#/ Synopsis
+#/    Creates a subdirectory under the state directory.
 ######################################################################
 p6_test_state_mkdir() {
-  local state_dir="$1"
-  local subdir="$2"
+  local state_dir="$1" # state directory
+  local subdir="$2"    # subdirectory name
 
   mkdir -p "$state_dir/$subdir"
   printf '%s/%s\n' "$state_dir" "$subdir"
@@ -168,19 +167,18 @@ p6_test_state_mkdir() {
 ######################################################################
 #<
 #
-# Function: path = p6_test_state_locate([start_dir=$PWD])
+# Function: p6_test_state_locate([start_dir=$PWD])
 #
 #  Args:
 #	OPTIONAL start_dir - [$PWD]
 #
-#  Returns:
-#	path -
-#
 #  Environment:	 PWD
 #>
+#/ Synopsis
+#/    Locates the nearest .p6-test-state file and prints its path.
 ######################################################################
 p6_test_state_locate() {
-  local start_dir="${1:-$PWD}"
+  local start_dir="${1:-$PWD}" # search start directory
 
   local dir="$start_dir"
   while true; do

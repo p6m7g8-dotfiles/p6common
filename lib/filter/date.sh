@@ -9,6 +9,8 @@
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Convert millisecond epoch values to local ISO8601 timestamps.
 ######################################################################
 p6_filter_translate_ms_epoch_to_iso8601_local() {
 
@@ -23,21 +25,23 @@ p6_filter_translate_ms_epoch_to_iso8601_local() {
 # Function: filter  = p6_filter_translate_date_to_iso8601_utc(column, input_fmt, ofs, fs)
 #
 #  Args:
-#	column -
-#	input_fmt -
-#	ofs -
-#	fs -
+#	column - column index
+#	input_fmt - input date format
+#	ofs - output field separator
+#	fs - input field separator
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Replace a date column with UTC ISO8601 timestamps.
 ######################################################################
 p6_filter_translate_date_to_iso8601_utc() {
-    local column="$1"
-    local input_fmt="$2"
-    local ofs="$3"
-    local fs="$4"
+    local column="$1"    # column index
+    local input_fmt="$2" # input date format
+    local ofs="$3"       # output field separator
+    local fs="$4"        # input field separator
 
     # preserve STDIN for filter pipe chain
     local line

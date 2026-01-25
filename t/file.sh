@@ -75,7 +75,7 @@ main() {
 
     p6_test_start "p6_file_line_delete_last"
     (
-        p6_test_run "printf 'a\nb\n' > lines.txt; p6_file_line_delete_last lines.txt; cat lines.txt"
+        p6_test_run "printf \"a${P6_NL}b${P6_NL}\" > lines.txt; p6_file_line_delete_last lines.txt; cat lines.txt"
         p6_test_assert_run_ok "delete last" 0 "a"
     )
     p6_test_finish
@@ -175,45 +175,42 @@ b"
 
     p6_test_start "p6_file_line_first"
     (
-        p6_test_run "printf 'a\nb\nc\n' > rows.txt; p6_file_line_first rows.txt"
+        p6_test_run "printf \"a${P6_NL}b${P6_NL}c${P6_NL}\" > rows.txt; p6_file_line_first rows.txt"
         p6_test_assert_run_ok "line_first" 0 "a"
     )
     p6_test_finish
 
     p6_test_start "p6_file_lines_last"
     (
-        p6_test_run "printf 'a\nb\nc\n' > rows.txt; p6_file_lines_last rows.txt 2"
-        p6_test_assert_run_ok "lines_last" 0 "b
-c"
+        p6_test_run "printf \"a${P6_NL}b${P6_NL}c${P6_NL}\" > rows.txt; p6_file_lines_last rows.txt 2"
+        p6_test_assert_run_ok "lines_last" 0 "b${P6_NL}c"
     )
     p6_test_finish
 
     p6_test_start "p6_file_lines"
     (
-        p6_test_run "printf 'a\nb\nc\n' > rows.txt; p6_file_lines rows.txt"
+        p6_test_run "printf \"a${P6_NL}b${P6_NL}c${P6_NL}\" > rows.txt; p6_file_lines rows.txt"
         p6_test_assert_run_ok "lines" 0 "3"
     )
     p6_test_finish
 
     p6_test_start "p6_file_lines_except_first"
     (
-        p6_test_run "printf 'a\nb\nc\n' > rows.txt; p6_file_lines_except_first rows.txt"
-        p6_test_assert_run_ok "lines_except_first" 0 "b
-c"
+        p6_test_run "printf \"a${P6_NL}b${P6_NL}c${P6_NL}\" > rows.txt; p6_file_lines_except_first rows.txt"
+        p6_test_assert_run_ok "lines_except_first" 0 "b${P6_NL}c"
     )
     p6_test_finish
 
     p6_test_start "p6_file_lines_first"
     (
-        p6_test_run "printf 'a\nb\nc\n' > rows.txt; p6_file_lines_first rows.txt 2"
-        p6_test_assert_run_ok "lines_first" 0 "a
-b"
+        p6_test_run "printf \"a${P6_NL}b${P6_NL}c${P6_NL}\" > rows.txt; p6_file_lines_first rows.txt 2"
+        p6_test_assert_run_ok "lines_first" 0 "a${P6_NL}b"
     )
     p6_test_finish
 
     p6_test_start "p6_file_marker_delete_to_end"
     (
-        p6_test_run "printf 'a\nMARK\nc\n' > rows.txt; p6_file_marker_delete_to_end rows.txt MARK; cat rows.txt"
+        p6_test_run "printf \"a${P6_NL}MARK${P6_NL}c${P6_NL}\" > rows.txt; p6_file_marker_delete_to_end rows.txt MARK; cat rows.txt"
         p6_test_assert_run_ok "marker_delete_to_end" 0 "a"
     )
     p6_test_finish

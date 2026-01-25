@@ -7,6 +7,8 @@
 #
 #  Environment:	 _
 #>
+#/ Synopsis
+#/    Regenerates module inline docs and README for the current module.
 ######################################################################
 p6_cicd_doc_gen() {
 

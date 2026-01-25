@@ -3,20 +3,29 @@
 ######################################################################
 #<
 #
-# Function: stream  = p6_date_range_fill()
+# Function: stream  = p6_date_range_fill(start_date, end_date, file, fmt, [sep=])
+#
+#  Args:
+#	start_date - first date (inclusive)
+#	end_date - last date (inclusive)
+#	file - input file of date/value rows
+#	fmt - date format (unused)
+#	OPTIONAL sep - column separator []
 #
 #  Returns:
 #	stream - 
 #
 #>
+#/ Synopsis
+#/    Fills missing dates between start and end with zero values from a file.
 ######################################################################
 p6_date_range_fill() {
-    local start_date="$1"
-    local end_date="$2"
-    local file="$3"
-    local fmt="$4"
-    local sep="${5:-}"
-    if [ -z "$sep" ]; then
+    local start_date="$1" # first date (inclusive)
+    local end_date="$2"   # last date (inclusive)
+    local file="$3"       # input file of date/value rows
+    local fmt="$4"        # date format (unused)
+    local sep="${5:-}"    # column separator
+    if p6_string_blank "$sep"; then
         sep=$'\t'
     fi
 
@@ -48,23 +57,25 @@ p6_date_range_fill() {
 ######################################################################
 #<
 #
-# Function: str line = p6_date_range_fill__process(date, dates_file, [sep=\t])
+# Function: str line = p6_date_range_fill__process(date, dates_file, [sep=])
 #
 #  Args:
-#	date -
-#	dates_file -
-#	OPTIONAL sep - [\t]
+#	date - date to process
+#	dates_file - file of date/value rows
+#	OPTIONAL sep - column separator []
 #
 #  Returns:
 #	str - line
 #
 #>
+#/ Synopsis
+#/    Builds a single date/value line from the date list and separator.
 ######################################################################
 p6_date_range_fill__process() {
-    local date="$1"
-    local dates_file="$2"
-    local sep="${3:-}"
-    if [ -z "$sep" ]; then
+    local date="$1"       # date to process
+    local dates_file="$2" # file of date/value rows
+    local sep="${3:-}"    # column separator
+    if p6_string_blank "$sep"; then
         sep=$'\t'
     fi
 

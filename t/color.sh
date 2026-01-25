@@ -71,8 +71,8 @@ main() {
 		local pairs="black:0 red:1 green:2 yellow:3 blue:4 magenta:5 cyan:6 white:7"
 		local pair
 		for pair in $pairs; do
-			local color=$(echo $pair | cut -d : -f 1)
-			local code=$(echo $pair | cut -d : -f 2)
+			local color=$(p6_echo "$pair" | p6_filter_column_pluck 1 ":")
+			local code=$(p6_echo "$pair" | p6_filter_column_pluck 2 ":")
 
 			p6_test_run "p6_color_to_code $color"
 			p6_test_assert_run_ok "$color has code $code" "" "$code"
@@ -98,8 +98,8 @@ main() {
 		     white:FFFFFF"
 		local pair
 		for pair in $pairs; do
-			local color=$(echo $pair | cut -d : -f 1)
-			local rgb=$(echo $pair | cut -d : -f 2)
+			local color=$(p6_echo "$pair" | p6_filter_column_pluck 1 ":")
+			local rgb=$(p6_echo "$pair" | p6_filter_column_pluck 2 ":")
 
 			p6_test_run "p6_color_name_to_rgb $color"
 			p6_test_assert_run_ok "$color is $rgb" "" "$rgb"

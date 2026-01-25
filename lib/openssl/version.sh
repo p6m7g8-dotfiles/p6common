@@ -9,6 +9,8 @@
 #	str - str
 #
 #>
+#/ Synopsis
+#/    Returns the output of `openssl version -a`.
 ######################################################################
 p6_openssl_version() {
 

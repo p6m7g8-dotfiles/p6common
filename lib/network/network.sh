@@ -9,6 +9,8 @@
 #	ipv4 - ip
 #
 #>
+#/ Synopsis
+#/    Fetches the public IPv4 address via ifconfig.me.
 ######################################################################
 p6_network_ip_public() {
 

@@ -3,28 +3,25 @@
 ######################################################################
 #<
 #
-# Function: p6_bootstrap()
+# Function: p6_bootstrap([dir=$P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common], [islocal=])
+#
+#  Args:
+#	OPTIONAL dir - library root to load [$P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common]
+#	OPTIONAL islocal - unused flag for local bootstrap []
 #
 #  Environment:	 P6_DFZ_SRC_P6M7G8_DOTFILES_DIR
 #>
+#/ Synopsis
+#/    Loads p6common library files from dir and adds its bin to PATH.
 ######################################################################
 p6_bootstrap() {
-  local dir="${1:-$P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common}"
-  local islocal="${2:-}"
+  local dir="${1:-$P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common}" # library root to load
+  local islocal="${2:-}"                                     # unused flag for local bootstrap
 
   local file
   for file in $(find -L "$dir/lib" -type f -a \( -name "*.sh" -o -name "*.zsh" \)); do
-    case "$file" in
-    */lib/test/*) continue ;;
-    */lib/test-codex/*) continue ;;
-    esac
     . "$file"
   done
-
-  if [ -f "$dir/lib/test-codex/loader.zsh" ]; then
-    . "$dir/lib/test-codex/loader.zsh"
-    p6_test_cdx_bootstrap "$dir"
-  fi
 
   p6_path_if "$dir/bin"
 

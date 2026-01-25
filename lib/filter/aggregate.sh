@@ -9,10 +9,31 @@
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Sort input then count identical lines.
 ######################################################################
 p6_filter_aggregate_map_reduce() {
 
-    sort | uniq -c
+    p6_filter_sort | p6_filter_aggregate_count
+
+    p6_return_filter
+}
+
+######################################################################
+#<
+#
+# Function: filter  = p6_filter_aggregate_count()
+#
+#  Returns:
+#	filter - 
+#
+#>
+#/ Synopsis
+#/    Count identical lines (expects sorted input).
+######################################################################
+p6_filter_aggregate_count() {
+
+    uniq -c
 
     p6_return_filter
 }
@@ -23,20 +44,20 @@ p6_filter_aggregate_map_reduce() {
 # Function: filter  = p6_filter_aggregate_table_by_group_with_count([sep=\t])
 #
 #  Args:
-#	OPTIONAL sep - [\t]
+#	OPTIONAL sep - field separator [\t]
 #
 #  Returns:
 #	filter - 
 #
 #>
-#/  Synopsis:
-#/	Input
-#/		group c1 c2 c3...
-#/		group c1 c2 c3...
-#/ 	  We're aggregrating group lines here
+#/ Synopsis
+#/    Aggregate group rows into counts and per-column averages.
+#/    Input:
+#/      group c1 c2 c3...
+#/      group c1 c2 c3...
 ######################################################################
 p6_filter_aggregate_table_by_group_with_count() {
-    local sep="${1:-\t}"
+    local sep="${1:-\t}" # field separator
 
     awk -F"$sep" '
 {
@@ -81,15 +102,17 @@ END {
 # Function: filter  = p6_filter_aggregate_table_with_count([sep=\t])
 #
 #  Args:
-#	OPTIONAL sep - [\t]
+#	OPTIONAL sep - field separator [\t]
 #
 #  Returns:
 #	filter - 
 #
 #>
+#/ Synopsis
+#/    Aggregate a table into total count and per-column averages.
 ######################################################################
 p6_filter_aggregate_table_with_count() {
-    local sep="${1:-\t}"
+    local sep="${1:-\t}" # field separator
 
     awk -F"$sep" '
 {

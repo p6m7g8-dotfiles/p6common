@@ -9,9 +9,11 @@
 #	n -
 #
 #>
+#/ Synopsis
+#/    Prints a TAP plan line for n tests.
 ######################################################################
 p6_test_tap_plan() {
-  local n="$1"
+  local n="$1" # number of planned tests
 
   printf '1..%s\n' "$n"
 }
@@ -26,10 +28,12 @@ p6_test_tap_plan() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Emits a TAP ok line.
 ######################################################################
 p6_test_tap_ok() {
-  local description="$1"
-  local reason="$2"
+  local description="$1" # test description
+  local reason="$2"      # reason or note
 
   local i
   i=$(p6_test_tap__next_index) || i="?"
@@ -46,10 +50,12 @@ p6_test_tap_ok() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Emits a TAP not ok line.
 ######################################################################
 p6_test_tap_not_ok() {
-  local description="$1"
-  local reason="$2"
+  local description="$1" # test description
+  local reason="$2"      # failure reason
 
   local i
   i=$(p6_test_tap__next_index) || i="?"
@@ -65,9 +71,11 @@ p6_test_tap_not_ok() {
 #	block -
 #
 #>
+#/ Synopsis
+#/    Prints a TAP block header comment.
 ######################################################################
 p6_test_tap_block() {
-  local block="$1"
+  local block="$1" # block name
 
   printf '# %s\n' "$block"
 }
@@ -82,10 +90,12 @@ p6_test_tap_block() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Emits a TAP ok line with SKIP directive.
 ######################################################################
 p6_test_tap_skip() {
-  local description="$1"
-  local reason="$2"
+  local description="$1" # test description
+  local reason="$2"      # skip reason
 
   local i
   i=$(p6_test_tap__next_index) || i="?"
@@ -102,10 +112,12 @@ p6_test_tap_skip() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Emits a TAP TODO line marked as planned.
 ######################################################################
 p6_test_tap_todo_planned() {
-  local description="$1"
-  local reason="$2"
+  local description="$1" # test description
+  local reason="$2"      # TODO reason
 
   local i
   i=$(p6_test_tap__next_index) || i="?"
@@ -122,10 +134,12 @@ p6_test_tap_todo_planned() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Emits a TAP TODO line marked as bonus.
 ######################################################################
 p6_test_tap_todo_bonus() {
-  local description="$1"
-  local reason="$2"
+  local description="$1" # test description
+  local reason="$2"      # TODO reason
 
   local i
   i=$(p6_test_tap__next_index) || i="?"
@@ -141,9 +155,11 @@ p6_test_tap_todo_bonus() {
 #	msg -
 #
 #>
+#/ Synopsis
+#/    Emits TAP diagnostic comment lines for the message.
 ######################################################################
 p6_test_tap_diagnostic() {
-  local msg="$1"
+  local msg="$1" # diagnostic message
 
   local line
   local IFS=$'\n'
@@ -161,9 +177,11 @@ p6_test_tap_diagnostic() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Emits a TAP Bail out! line.
 ######################################################################
 p6_test_tap_bail_out() {
-  local reason="$1"
+  local reason="$1" # bailout reason
 
   printf 'Bail out! %s\n' "$reason"
 }
@@ -174,6 +192,8 @@ p6_test_tap_bail_out() {
 # Function: p6_test_tap_shell()
 #
 #>
+#/ Synopsis
+#/    Placeholder to assert the shell is TAP-capable.
 ######################################################################
 p6_test_tap_shell() {
   true
@@ -192,13 +212,15 @@ p6_test_tap_shell() {
 #	reason -
 #
 #>
+#/ Synopsis
+#/    Formats a TAP result line with optional directive and reason.
 ######################################################################
 p6_test_tap__line() {
-  local outcome="$1"
-  local i="$2"
-  local description="$3"
-  local directive="$4"
-  local reason="$5"
+  local outcome="$1"     # ok/not ok
+  local i="$2"           # test index
+  local description="$3" # test description
+  local directive="$4"   # SKIP/TODO
+  local reason="$5"      # directive reason
 
   local line="$outcome $i"
   if [ -n "$description" ]; then
@@ -217,12 +239,11 @@ p6_test_tap__line() {
 ######################################################################
 #<
 #
-# Function: int = p6_test_tap__next_index()
-#
-#  Returns:
-#	int -
+# Function: p6_test_tap__next_index()
 #
 #>
+#/ Synopsis
+#/    Increments and returns the current TAP test index.
 ######################################################################
 p6_test_tap__next_index() {
   local state_dir

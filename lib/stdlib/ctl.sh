@@ -3,16 +3,22 @@
 ######################################################################
 #<
 #
-# Function: p6_ctl_usage()
+# Function: p6_ctl_usage([rc=0], [msg=])
+#
+#  Args:
+#	OPTIONAL rc - exit code [0]
+#	OPTIONAL msg - optional message []
 #
 #  Environment:	 P6_DFZ_SRC_P6M7G8_DOTFILES_DIR
 #>
+#/ Synopsis
+#/    Print usage and exit with the specified code.
 ######################################################################
 p6_ctl_usage() {
-  local rc="${1:-0}"
-  local msg="${2:-}"
+  local rc="${1:-0}"  # exit code
+  local msg="${2:-}" # optional message
 
-  if [ -n "$msg" ]; then
+  if p6_string_blank_NOT "$msg"; then
     p6_msg "$msg"
   fi
   cat <<EOF
@@ -26,7 +32,7 @@ Cmds:
   help
 EOF
 
-  grep ^p6_ctl_cmd $P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common/lib/stdlib/ctl.sh | sed -e 's,(.*,,' -e 's,p6_ctl_cmd_,,' -e 's,^,  ,' | sort
+  p6_file_display "$P6_DFZ_SRC_P6M7G8_DOTFILES_DIR/p6common/lib/stdlib/ctl.sh" | p6_filter_row_select "^p6_ctl_cmd" | p6_filter_extract_before "(" | p6_filter_extract_after "p6_ctl_cmd_" | p6_filter_translate_start_to_arg "  " | p6_filter_sort
 
   exit "$rc"
 }
@@ -37,18 +43,14 @@ EOF
 # Function: p6_ctl_run(...)
 #
 #  Args:
-#	... - 
+#	... - arguments for p6ctl
 #
 #>
 #/ Synopsis
-#/    bin/p6ctl [-D|-d] [cmd]
-#/
-#/ Synopsis
-#/    The entry point for bin/p6ctl
-#/
+#/    Parse CLI arguments and dispatch a p6ctl subcommand.
 ######################################################################
 p6_ctl_run() {
-  shift 0
+  shift 0 # arguments for p6ctl
 
   # sanitize env
   LC_ALL=C
@@ -68,8 +70,8 @@ p6_ctl_run() {
   shift $((OPTIND - 1))
 
   # grab command
-  local cmd="$1"
-  shift 1
+  local cmd="$1" # subcommand name
+  shift 1        # remaining subcommand args
 
   # security 101: only allow valid comamnds
   case $cmd in
@@ -108,6 +110,8 @@ p6_ctl_run() {
 #
 #  Environment:	 TERM
 #>
+#/ Synopsis
+#/    Prepare docker build environment dependencies.
 ######################################################################
 p6_ctl_cmd_docker_build() {
 
@@ -123,13 +127,15 @@ p6_ctl_cmd_docker_build() {
 # Function: p6_ctl_cmd_install([home=pgollucci/home])
 #
 #  Args:
-#	OPTIONAL home - [pgollucci/home]
+#	OPTIONAL home - GitHub repo for home config [pgollucci/home]
 #
 #  Environment:	 HOME SHELL
 #>
+#/ Synopsis
+#/    Install p6 dotfiles into a target home repo.
 ######################################################################
 p6_ctl_cmd_install() {
-  local home="${1:-pgollucci/home}"
+  local home="${1:-pgollucci/home}" # GitHub repo for home config
 
   local root
   local gh_dir
@@ -172,6 +178,8 @@ p6_ctl_cmd_install() {
 # Function: p6_ctl_cmd_docker_test()
 #
 #>
+#/ Synopsis
+#/    Run the test suite in a docker environment.
 ######################################################################
 p6_ctl_cmd_docker_test() {
 
@@ -184,10 +192,12 @@ p6_ctl_cmd_docker_test() {
 # Function: p6_ctl_cmd_test()
 #
 #>
+#/ Synopsis
+#/    Run the module test suite.
 ######################################################################
 p6_ctl_cmd_test() {
 
-  p6_cicd_tests_run
+  p6_cicd_tests_run "$@"
 }
 
 ######################################################################
@@ -196,12 +206,14 @@ p6_ctl_cmd_test() {
 # Function: p6_ctl_cmd_build(dockerfile)
 #
 #  Args:
-#	dockerfile -
+#	dockerfile - Dockerfile path
 #
 #>
+#/ Synopsis
+#/    Build the module using a Dockerfile.
 ######################################################################
 p6_ctl_cmd_build() {
-  local dockerfile="$1"
+  local dockerfile="$1" # Dockerfile path
 
   p6_cicd_build_run "$dockerfile"
 }

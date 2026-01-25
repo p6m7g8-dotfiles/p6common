@@ -3,12 +3,17 @@
 ######################################################################
 #<
 #
-# Function: p6_os__debug()
+# Function: p6_os__debug(msg)
+#
+#  Args:
+#	msg - debug message
 #
 #>
+#/ Synopsis
+#/    Emit a namespaced debug message for OS helpers.
 ######################################################################
 p6_os__debug() {
-    local msg="$1"
+    local msg="$1" # debug message
 
     p6_debug "p6_os: $msg"
 
@@ -24,6 +29,8 @@ p6_os__debug() {
 #	str - name
 #
 #>
+#/ Synopsis
+#/    Return the OS kernel release string.
 ######################################################################
 p6_os_name() {
 

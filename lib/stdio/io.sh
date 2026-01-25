@@ -6,6 +6,8 @@
 # Function: p6_echo()
 #
 #>
+#/ Synopsis
+#/    Echo arguments to stdout.
 ######################################################################
 p6_echo() {
 
@@ -18,12 +20,14 @@ p6_echo() {
 # Function: p6_msg(msg)
 #
 #  Args:
-#	msg -
+#	msg - message text
 #
 #>
+#/ Synopsis
+#/    Print a message with a trailing newline.
 ######################################################################
 p6_msg() {
-    local msg="$*"
+    local msg="$*" # message text
 
     p6_echo "$msg"
 }
@@ -34,12 +38,14 @@ p6_msg() {
 # Function: p6_msg_no_nl(msg)
 #
 #  Args:
-#	msg -
+#	msg - message text
 #
 #>
+#/ Synopsis
+#/    Print a message without a trailing newline.
 ######################################################################
 p6_msg_no_nl() {
-    local msg="$*"
+    local msg="$*" # message text
 
     p6_echo -n "$msg"
 }
@@ -50,6 +56,8 @@ p6_msg_no_nl() {
 # Function: p6_msg_h3()
 #
 #>
+#/ Synopsis
+#/    Print a level-3 header message.
 ######################################################################
 p6_msg_h3() {
 
@@ -63,8 +71,7 @@ p6_msg_h3() {
 #
 #>
 #/ Synopsis
-#/  Outputs [CHECK] followed by message
-#/
+#/    Print a success message with a checkmark prefix.
 ######################################################################
 p6_msg_success() {
 
@@ -78,8 +85,7 @@ p6_msg_success() {
 #
 #>
 #/ Synopsis
-#/  Outputs [FAIL] followed by message
-#/
+#/    Print a failure message with a cross prefix.
 ######################################################################
 p6_msg_fail() {
 
@@ -92,12 +98,14 @@ p6_msg_fail() {
 # Function: p6_error(msg)
 #
 #  Args:
-#	msg -
+#	msg - message text
 #
 #>
+#/ Synopsis
+#/    Print an error message to stderr.
 ######################################################################
 p6_error() {
-    local msg="$*"
+    local msg="$*" # message text
 
     p6_msg "$msg" >&2
 }
@@ -108,14 +116,16 @@ p6_error() {
 # Function: p6_die(code, ...)
 #
 #  Args:
-#	code -
-#	... - 
+#	code - exit code
+#	... - message text
 #
 #>
+#/ Synopsis
+#/    Print a message and exit with the given code.
 ######################################################################
 p6_die() {
-    local code="$1"
-    shift
+    local code="$1" # exit code
+    shift           # message text
 
     p6_msg "$@"
     exit $code
@@ -127,14 +137,16 @@ p6_die() {
 # Function: p6__header(indent, ...)
 #
 #  Args:
-#	indent -
-#	... - 
+#	indent - number of '=' characters
+#	... - header text
 #
 #>
+#/ Synopsis
+#/    Print a header line prefixed by a repeated '=' marker.
 ######################################################################
 p6__header() {
-    local indent="$1"
-    shift
+    local indent="$1" # number of '=' characters
+    shift             # header text
 
     local h=""
     local i=0
@@ -154,12 +166,14 @@ p6__header() {
 # Function: p6__deprecated(thing)
 #
 #  Args:
-#	thing -
+#	thing - deprecated feature name
 #
 #>
+#/ Synopsis
+#/    Print a DEPRECATED warning for a feature.
 ######################################################################
 p6__deprecated() {
-    local thing="$1"
+    local thing="$1" # deprecated feature name
 
     p6_msg "DEPRECATED: $thing"
 
@@ -172,12 +186,14 @@ p6__deprecated() {
 # Function: p6_h1(header)
 #
 #  Args:
-#	header -
+#	header - header text
 #
 #>
+#/ Synopsis
+#/    Print a level-1 header.
 ######################################################################
 p6_h1() {
-    local header="$1"
+    local header="$1" # header text
 
     p6__header "2" "$header"
 
@@ -190,12 +206,14 @@ p6_h1() {
 # Function: p6_h2(header)
 #
 #  Args:
-#	header -
+#	header - header text
 #
 #>
+#/ Synopsis
+#/    Print a level-2 header.
 ######################################################################
 p6_h2() {
-    local header="$1"
+    local header="$1" # header text
 
     p6__header "4" "$header"
 
@@ -208,12 +226,14 @@ p6_h2() {
 # Function: p6_h3(header)
 #
 #  Args:
-#	header -
+#	header - header text
 #
 #>
+#/ Synopsis
+#/    Print a level-3 header.
 ######################################################################
 p6_h3() {
-    local header="$1"
+    local header="$1" # header text
 
     p6__header "6" "$header"
 
@@ -226,12 +246,14 @@ p6_h3() {
 # Function: p6_h4(header)
 #
 #  Args:
-#	header -
+#	header - header text
 #
 #>
+#/ Synopsis
+#/    Print a level-4 header.
 ######################################################################
 p6_h4() {
-    local header="$1"
+    local header="$1" # header text
 
     p6__header "8" "$header"
 
@@ -244,12 +266,14 @@ p6_h4() {
 # Function: p6_h5(header)
 #
 #  Args:
-#	header -
+#	header - header text
 #
 #>
+#/ Synopsis
+#/    Print a level-5 header.
 ######################################################################
 p6_h5() {
-    local header="$1"
+    local header="$1" # header text
 
     p6__header "10" "$header"
 
@@ -262,12 +286,14 @@ p6_h5() {
 # Function: p6_h6(header)
 #
 #  Args:
-#	header -
+#	header - header text
 #
 #>
+#/ Synopsis
+#/    Print a level-6 header.
 ######################################################################
 p6_h6() {
-    local header="$1"
+    local header="$1" # header text
 
     p6__header "12" "$header"
 
@@ -280,13 +306,15 @@ p6_h6() {
 # Function: p6_vertical(v)
 #
 #  Args:
-#	v -
+#	v - colon-delimited string
 #
 #  Environment:	 IFS IFS_SAVED
 #>
+#/ Synopsis
+#/    Print a colon-delimited string vertically, one per line.
 ######################################################################
 p6_vertical() {
-    local v="$1"
+    local v="$1" # colon-delimited string
 
     local IFS_SAVED=$IFS
     local i

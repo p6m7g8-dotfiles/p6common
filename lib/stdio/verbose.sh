@@ -5,20 +5,22 @@
 #
 #  Args:
 #	level - minimum verbosity before output
-#	... - 
+#	... - message text
 #
 #  Environment:	 P6_VERBOSE
 #>
+#/ Synopsis
+#/    Print messages when verbosity meets the required level.
 ######################################################################
 p6_verbose() {
     local level="$1" # minimum verbosity before output
-    if [ -z "$level" ]; then
+    if p6_string_blank "$level"; then
         p6_return_void
         return
     fi
-    shift
+    shift # message text
 
-    if [ -n "$level" ]; then
+    if p6_string_blank_NOT "$level"; then
         P6_VERBOSE=${P6_VERBOSE:-0}
 
         case $level in

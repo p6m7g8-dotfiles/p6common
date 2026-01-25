@@ -65,7 +65,7 @@ main() {
 
     p6_test_start "p6_math_range_generate"
     (
-        p6_test_run "p6_math_range_generate 1 3 | tr '\n' ' ' | sed 's/ $//'"
+        p6_test_run "p6_math_range_generate 1 3 | tr \"$P6_NL\" ' ' | sed 's/ $//'"
         p6_test_assert_run_ok "range" 0 "1 2 3"
     )
     p6_test_finish
