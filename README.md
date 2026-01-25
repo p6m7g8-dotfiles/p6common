@@ -1234,6 +1234,10 @@ TODO: Add a short summary of this module.
   - Synopsis: Return true when the string equals 0.
   - Args:
     - str - string to test
+- `bool rc = p6_string_ne_0(str)`
+  - Synopsis: Return true when the string does not equal 0.
+  - Args:
+    - str - string to test
 - `bool rc = p6_string_eq_1(str)`
   - Synopsis: Return true when the string equals 1.
   - Args:

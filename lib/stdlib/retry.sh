@@ -73,7 +73,7 @@ p6_retry_delay() {
     local type="$1" # delay strategy
     local i="$2"    # current delay
 
-    p6_sleep "$i"
+    sleep "$i"
 
     case $type in
     double) i=$(($i * 2)) ;;
