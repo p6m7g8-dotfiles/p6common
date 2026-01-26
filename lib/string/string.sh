@@ -189,6 +189,31 @@ p6_string_eq_0() {
 ######################################################################
 #<
 #
+# Function: bool rc = p6_string_ne_0(str)
+#
+#  Args:
+#	str - string to test
+#
+#  Returns:
+#	bool - rc
+#
+#>
+#/ Synopsis
+#/    Return true when the string does not equal 0.
+######################################################################
+p6_string_ne_0() {
+    local str="$1" # string to test
+
+    p6_string_ne "$str" "0"
+    local rc=$?
+    p6_string__debug "ne_0(): [$str] ne? [0] -> $rc"
+
+    p6_return_bool "$rc"
+}
+
+######################################################################
+#<
+#
 # Function: bool rc = p6_string_eq_neg_1(str)
 #
 #  Args:
