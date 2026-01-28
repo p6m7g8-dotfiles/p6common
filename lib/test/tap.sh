@@ -223,11 +223,11 @@ p6_test_tap__line() {
   local reason="$5"      # directive reason
 
   local line="$outcome $i"
-  if [ -n "$description" ]; then
+  if p6_string_blank_NOT "$description"; then
     line="$line $description"
-    if [ -n "$directive" ]; then
+    if p6_string_blank_NOT "$directive"; then
       line="$line # $directive"
-      if [ -n "$reason" ]; then
+      if p6_string_blank_NOT "$reason"; then
         line="$line $reason"
       fi
     fi

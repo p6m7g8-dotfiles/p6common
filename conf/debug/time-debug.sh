@@ -17,7 +17,7 @@ p6_time() {
     local t1="$EPOCHREALTIME"
 
     local delta
-    if [ -n "$t0" ] && [ -n "$t1" ]; then
+    if p6_string_blank_NOT "$t0" && p6_string_blank_NOT "$t1"; then
         delta=$(($t1 - $t0))
         delta=$(printf "%.3f" "$delta")
         p6_echo "p6_time: $delta $msg" >>/tmp/p6/time.log

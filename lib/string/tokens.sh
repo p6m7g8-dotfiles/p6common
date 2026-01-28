@@ -39,7 +39,7 @@ p6_token_hash() {
     local string="$1" # input string
 
     local hashed=
-    if ! p6_string_blank "$string"; then
+    if p6_string_blank_NOT "$string"; then
         if command -v md5 >/dev/null 2>&1; then
             hashed=$(p6_echo "$string" | md5)
         else
@@ -69,7 +69,7 @@ p6_token_random() {
     local len="$1" # token length
 
     local token
-    if ! p6_string_blank "$len"; then
+    if p6_string_blank_NOT "$len"; then
         token=$(cat /dev/urandom | LC_ALL=C tr -dc a-zA-Z0-9 | head -c $len)
     fi
 

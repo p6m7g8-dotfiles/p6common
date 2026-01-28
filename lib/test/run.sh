@@ -48,7 +48,7 @@ p6_test_run() {
   *) full_cmd="" ;;
   esac
 
-  if [ -n "$full_cmd" ] && [ -s "$stdout" ]; then
+  if p6_string_blank_NOT "$full_cmd" && [ -s "$stdout" ]; then
     local tmp_stdout
     tmp_stdout="$block_dir/stdout.normalized"
 
@@ -64,7 +64,7 @@ p6_test_run() {
     mv "$tmp_stdout" "$stdout"
   fi
 
-  if [ -n "$ZSH_VERSION" ] && [ -s "$stderr" ]; then
+  if p6_string_blank_NOT "$ZSH_VERSION" && [ -s "$stderr" ]; then
     local tmp_stderr
     tmp_stderr="$block_dir/stderr.normalized"
 

@@ -266,6 +266,32 @@ p6_file_exists() {
 ######################################################################
 #<
 #
+# Function: bool rv = p6_file_exists_NOT(file)
+#
+#  Args:
+#	file - file path
+#
+#  Returns:
+#	bool - rv
+#
+#>
+#/ Synopsis
+#/    Return true when a file is NOT readable (inverse of p6_file_exists).
+######################################################################
+p6_file_exists_NOT() {
+    local file="$1" # file path
+
+    test ! -r "$file"
+    local rv=$?
+
+    p6_file__debug "exists_NOT(): $file -> $rv"
+
+    p6_return_bool "$rv"
+}
+
+######################################################################
+#<
+#
 # Function: bool rv = p6_file_executable(file)
 #
 #  Args:
@@ -451,7 +477,7 @@ p6_file_cascade() {
     # Search
     local path
     for path in "$@"; do
-        if ! p6_string_blank "${exts}"; then
+        if p6_string_blank_NOT "${exts}"; then
             p6_file__debug "cascade(): Checking: $path/$cmd"
             if p6_file_exists "$path/$cmd"; then
                 p6_file__debug "cascade(): Found: $path/$cmd"

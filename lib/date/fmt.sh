@@ -28,11 +28,11 @@ p6_date_fmt__date() {
     local cli_args=""
 
     # Applies offset
-    if ! p6_string_blank "$offset"; then
+    if p6_string_blank_NOT "$offset"; then
         cli_args="$cli_args -v ${offset}${offset_fmt}"
     fi
 
-    if ! p6_string_blank "$input_date"; then
+    if p6_string_blank_NOT "$input_date"; then
         cli_args="$cli_args -j -f \"$input_fmt\" \"$input_date\""
     else
         cli_args="$cli_args -j"

@@ -47,7 +47,7 @@ p6_transient_create() {
         p6_return_str ""
     else
         local rand
-        if ! p6_string_blank "$P6_TEST_TRANSIENT_CREATE_RAND"; then
+        if p6_string_blank_NOT "$P6_TEST_TRANSIENT_CREATE_RAND"; then
             rand=TEST_MODE
         else
             rand=$(p6_token_random "$len")

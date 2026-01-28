@@ -40,7 +40,7 @@ p6_test_state_init() {
 p6_test_state_cleanup() {
   local state_dir="$1" # state directory
 
-  if [ -n "$state_dir" ] && [ -d "$state_dir" ]; then
+  if p6_string_blank_NOT "$state_dir" && [ -d "$state_dir" ]; then
     rm -rf "$state_dir"
   fi
 

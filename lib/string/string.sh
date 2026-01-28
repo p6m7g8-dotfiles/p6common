@@ -292,7 +292,7 @@ p6_string_contains() {
     local needle="$2" # substring to find
 
     local rv=$P6_FALSE
-    if ! p6_string_blank "$needle"; then
+    if p6_string_blank_NOT "$needle"; then
         p6_echo "$str" | grep -F -q -- "$needle"
         rv=$?
     fi
@@ -323,7 +323,7 @@ p6_string_starts_with() {
     local prefix="$2" # prefix to match
 
     local rv=$P6_FALSE
-    if ! p6_string_blank "$prefix"; then
+    if p6_string_blank_NOT "$prefix"; then
         case "$str" in
         "$prefix"*) rv=$P6_TRUE ;;
         *) rv=$P6_FALSE ;;
@@ -356,7 +356,7 @@ p6_string_ends_with() {
     local suffix="$2" # suffix to match
 
     local rv=$P6_FALSE
-    if ! p6_string_blank "$suffix"; then
+    if p6_string_blank_NOT "$suffix"; then
         case "$str" in
         *"$suffix") rv=$P6_TRUE ;;
         *) rv=$P6_FALSE ;;
@@ -389,7 +389,7 @@ p6_string_match_regex() {
     local re="$2"  # extended regex
 
     local rv=$P6_FALSE
-    if ! p6_string_blank "$re"; then
+    if p6_string_blank_NOT "$re"; then
         p6_echo "$str" | grep -E -q -- "$re"
         rv=$?
     fi

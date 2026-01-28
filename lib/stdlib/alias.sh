@@ -69,8 +69,8 @@ p6_alias() {
 
     p6_alias__debug "alias(): $from -> $to"
 
-    if ! p6_string_blank "$to"; then
-        if ! p6_string_blank "$from"; then
+    if p6_string_blank_NOT "$to"; then
+        if p6_string_blank_NOT "$from"; then
             alias $from="$to"
         fi
     fi

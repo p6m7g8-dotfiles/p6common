@@ -46,7 +46,7 @@ p6_filter_translate_date_to_iso8601_utc() {
     # preserve STDIN for filter pipe chain
     local line
     while read -r line; do
-        if ! p6_string_blank "$line"; then
+        if p6_string_blank_NOT "$line"; then
             # not utc
             local input_date=$(p6_echo "$line" | p6_filter_column_pluck "$column" "|")
 
