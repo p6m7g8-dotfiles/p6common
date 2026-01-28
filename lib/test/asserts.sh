@@ -23,13 +23,13 @@ p6_test_assert_run_ok() {
 
   p6_test_assert_run_rc "$description: return code success" "$rv"
 
-  if [ -n "$stdout" ]; then
+  if p6_string_blank_NOT "$stdout"; then
     p6_test_assert_eq "$(p6_test_run_stdout)" "$stdout" "$description: custom stdout matches"
   else
     p6_test_assert_run_no_stdout "$description"
   fi
 
-  if [ -n "$stderr" ]; then
+  if p6_string_blank_NOT "$stderr"; then
     p6_test_assert_eq "$(p6_test_run_stderr)" "$stderr" "$description: custom stderr matches"
   else
     p6_test_assert_run_no_stderr "$description"
@@ -360,7 +360,7 @@ p6_test_assert_not_blank() {
   local reason="$3"      # failure reason
 
   local rv=-1
-  if [ -n "$val" ]; then
+  if p6_string_blank_NOT "$val"; then
     rv=1
     p6_test_tap_ok "$description" "$reason"
   else
@@ -571,7 +571,7 @@ p6_test_assert_log_contains() {
 
   local file
   for file in "$log_file" "$P6_TEST_LOG_FILE" "$P6_PREFIX/tmp/p6/debug.log"; do
-    if [ -n "$file" ] && [ -f "$file" ]; then
+    if p6_string_blank_NOT "$file" && [ -f "$file" ]; then
       if grep -q -- "$needle" "$file"; then
         p6_test_tap_ok "log contains [$needle]" ""
         return 0

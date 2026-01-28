@@ -102,7 +102,7 @@ p6_dirs_list() {
     for dir in $dirs; do
         local children=""
         children=$(p6_dir_list "$dir")
-        if ! p6_string_blank "$children"; then
+        if p6_string_blank_NOT "$children"; then
             entries=$(p6_string_append "$entries" "$children" " ")
         fi
     done
@@ -167,6 +167,32 @@ p6_dir_exists() {
 ######################################################################
 #<
 #
+# Function: bool rv = p6_dir_exists_NOT(dir)
+#
+#  Args:
+#	dir - directory path
+#
+#  Returns:
+#	bool - rv
+#
+#>
+#/ Synopsis
+#/    Return success when a directory does NOT exist (inverse of p6_dir_exists).
+######################################################################
+p6_dir_exists_NOT() {
+    local dir="$1" # directory path
+
+    test ! -d "$dir"
+    local rc=$?
+
+    p6_dir__debug "exists_NOT(): [dir=$dir] -> [rc=$rc]"
+
+    p6_return_code_as_code "$rc"
+}
+
+######################################################################
+#<
+#
 # Function: p6_dir_rmrf(dir)
 #
 #  Args:
@@ -204,7 +230,7 @@ p6_dir_rmrf() {
 p6_dir_mk() {
     local dir="$1" # directory path
 
-    if ! p6_dir_exists "$dir"; then
+    if p6_dir_exists_NOT "$dir"; then
         p6_dir__debug "mk(): mkdir -p $dir"
         mkdir -p $dir
     fi

@@ -16,7 +16,7 @@
 p6_test_setup() {
   local n="$1" # number of planned tests
 
-  if [ -n "$ZSH_VERSION" ]; then
+  if p6_string_blank_NOT "$ZSH_VERSION"; then
     setopt SH_WORD_SPLIT
   fi
 
@@ -98,11 +98,11 @@ p6_test_finish() {
   local block_dir
   block_dir=$(p6_test_state_get "$state_dir" "block_dir" "")
 
-  if [ -n "$block_orig" ]; then
+  if p6_string_blank_NOT "$block_orig"; then
     cd "$block_orig" || return 1
   fi
 
-  if [ -n "$block_dir" ] && [ -d "$block_dir" ]; then
+  if p6_string_blank_NOT "$block_dir" && [ -d "$block_dir" ]; then
     rm -rf "$block_dir"
   fi
 
@@ -136,13 +136,13 @@ p6_test_teardown() {
   local block_orig
   block_orig=$(p6_test_state_get "$state_dir" "block_orig" "")
 
-  if [ -n "$block_orig" ]; then
+  if p6_string_blank_NOT "$block_orig"; then
     cd "$block_orig" || true
   fi
 
   local block_dir
   block_dir=$(p6_test_state_get "$state_dir" "block_dir" "")
-  if [ -n "$block_dir" ] && [ -d "$block_dir" ]; then
+  if p6_string_blank_NOT "$block_dir" && [ -d "$block_dir" ]; then
     rm -rf "$block_dir"
   fi
 

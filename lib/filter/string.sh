@@ -19,7 +19,7 @@ p6_filter__string_apply() {
 
     local line
     local rc=0
-    while IFS= read -r line || [ -n "$line" ]; do
+    while IFS= read -r line || p6_string_blank_NOT "$line"; do
         "$func" "$line" "$@"
         rc=$?
     done

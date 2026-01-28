@@ -81,7 +81,7 @@ p6_date_range_fill__process() {
 
     local value=0
     local line=$(p6_file_contains "$date" "$dates_file")
-    if ! p6_string_blank "$line"; then
+    if p6_string_blank_NOT "$line"; then
         value=$(p6_echo "$line" | p6_filter_column_pluck "2")
     fi
 
