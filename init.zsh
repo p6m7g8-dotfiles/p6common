@@ -37,12 +37,12 @@ p6df::modules::p6common::gha::ModuleDeps() {
   local module="$1"
 
   . ./init.zsh
-  p6df::modules::${module}::deps
+  p6df::modules::"${module}"::deps
   local dep
   local deps=$(
     for dep in $ModuleDeps; do
-      echo $dep | p6_filter_column_pluck 1 ":"
-    done | p6_filter_sort_unique | p6_filter_row_exclude "p6common"
+      echo $dep | cut -d: -f 1
+    done | sort -u | grep -v p6common
   )
 
   local repo
