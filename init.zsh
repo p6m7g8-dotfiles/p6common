@@ -36,6 +36,11 @@ p6df::modules::p6common::init() {
 p6df::modules::p6common::gha::ModuleDeps() {
   local module="$1"
 
+  # p6df-core obviously has no deps other than p6common
+  if [ x"$module" = x"core" ]; then
+    return
+  fi
+
   . ./init.zsh
   p6df::modules::"${module}"::deps
   local dep
