@@ -71,13 +71,10 @@ p6_file_load() {
     *) file="./$file" ;;
     esac
 
+    p6_log ". $file"
     . "$file"
+    
     p6_return_void
-
-    #    if p6_file_exists "$file"; then
-    # p6_file__debug "load(): $file"
-    #    fi
-
 }
 
 ######################################################################
