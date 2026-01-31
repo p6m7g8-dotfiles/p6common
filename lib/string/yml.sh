@@ -43,19 +43,48 @@ p6_yml_eval() {
 ######################################################################
 #<
 #
-# Function: p6_yml_from_file(file)
+# Function: stream = p6_yml_from_file(file, [query])
 #
 #  Args:
 #	file - YAML file path
+#	query - yq query string (optional)
+#
+#  Returns:
+#	stream -
 #
 #>
 #/ Synopsis
-#/    Reads YAML from file and emits it via yq.
+#/    Reads YAML from file and optionally applies a yq query.
 ######################################################################
 p6_yml_from_file() {
-    local file="$1" # YAML file path
+    local file="$1"  # YAML file path
+    local query="$2" # yq query string (optional)
 
-    yq <"$file"
+    if p6_string_blank "$query"; then
+        yq <"$file"
+    else
+        yq -r "$query" <"$file"
+    fi
+
+    p6_return_stream
+}
+
+######################################################################
+#<
+#
+# Function: p6_yml_update_in_file(file, query)
+#
+#  Args:
+#	file - YAML file path
+#	query - yq query string
+#
+#>
+######################################################################
+p6_yml_update_in_file() {
+    local file="$1"  # YAML file path
+    local query="$2" # yq query
+
+    yq -i "$query" "$file"
 
     p6_return_void
 }
