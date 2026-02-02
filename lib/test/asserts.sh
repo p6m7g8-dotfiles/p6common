@@ -6,10 +6,10 @@
 # Function: p6_test_assert_run_ok(description, [rv=0], [stdout=], [stderr=])
 #
 #  Args:
-#	description -
-#	OPTIONAL rv - [0]
-#	OPTIONAL stdout - []
-#	OPTIONAL stderr - []
+#	description - assertion description
+#	OPTIONAL rv - expected return value [0]
+#	OPTIONAL stdout - expected stdout []
+#	OPTIONAL stderr - expected stderr []
 #
 #>
 #/ Synopsis
@@ -42,8 +42,8 @@ p6_test_assert_run_ok() {
 # Function: p6_test_assert_run_rc(description, rv)
 #
 #  Args:
-#	description -
-#	rv -
+#	description - assertion description
+#	rv - expected return value
 #
 #>
 #/ Synopsis
@@ -68,8 +68,8 @@ p6_test_assert_run_rc() {
 # Function: p6_test_assert_run_no_output(description, reason)
 #
 #  Args:
-#	description -
-#	reason -
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -89,8 +89,8 @@ p6_test_assert_run_no_output() {
 # Function: p6_test_assert_run_no_stdout(description, reason)
 #
 #  Args:
-#	description -
-#	reason -
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -109,8 +109,8 @@ p6_test_assert_run_no_stdout() {
 # Function: p6_test_assert_run_no_stderr(description, reason)
 #
 #  Args:
-#	description -
-#	reason -
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -129,8 +129,8 @@ p6_test_assert_run_no_stderr() {
 # Function: p6_test_assert_run_not_ok(description, reason)
 #
 #  Args:
-#	description -
-#	reason -
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -152,10 +152,10 @@ p6_test_assert_run_not_ok() {
 # Function: p6_test_assert_eq(val, const, description, reason)
 #
 #  Args:
-#	val -
-#	const -
-#	description -
-#	reason -
+#	val - actual value
+#	const - expected value
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -186,10 +186,10 @@ p6_test_assert_eq() {
 # Function: p6_test_assert_not_eq(val, const, description, reason)
 #
 #  Args:
-#	val -
-#	const -
-#	description -
-#	reason -
+#	val - actual value
+#	const - expected value
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -220,10 +220,10 @@ p6_test_assert_not_eq() {
 # Function: p6_test_assert_len(val, const, description, reason)
 #
 #  Args:
-#	val -
-#	const -
-#	description -
-#	reason -
+#	val - actual value
+#	const - expected length
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -246,10 +246,10 @@ p6_test_assert_len() {
 # Function: p6_test_assert_contains(val, const, description, reason)
 #
 #  Args:
-#	val -
-#	const -
-#	description -
-#	reason -
+#	val - actual value
+#	const - regex pattern
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -280,10 +280,10 @@ p6_test_assert_contains() {
 # Function: p6_test_assert_not_contains(val, const, description, reason)
 #
 #  Args:
-#	val -
-#	const -
-#	description -
-#	reason -
+#	val - actual value
+#	const - regex pattern
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -314,9 +314,9 @@ p6_test_assert_not_contains() {
 # Function: p6_test_assert_blank(val, description, reason)
 #
 #  Args:
-#	val -
-#	description -
-#	reason -
+#	val - value to check
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -346,9 +346,9 @@ p6_test_assert_blank() {
 # Function: p6_test_assert_not_blank(val, description, reason)
 #
 #  Args:
-#	val -
-#	description -
-#	reason -
+#	val - value to check
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -378,9 +378,9 @@ p6_test_assert_not_blank() {
 # Function: p6_test_assert_dir_exists(val, description, reason)
 #
 #  Args:
-#	val -
-#	description -
-#	reason -
+#	val - directory path
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -410,9 +410,9 @@ p6_test_assert_dir_exists() {
 # Function: p6_test_assert_dir_not_exists(val, description, reason)
 #
 #  Args:
-#	val -
-#	description -
-#	reason -
+#	val - directory path
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -442,9 +442,9 @@ p6_test_assert_dir_not_exists() {
 # Function: p6_test_assert_file_exists(val, description, reason)
 #
 #  Args:
-#	val -
-#	description -
-#	reason -
+#	val - file path
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -474,9 +474,9 @@ p6_test_assert_file_exists() {
 # Function: p6_test_assert_file_not_exists(val, description, reason)
 #
 #  Args:
-#	val -
-#	description -
-#	reason -
+#	val - file path
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -506,10 +506,10 @@ p6_test_assert_file_not_exists() {
 # Function: p6_test_assert_file_matches(file1, file2, description, reason)
 #
 #  Args:
-#	file1 -
-#	file2 -
-#	description -
-#	reason -
+#	file1 - expected file
+#	file2 - actual file
+#	description - assertion description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -547,8 +547,8 @@ p6_test_assert_file_matches() {
 # Function: p6_test_assert_log_contains(needle, [log_file=])
 #
 #  Args:
-#	needle -
-#	OPTIONAL log_file - []
+#	needle - string to search for
+#	OPTIONAL log_file - log file path []
 #
 #  Environment:	 P6_PREFIX P6_TEST_LOG_FILE
 #>

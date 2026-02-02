@@ -6,7 +6,7 @@
 # Function: p6_test_state_init([base_dir=${TMPDIR:-/tmp])
 #
 #  Args:
-#	OPTIONAL base_dir - [${TMPDIR:-/tmp]
+#	OPTIONAL base_dir - base temp directory [${TMPDIR:-/tmp]
 #
 #  Environment:	 TMPDIR
 #>
@@ -31,7 +31,7 @@ p6_test_state_init() {
 # Function: p6_test_state_cleanup(state_dir)
 #
 #  Args:
-#	state_dir -
+#	state_dir - state directory
 #
 #>
 #/ Synopsis
@@ -53,8 +53,8 @@ p6_test_state_cleanup() {
 # Function: p6_test_state_path(state_dir, key)
 #
 #  Args:
-#	state_dir -
-#	key -
+#	state_dir - state directory
+#	key - state key
 #
 #>
 #/ Synopsis
@@ -73,9 +73,9 @@ p6_test_state_path() {
 # Function: p6_test_state_set(state_dir, key, value)
 #
 #  Args:
-#	state_dir -
-#	key -
-#	value -
+#	state_dir - state directory
+#	key - state key
+#	value - value to store
 #
 #>
 #/ Synopsis
@@ -95,9 +95,9 @@ p6_test_state_set() {
 # Function: p6_test_state_get(state_dir, key, [default=])
 #
 #  Args:
-#	state_dir -
-#	key -
-#	OPTIONAL default - []
+#	state_dir - state directory
+#	key - state key
+#	OPTIONAL default - fallback value []
 #
 #>
 #/ Synopsis
@@ -124,8 +124,8 @@ p6_test_state_get() {
 # Function: p6_test_state_inc(state_dir, key)
 #
 #  Args:
-#	state_dir -
-#	key -
+#	state_dir - state directory
+#	key - state key
 #
 #>
 #/ Synopsis
@@ -149,8 +149,8 @@ p6_test_state_inc() {
 # Function: p6_test_state_mkdir(state_dir, subdir)
 #
 #  Args:
-#	state_dir -
-#	subdir -
+#	state_dir - state directory
+#	subdir - subdirectory name
 #
 #>
 #/ Synopsis
@@ -170,7 +170,7 @@ p6_test_state_mkdir() {
 # Function: p6_test_state_locate([start_dir=$PWD])
 #
 #  Args:
-#	OPTIONAL start_dir - [$PWD]
+#	OPTIONAL start_dir - search start directory [$PWD]
 #
 #  Environment:	 PWD
 #>

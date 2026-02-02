@@ -68,8 +68,9 @@ p6_dir_list() {
 
     local children
     if p6_dir_exists "$dir"; then
-        children=$(p6_run_dir "$dir" "ls -1 | xargs")
-        p6_dir__debug "list(): collected [$dir] -> [$children]"
+        children=$(p6_run_dir "$dir" "ls -1 | sort")
+        local hchildren=$(p6_echo "$children" | xargs)
+        p6_dir__debug "list(): collected [$dir] -> [$hchildren]"
     else
         p6_dir__debug "list(): [$dir] DNE"
     fi
@@ -167,13 +168,10 @@ p6_dir_exists() {
 ######################################################################
 #<
 #
-# Function: bool rv = p6_dir_exists_NOT(dir)
+# Function: p6_dir_exists_NOT(dir)
 #
 #  Args:
 #	dir - directory path
-#
-#  Returns:
-#	bool - rv
 #
 #>
 #/ Synopsis

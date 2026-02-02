@@ -92,11 +92,11 @@ p6_word_not() {
 # Function: words result = p6_word_comm_missing(a, b)
 #
 #  Args:
-#	a - word list A (sorted)
-#	b - word list B (sorted)
+#	a - word list A
+#	b - word list B
 #
 #  Returns:
-#	words - result (in A, not in B)
+#	words - result
 #
 #>
 ######################################################################
@@ -104,7 +104,7 @@ p6_word_comm_missing() {
   local a="$1" # word list A
   local b="$2" # word list B
 
-  local result=$(comm -23 <(p6_echo "$a") <(p6_echo "$b"))
+  local result=$(comm -23 <(p6_echo "$a" | sort) <(p6_echo "$b" | sort))
 
   p6_return_words "$result"
 }
@@ -115,11 +115,11 @@ p6_word_comm_missing() {
 # Function: words result = p6_word_comm_extra(a, b)
 #
 #  Args:
-#	a - word list A (sorted)
-#	b - word list B (sorted)
+#	a - word list A
+#	b - word list B
 #
 #  Returns:
-#	words - result (in B, not in A)
+#	words - result
 #
 #>
 ######################################################################
@@ -127,7 +127,7 @@ p6_word_comm_extra() {
   local a="$1" # word list A
   local b="$2" # word list B
 
-  local result=$(comm -13 <(p6_echo "$a") <(p6_echo "$b"))
+  local result=$(comm -13 <(p6_echo "$a" | sort) <(p6_echo "$b" | sort))
 
   p6_return_words "$result"
 }
@@ -138,11 +138,11 @@ p6_word_comm_extra() {
 # Function: words result = p6_word_comm_same(a, b)
 #
 #  Args:
-#	a - word list A (sorted)
-#	b - word list B (sorted)
+#	a - word list A
+#	b - word list B
 #
 #  Returns:
-#	words - result (in both A and B)
+#	words - result
 #
 #>
 ######################################################################
@@ -150,7 +150,7 @@ p6_word_comm_same() {
   local a="$1" # word list A
   local b="$2" # word list B
 
-  local result=$(comm -12 <(p6_echo "$a") <(p6_echo "$b"))
+  local result=$(comm -12 <(p6_echo "$a" | sort) <(p6_echo "$b"))
 
   p6_return_words "$result"
 }

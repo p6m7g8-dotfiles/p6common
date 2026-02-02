@@ -6,8 +6,8 @@
 # Function: p6_test_run(command, ...)
 #
 #  Args:
-#	command -
-#	... - 
+#	command - command to execute
+#	... - command arguments
 #
 #  Environment:	 ZSH_VERSION
 #>

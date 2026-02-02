@@ -43,14 +43,14 @@ p6_yml_eval() {
 ######################################################################
 #<
 #
-# Function: stream = p6_yml_from_file(file, [query])
+# Function: stream  = p6_yml_from_file(file, query)
 #
 #  Args:
 #	file - YAML file path
 #	query - yq query string (optional)
 #
 #  Returns:
-#	stream -
+#	stream - 
 #
 #>
 #/ Synopsis
@@ -76,7 +76,7 @@ p6_yml_from_file() {
 #
 #  Args:
 #	file - YAML file path
-#	query - yq query string
+#	query - yq query
 #
 #>
 ######################################################################

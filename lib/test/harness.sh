@@ -37,7 +37,7 @@
 # Function: p6_test_harness_tests_run(dir)
 #
 #  Args:
-#	dir -
+#	dir - test dir or file
 #
 #>
 #/ Synopsis
@@ -66,7 +66,7 @@ p6_test_harness_tests_run() {
 # Function: p6_test_harness_tests_run_bats(dir)
 #
 #  Args:
-#	dir -
+#	dir - bats path
 #
 #>
 #/ Synopsis
@@ -84,8 +84,8 @@ p6_test_harness_tests_run_bats() {
 # Function: p6_test_harness___accumulate_results(name, results)
 #
 #  Args:
-#	name -
-#	results -
+#	name - test name
+#	results - key/value results
 #
 #  Environment:	 B P S T
 #>
@@ -135,7 +135,7 @@ p6_test_harness___accumulate_results() {
 # Function: p6_test_harness_tests_run_local(dir)
 #
 #  Args:
-#	dir -
+#	dir - test dir or file
 #
 #  Environment:	 B S T
 #>
@@ -202,7 +202,7 @@ p6_test_harness_tests_run_local() {
 # Function: p6_test_harness_test_run(file)
 #
 #  Args:
-#	file -
+#	file - test file path
 #
 #  Environment:	 T TB TF TP TS TT
 #>
@@ -294,14 +294,14 @@ p6_test_harness_test_run() {
 # Function: p6_test_harness___results(name, duration, prcnt_passed, passed, total, bonus, todo, skipped)
 #
 #  Args:
-#	name -
-#	duration -
-#	prcnt_passed -
-#	passed -
-#	total -
-#	bonus -
-#	todo -
-#	skipped -
+#	name - test name
+#	duration - run duration seconds
+#	prcnt_passed - percent passed
+#	passed - passed count
+#	total - total count
+#	bonus - TODO bonus count
+#	todo - TODO count
+#	skipped - skipped count
 #
 #>
 #/ Synopsis
