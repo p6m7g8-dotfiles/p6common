@@ -6,7 +6,7 @@
 # Function: p6_test_setup(n)
 #
 #  Args:
-#	n -
+#	n - number of planned tests
 #
 #  Environment:	 P6_TEST_DIR_ORIG PWD ZSH_VERSION
 #>
@@ -43,7 +43,7 @@ p6_test_setup() {
 # Function: p6_test_start(block)
 #
 #  Args:
-#	block -
+#	block - block name
 #
 #  Environment:	 PWD
 #>
@@ -168,8 +168,8 @@ p6_test_teardown() {
 # Function: p6_test_skip(description, reason)
 #
 #  Args:
-#	description -
-#	reason -
+#	description - test description
+#	reason - skip reason
 #
 #>
 #/ Synopsis
@@ -188,8 +188,8 @@ p6_test_skip() {
 # Function: p6_test_ok(description, reason)
 #
 #  Args:
-#	description -
-#	reason -
+#	description - test description
+#	reason - success reason
 #
 #>
 #/ Synopsis
@@ -208,8 +208,8 @@ p6_test_ok() {
 # Function: p6_test_not_ok(description, reason)
 #
 #  Args:
-#	description -
-#	reason -
+#	description - test description
+#	reason - failure reason
 #
 #>
 #/ Synopsis
@@ -228,10 +228,10 @@ p6_test_not_ok() {
 # Function: p6_test_todo(val, const, description, reason)
 #
 #  Args:
-#	val -
-#	const -
-#	description -
-#	reason -
+#	val - actual value
+#	const - expected value
+#	description - test description
+#	reason - TODO reason
 #
 #>
 #/ Synopsis
@@ -257,7 +257,7 @@ p6_test_todo() {
 # Function: p6_test_diagnostic(msg)
 #
 #  Args:
-#	msg -
+#	msg - diagnostic message
 #
 #>
 #/ Synopsis
@@ -275,7 +275,7 @@ p6_test_diagnostic() {
 # Function: p6_test_bail(reason)
 #
 #  Args:
-#	reason -
+#	reason - bailout reason
 #
 #>
 #/ Synopsis

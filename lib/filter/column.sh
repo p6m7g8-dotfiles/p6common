@@ -12,7 +12,7 @@
 # Function: str action = p6_filter_column_pluck__all_to_action(action)
 #
 #  Args:
-#	action -
+#	action - awk action for full line
 #
 #  Returns:
 #	str - action
