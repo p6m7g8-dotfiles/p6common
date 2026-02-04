@@ -640,6 +640,67 @@ TODO: Add a short summary of this module.
 - `p6_log_disable()`
 - `p6_log_enable()`
 
+##### p6common/conf/debug/return.sh
+
+- `bool  = p6_return_bool(bool)`
+  - Synopsis: Exactly 0 or 1 No blanks Suitable for use in conditionals
+  - Args:
+    - bool - boolean value (0 or 1)
+- `false  = p6_return_false()`
+  - Synopsis: Suitable for use in conditionals
+- `filter  = p6_return_filter()`
+  - Synopsis: Filters return this for syntaxtic sugar Maintains the filters $? rc code for pipe chain short circuits
+- `float  = p6_return_float(float)`
+  - Synopsis: Any floating point No blanks
+  - Args:
+    - float - floating-point number
+- `int  = p6_return_int(int)`
+  - Synopsis: Any Integer Positive or Negative
+  - Args:
+    - int - integer (positive or negative)
+- `ipv4  = p6_return_ipv4(ip)`
+  - Synopsis: Any IP v4 address
+  - Args:
+    - ip - IPv4 address string
+- `p6_return_code_as_code(rc)`
+  - Synopsis: Validates rc and returns it as the function exit code.
+  - Args:
+    - rc - return code (0..255)
+- `p6_return_code_as_value(rc)`
+  - Synopsis: Validates rc and prints it to stdout.
+  - Args:
+    - rc - return code (0..255)
+- `p6_return_date(date)`
+  - Synopsis: Only the listed dates are allowed Think twice before adding more
+  - Args:
+    - date - date string in accepted formats
+- `p6_return_void()`
+  - Synopsis: The literal absence of a return value Do not use this in conditionals Do not use this in blank string checks Use me when the function simply groups commands for re-use
+- `path  = p6_return_path(path)`
+  - Synopsis: Specialized string of well formed simple unix paths Only /, letters, numbers, -, _, @, +, ~, ., ',' NO SPACES, QUOTES etc...
+  - Args:
+    - path - unix-like path string
+- `size_t  = p6_return_size_t(size_t)`
+  - Synopsis: Any Positive Integer No blanks
+  - Args:
+    - size_t - non-negative integer
+- `str  = p6_return_str(str)`
+  - Synopsis: Any string BLANKS allowed
+  - Args:
+    - str - string value (blanks allowed)
+- `stream  = p6_return_stream()`
+  - Synopsis: Function emits arbitrary text
+- `true  = p6_return(rv)`
+  - Synopsis: Prints rv to stdout and returns success.
+  - Args:
+    - rv - value to echo
+- `true  = p6_return_true()`
+  - Synopsis: Suitable for use in conditionals
+- `words  = p6_return_words(words)`
+  - Synopsis: A word is a loop item. Words is a collection of words. Words should be split on $IFS "" or '' count as a blank word
+  - Args:
+    - words - words list (preserves splits)
+
 ##### p6common/conf/debug/time-debug.sh
 
 - `p6_time(t0, t1, msg)`
@@ -657,6 +718,26 @@ TODO: Add a short summary of this module.
     - msg - 
 - `p6_log_disable()`
 - `p6_log_enable()`
+
+##### p6common/conf/prod/return.sh
+
+- `bool  = p6_return_bool()`
+- `false  = p6_return_false()`
+- `filter  = p6_return_filter()`
+- `float  = p6_return_float()`
+- `int  = p6_return_int()`
+- `ipv4  = p6_return_ipv4()`
+- `p6_return()`
+- `p6_return_code_as_code()`
+- `p6_return_code_as_value()`
+- `p6_return_date()`
+- `p6_return_void()`
+- `path  = p6_return_path()`
+- `size_t  = p6_return_size_t()`
+- `str  = p6_return_str()`
+- `stream  = p6_return_stream()`
+- `true  = p6_return_true()`
+- `words  = p6_return_words()`
 
 ##### p6common/conf/prod/time-prod.sh
 
@@ -712,6 +793,10 @@ TODO: Add a short summary of this module.
   - Args:
     - name - color name
 
+##### p6common/lib/stdio/debug.sh
+
+- `p6_debug_load()`
+
 ##### p6common/lib/stdio/dir.sh
 
 - `p6_dir_cd(dir)`
@@ -725,6 +810,10 @@ TODO: Add a short summary of this module.
     - dst - destination directory
 - `p6_dir_exists(dir)`
   - Synopsis: Return success when a directory exists.
+  - Args:
+    - dir - directory path
+- `p6_dir_exists_NOT(dir)`
+  - Synopsis: Return success when a directory does NOT exist (inverse of p6_dir_exists).
   - Args:
     - dir - directory path
 - `p6_dir_load(dirs)`
@@ -771,6 +860,10 @@ TODO: Add a short summary of this module.
     - file - file path
 - `bool rv = p6_file_exists(file)`
   - Synopsis: Return true when a file is readable.
+  - Args:
+    - file - file path
+- `bool rv = p6_file_exists_NOT(file)`
+  - Synopsis: Return true when a file is NOT readable (inverse of p6_file_exists).
   - Args:
     - file - file path
 - `int count = p6_file_lines(file)`
@@ -1234,16 +1327,16 @@ TODO: Add a short summary of this module.
   - Synopsis: Return true when the string equals 0.
   - Args:
     - str - string to test
-- `bool rc = p6_string_ne_0(str)`
-  - Synopsis: Return true when the string does not equal 0.
-  - Args:
-    - str - string to test
 - `bool rc = p6_string_eq_1(str)`
   - Synopsis: Return true when the string equals 1.
   - Args:
     - str - string to test
 - `bool rc = p6_string_eq_neg_1(str)`
   - Synopsis: Return true when the string equals -1.
+  - Args:
+    - str - string to test
+- `bool rc = p6_string_ne_0(str)`
+  - Synopsis: Return true when the string does not equal 0.
   - Args:
     - str - string to test
 - `bool rv = p6_string_blank(str)`
@@ -1460,6 +1553,18 @@ TODO: Add a short summary of this module.
     - word - word to find
     - ... - remaining words
     - words - word list
+- `words result = p6_word_comm_extra(a, b)`
+  - Args:
+    - a - word list A
+    - b - word list B
+- `words result = p6_word_comm_missing(a, b)`
+  - Args:
+    - a - word list A
+    - b - word list B
+- `words result = p6_word_comm_same(a, b)`
+  - Args:
+    - a - word list A
+    - b - word list B
 - `words result = p6_word_not(a, b)`
   - Synopsis: Return words that appear in A but not in B.
   - Args:
@@ -1477,73 +1582,15 @@ TODO: Add a short summary of this module.
   - Args:
     - yml - YAML content
     - ... - yq options and query
-- `p6_yml_from_file(file)`
-  - Synopsis: Reads YAML from file and emits it via yq.
+- `p6_yml_update_in_file(file, query)`
   - Args:
     - file - YAML file path
-
-#### types
-
-##### p6common/lib/types/return.sh
-
-- `bool  = p6_return_bool(bool)`
-  - Synopsis: Exactly 0 or 1 No blanks Suitable for use in conditionals
+    - query - yq query
+- `stream  = p6_yml_from_file(file, query)`
+  - Synopsis: Reads YAML from file and optionally applies a yq query.
   - Args:
-    - bool - boolean value (0 or 1)
-- `false  = p6_return_false()`
-  - Synopsis: Suitable for use in conditionals
-- `filter  = p6_return_filter()`
-  - Synopsis: Filters return this for syntaxtic sugar Maintains the filters $? rc code for pipe chain short circuits
-- `float  = p6_return_float(float)`
-  - Synopsis: Any floating point No blanks
-  - Args:
-    - float - floating-point number
-- `int  = p6_return_int(int)`
-  - Synopsis: Any Integer Positive or Negative
-  - Args:
-    - int - integer (positive or negative)
-- `ipv4  = p6_return_ipv4(ip)`
-  - Synopsis: Any IP v4 address
-  - Args:
-    - ip - IPv4 address string
-- `p6_return_code_as_code(rc)`
-  - Synopsis: Validates rc and returns it as the function exit code.
-  - Args:
-    - rc - return code (0..255)
-- `p6_return_code_as_value(rc)`
-  - Synopsis: Validates rc and prints it to stdout.
-  - Args:
-    - rc - return code (0..255)
-- `p6_return_date(date)`
-  - Synopsis: Only the listed dates are allowed Think twice before adding more
-  - Args:
-    - date - date string in accepted formats
-- `p6_return_void()`
-  - Synopsis: The literal absence of a return value Do not use this in conditionals Do not use this in blank string checks Use me when the function simply groups commands for re-use
-- `path  = p6_return_path(path)`
-  - Synopsis: Specialized string of well formed simple unix paths Only /, letters, numbers, -, _, @, +, ~, ., ',' NO SPACES, QUOTES etc...
-  - Args:
-    - path - unix-like path string
-- `size_t  = p6_return_size_t(size_t)`
-  - Synopsis: Any Positive Integer No blanks
-  - Args:
-    - size_t - non-negative integer
-- `str  = p6_return_str(str)`
-  - Synopsis: Any string BLANKS allowed
-  - Args:
-    - str - string value (blanks allowed)
-- `stream  = p6_return_stream()`
-  - Synopsis: Function emits arbitrary text
-- `true  = p6_return(rv)`
-  - Synopsis: Prints rv to stdout and returns success.
-  - Args:
-    - rv - value to echo
-- `true  = p6_return_true()`
-  - Synopsis: Suitable for use in conditionals
-- `words  = p6_return_words(words)`
-  - Synopsis: A word is a loop item. Words is a collection of words. Words should be split on $IFS "" or '' count as a blank word
-  - Args:
-    - words - words list (preserves splits)
+    - file - YAML file path
+    - query - yq query string (optional)
 
 ## Hierarchy
 
@@ -1555,11 +1602,13 @@ TODO: Add a short summary of this module.
 │   ├── debug
 │   │   ├── debug-debug.sh
 │   │   ├── log-debug.sh
+│   │   ├── return.sh
 │   │   ├── time-debug.sh
 │   │   └── trace-debug.sh
 │   └── prod
 │       ├── debug-prod.sh
 │       ├── log-prod.sh
+│       ├── return.sh
 │       ├── time-prod.sh
 │       └── trace-debug.sh
 ├── Dockerfile
@@ -1612,6 +1661,7 @@ TODO: Add a short summary of this module.
 │   ├── prod -> ../conf/prod
 │   ├── stdio
 │   │   ├── color.sh
+│   │   ├── debug.sh
 │   │   ├── dir.sh
 │   │   ├── file.sh
 │   │   ├── interactive.sh
@@ -1641,15 +1691,13 @@ TODO: Add a short summary of this module.
 │   │   ├── uri.sh
 │   │   ├── word.sh
 │   │   └── yml.sh
-│   ├── test
-│   │   ├── api.sh
-│   │   ├── asserts.sh
-│   │   ├── harness.sh
-│   │   ├── run.sh
-│   │   ├── state.sh
-│   │   └── tap.sh
-│   └── types
-│       └── return.sh
+│   └── test
+│       ├── api.sh
+│       ├── asserts.sh
+│       ├── harness.sh
+│       ├── run.sh
+│       ├── state.sh
+│       └── tap.sh
 ├── README.md
 └── t
     ├── alias.sh
@@ -1691,7 +1739,7 @@ TODO: Add a short summary of this module.
     ├── word.sh
     └── yml.sh
 
-19 directories, 123 files
+18 directories, 125 files
 ```
 
 ## Author
