@@ -121,6 +121,25 @@ p6_filter_strip_leading_spaces() {
 ######################################################################
 #<
 #
+# Function: filter  = p6_filter_strip_leading_underscores()
+#
+#  Returns:
+#	filter - 
+#
+#>
+#/ Synopsis
+#/    Strip leading underscores from each line.
+######################################################################
+p6_filter_strip_leading_underscores() {
+
+    p6_filter__string_apply p6_string_strip_leading_underscores
+
+    p6_return_filter
+}
+
+######################################################################
+#<
+#
 # Function: filter  = p6_filter_strip_trailing_spaces()
 #
 #  Returns:

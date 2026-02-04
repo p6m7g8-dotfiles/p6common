@@ -862,6 +862,32 @@ p6_string_strip_spaces() {
 ######################################################################
 #<
 #
+# Function: str str_r = p6_string_strip_leading_underscores(str)
+#
+#  Args:
+#	str - input string
+#
+#  Returns:
+#	str - str_r
+#
+#>
+#/ Synopsis
+#/    Strip leading underscores from a string.
+######################################################################
+p6_string_strip_leading_underscores() {
+    local str="$1" # input string
+
+    local str_r="$str"
+    str_r=${str_r#"${str_r%%[!_]*}"}
+
+    p6_string__debug "strip_leading_underscores(): [$str] -> [$str_r]"
+
+    p6_return_str "$str_r"
+}
+
+######################################################################
+#<
+#
 # Function: str str_r = p6_string_strip_alum(str)
 #
 #  Args:
