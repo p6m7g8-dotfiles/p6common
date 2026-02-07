@@ -29,13 +29,9 @@ p6_debug__debug() {
 p6_debug() {
     local msg="$1"
 
-    if p6_debugging; then
-        local systems="$P6_DEBUG"
-        local system=$(p6_echo "$msg" | cut -d : -f 1)
-
-        if p6_debugging_system_on "$systems" "$system"; then
-            p6_echo "$msg" >>$P6_PREFIX/tmp/p6/debug.log
-        fi
+    local system="${msg%%:*}"
+    if p6_debugging_system_on "$P6_DEBUG" "$system"; then
+        p6_echo "$msg" >>"$P6_PREFIX/tmp/p6/debug.log"
     fi
 
     p6_return_void
@@ -82,11 +78,7 @@ p6_debugging_system_on() {
     local rc=$P6_FALSE
 
     case $systems in
-    *$system*) rc=$P6_TRUE ;;
-    esac
-
-    case $systems in
-    *all*) rc=$P6_TRUE ;;
+    *$system* | *all*) rc=$P6_TRUE ;;
     esac
 
     p6_return_code_as_code "$rc"
