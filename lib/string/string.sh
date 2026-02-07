@@ -41,7 +41,7 @@ p6_string_blank() {
     test -z "$str"
     local rv=$?
 
-    p6_string__debug "blank(): [$str] -> $rv"
+#    p6_string__debug "blank(): [$str] -> $rv"
 
     p6_return_bool "$rv"
 }
@@ -67,7 +67,7 @@ p6_string_blank_NOT() {
     test -n "$str"
     local rv=$?
 
-    p6_string__debug "blank_NOT(): [$str] -> $rv"
+#    p6_string__debug "blank_NOT(): [$str] -> $rv"
 
     p6_return_bool "$rv"
 }
@@ -99,7 +99,7 @@ p6_string_eq() {
         rv=$P6_FALSE
     fi
 
-    p6_string__debug "eq(): [$str] eq? [$val] -> $rv"
+#    p6_string__debug "eq(): [$str] eq? [$val] -> $rv"
 
     p6_return_bool "$rv"
 }
@@ -131,7 +131,7 @@ p6_string_ne() {
         rv=$P6_TRUE
     fi
 
-    p6_string__debug "ne(): [$str] ne? [$val] -> $rv"
+#    p6_string__debug "ne(): [$str] ne? [$val] -> $rv"
 
     p6_return_bool "$rv"
 }
@@ -156,7 +156,7 @@ p6_string_eq_1() {
 
     p6_string_eq "$str" "1"
     local rc=$?
-    p6_string__debug "eq_1(): [$str] eq? [1] -> $rc"
+#    p6_string__debug "eq_1(): [$str] eq? [1] -> $rc"
 
     p6_return_bool "$rc"
 }
@@ -181,7 +181,7 @@ p6_string_eq_0() {
 
     p6_string_eq "$str" "0"
     local rc=$?
-    p6_string__debug "eq_0(): [$str] eq? [0] -> $rc"
+#    p6_string__debug "eq_0(): [$str] eq? [0] -> $rc"
 
     p6_return_bool "$rc"
 }
@@ -206,7 +206,7 @@ p6_string_ne_0() {
 
     p6_string_ne "$str" "0"
     local rc=$?
-    p6_string__debug "ne_0(): [$str] ne? [0] -> $rc"
+#    p6_string__debug "ne_0(): [$str] ne? [0] -> $rc"
 
     p6_return_bool "$rc"
 }
@@ -231,7 +231,7 @@ p6_string_eq_neg_1() {
 
     p6_string_eq "$str" "-1"
     local rc=$?
-    p6_string__debug "eq_neg_1(): [$str] eq? [-1] -> $rc"
+#    p6_string__debug "eq_neg_1(): [$str] eq? [-1] -> $rc"
 
     p6_return_bool "$rc"
 }
@@ -394,7 +394,7 @@ p6_string_match_regex() {
         rv=$?
     fi
 
-    p6_string__debug "match_regex(): [$str] =~ [$re] -> $rv"
+#    p6_string__debug "match_regex(): [$str] =~ [$re] -> $rv"
 
     p6_return_bool "$rv"
 }
@@ -418,6 +418,7 @@ p6_string_len() {
     local str="$1" # input string
 
     local len="${#str}"
+    p6_string__debug "len(): [$str] is [$len] long"
 
     p6_return_size_t "$len"
 }
@@ -476,7 +477,7 @@ p6_string_append() {
 
     local str_a="${str}${sep}${add}"
 
-    p6_string__debug "append(): [$str] + [$add] by [$sep] -> [$str_a]"
+#    p6_string__debug "append(): [$str] + [$add] by [$sep] -> [$str_a]"
 
     p6_return_str "$str_a"
 }
@@ -505,7 +506,7 @@ p6_string_prepend() {
 
     local str_a="${add}${sep}${str}"
 
-    p6_string__debug "prepend(): [$add] + [$str] by [$sep] -> [$str_a]"
+#    p6_string__debug "prepend(): [$add] + [$str] by [$sep] -> [$str_a]"
 
     p6_return_str "$str_a"
 }
