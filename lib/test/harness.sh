@@ -105,7 +105,7 @@ p6_test_harness___accumulate_results() {
   local di=0 # duration seconds
 
   local kv
-  for kv in $results; do
+  for kv in $(echo "$results"); do
     case $kv in
     Tt=*) ti=${kv#Tt=} ;;
     Tp=*) pi=${kv#Tp=} ;;
