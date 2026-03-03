@@ -567,7 +567,7 @@ TODO: Add a short summary of this module.
     - port - TCP port
     - ... - additional openssl options
 - `p6_openssl_s_client_connect(host, [port=443], ...)`
-  - Synopsis: Connects to $host on $port and returns the SSL Cert This already redirected to STDOUT Additional openssl options can be passed SSL is not allowed, only TLSv1+
+  - Synopsis: Connects to $host on $port and returns the SSL Cert This already redirected to STDOUT Additional openssl options can be passed SSL is not allowed, only TLSv1+ <!-- markdownlint-disable-line MD013 -->
   - Args:
     - host - FQDN of the website
     - OPTIONAL port - TCP port [443]
@@ -624,11 +624,11 @@ TODO: Add a short summary of this module.
 
 - `p6df::modules::p6common::gha::ModuleDeps(module)`
   - Args:
-    - module - 
+    - module -
 - `p6df::modules::p6common::init(_module, dir)`
   - Args:
-    - _module - 
-    - dir - 
+    - _module -
+    - dir -
 
 #### p6common/conf/debug
 
@@ -636,7 +636,7 @@ TODO: Add a short summary of this module.
 
 - `p6_log(msg)`
   - Args:
-    - msg - 
+    - msg -
 - `p6_log_disable()`
 - `p6_log_enable()`
 
@@ -675,9 +675,9 @@ TODO: Add a short summary of this module.
   - Args:
     - date - date string in accepted formats
 - `p6_return_void()`
-  - Synopsis: The literal absence of a return value Do not use this in conditionals Do not use this in blank string checks Use me when the function simply groups commands for re-use
+  - Synopsis: The literal absence of a return value Do not use this in conditionals Do not use this in blank string checks Use me when the function simply groups commands for re-use <!-- markdownlint-disable-line MD013 -->
 - `path  = p6_return_path(path)`
-  - Synopsis: Specialized string of well formed simple unix paths Only /, letters, numbers, -, _, @, +, ~, ., ',' NO SPACES, QUOTES etc...
+  - Synopsis: Specialized string of well formed simple unix paths Only /, letters, numbers, -, _, @, +, ~, ., ',' NO SPACES, QUOTES etc... <!-- markdownlint-disable-line MD013 -->
   - Args:
     - path - unix-like path string
 - `size_t  = p6_return_size_t(size_t)`
@@ -697,7 +697,7 @@ TODO: Add a short summary of this module.
 - `true  = p6_return_true()`
   - Synopsis: Suitable for use in conditionals
 - `words  = p6_return_words(words)`
-  - Synopsis: A word is a loop item. Words is a collection of words. Words should be split on $IFS "" or '' count as a blank word
+  - Synopsis: A word is a loop item. Words is a collection of words. Words should be split on $IFS "" or '' count as a blank word <!-- markdownlint-disable-line MD013 -->
   - Args:
     - words - words list (preserves splits)
 
@@ -705,9 +705,9 @@ TODO: Add a short summary of this module.
 
 - `p6_time(t0, t1, msg)`
   - Args:
-    - t0 - 
-    - t1 - 
-    - msg - 
+    - t0 -
+    - t1 -
+    - msg -
 
 #### p6common/conf/prod
 
@@ -715,7 +715,7 @@ TODO: Add a short summary of this module.
 
 - `p6_log(msg)`
   - Args:
-    - msg - 
+    - msg -
 - `p6_log_disable()`
 - `p6_log_enable()`
 
@@ -743,9 +743,9 @@ TODO: Add a short summary of this module.
 
 - `p6_time(t0, t1, msg)`
   - Args:
-    - t0 - 
-    - t1 - 
-    - msg - 
+    - t0 -
+    - t1 -
+    - msg -
 
 #### p6common/lib
 
