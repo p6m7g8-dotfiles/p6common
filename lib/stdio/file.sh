@@ -443,6 +443,7 @@ p6_file_symlink() {
     local from="$2" # link path
 
     p6_file__debug "symlink(): $to -> $from"
+    p6_log "ln -s $to $from"
     ln -s $to $from
 
     p6_return_void
