@@ -13,7 +13,7 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: orchestrator-${{ github.event.pull_request.number || github.event.workflow_run.id || github.run_id }}
+  group: orchestrator-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}
   cancel-in-progress: true
 
 jobs:
@@ -143,8 +143,26 @@ jobs:
 
           gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "Autonomous adjudicator: resolved $count unresolved review thread(s)."
 
-      - name: Approve PR
+      - name: Final guard for review decision
+        id: final_guard
         if: steps.ai.outputs.verdict == 'accept'
+        env:
+          GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          decision=$(gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json reviewDecision --jq '.reviewDecision')
+          if [ "$decision" = "CHANGES_REQUESTED" ]; then
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "Autonomous adjudicator: changes are still requested. Triggering another AI iteration."
+            gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "/codex address comments"
+            gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "/claude address comments"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Approve PR
+        if: steps.ai.outputs.verdict == 'accept' && steps.final_guard.outputs.ok == 'true'
         env:
           GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
           PR_NUMBER: ${{ steps.pr.outputs.number }}
@@ -153,7 +171,7 @@ jobs:
           gh pr review "$PR_NUMBER" --repo "${{ github.repository }}" --approve --body "Autonomous approval: Codex and Claude both accepted."
 
       - name: Enqueue PR
-        if: steps.ai.outputs.verdict == 'accept'
+        if: steps.ai.outputs.verdict == 'accept' && steps.final_guard.outputs.ok == 'true'
         uses: p6m7g8-actions/p6-gh-pr-auto-enqueue@main
         with:
           gh_token: ${{ secrets.P6_A_GH_TOKEN }}
