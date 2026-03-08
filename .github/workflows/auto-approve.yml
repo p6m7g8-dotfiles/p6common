@@ -93,8 +93,19 @@ jobs:
           claude_incorrect=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is incorrect|🚨\s*\*\*Bug\*\*|\[P1\]' || true)
           codex_correct=$(printf '%s' "$codex_body" | grep -Eic 'Overall:\s*patch is correct' || true)
           claude_correct=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is correct|Code Review Complete' || true)
+          codex_findings=$(printf '%s' "$codex_body" | sed -nE 's/.*Findings \(total\):[[:space:]]*([0-9]+).*/\1/p' | tail -n1)
+          if [ -z "$codex_findings" ]; then
+            codex_findings=999
+          fi
 
           if [ "$codex_incorrect" -gt 0 ] || [ "$claude_incorrect" -gt 0 ]; then
+            # Break stale-thread deadlock: codex can report incorrect with zero findings
+            # solely because an old unresolved thread exists. In that case allow accept,
+            # then resolve threads in the next step.
+            if [ "$codex_incorrect" -gt 0 ] && [ "$codex_findings" -eq 0 ] && [ "$claude_correct" -gt 0 ] && [ "$claude_incorrect" -eq 0 ]; then
+              echo "verdict=accept" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
             echo "verdict=iterate" >> "$GITHUB_OUTPUT"
             exit 0
           fi
