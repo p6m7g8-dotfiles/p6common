@@ -23,15 +23,9 @@ jobs:
       - name: Skip in merge queue context
         if: github.event_name == 'merge_group'
         run: echo "Skipping AI PR review in merge queue context."
-      - name: Checkout PR ref
-        if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Run claude review
         if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
-        uses: anthropics/claude-code-action@beta
+        continue-on-error: true
+        uses: p6m7g8-actions/claude@main
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          github_token: ${{ secrets.P6_A_GH_TOKEN }}
-          direct_prompt: Review this pull request for code quality, bugs, and best practices. Be concise.
