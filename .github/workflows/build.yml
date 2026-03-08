@@ -1,11 +1,23 @@
 name: Build
 
 on:
-  pull_request: {}
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+  merge_group:
+    types: [checks_requested]
   workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
+    name: build
     runs-on: ubuntu-latest
     steps:
       - name: Build
@@ -14,3 +26,18 @@ jobs:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           shellcheck: false
           test: false
+
+  lint_pr_title:
+    name: Lint PR title
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Skip PR title lint in merge queue context
+        if: github.event_name == 'merge_group'
+        run: echo "No PR title in merge_group event; marking check successful."
+      - name: Lint PR title
+        if: github.event_name == 'pull_request'
+        uses: p6m7g8-actions/p6-gh-pr-title-linter@main
+        with:
+          gh_token: ${{ secrets.GITHUB_TOKEN }}

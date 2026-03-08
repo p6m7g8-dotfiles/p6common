@@ -1,7 +1,10 @@
 name: Codex Code Review
+
 on:
   pull_request:
     types: [opened, ready_for_review, synchronize]
+  merge_group:
+    types: [checks_requested]
 
 permissions:
   contents: read
@@ -9,11 +12,20 @@ permissions:
   issues: write
   pull-requests: write
 
+concurrency:
+  group: codex-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   codex-review:
+    name: codex-review
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
     steps:
-      - uses: p6m7g8-actions/codex@main
+      - name: Skip in merge queue context
+        if: github.event_name == 'merge_group'
+        run: echo "Skipping AI PR review in merge queue context."
+      - name: Run codex review
+        if: github.event_name == 'pull_request' && github.event.pull_request.draft == false && github.event.pull_request.head.repo.fork == false
+        uses: p6m7g8-actions/codex@main
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
