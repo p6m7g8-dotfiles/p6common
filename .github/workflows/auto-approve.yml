@@ -82,17 +82,17 @@ jobs:
           set -euo pipefail
           repo="${{ github.repository }}"
 
-          codex_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select(.author.login | startswith("github-actions")) | .body | select(startswith("Codex Autonomous Review:"))] | last // ""')
-          claude_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select(.author.login | startswith("github-actions")) | .body | select(startswith("Claude Autonomous Review:"))] | last // ""')
+          codex_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login | startswith("github-actions")) or (.author.login == "p6m7g8-automation")) | .body | select(startswith("Codex Autonomous Review:"))] | last // ""')
+          claude_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login | startswith("github-actions")) or (.author.login | startswith("claude")) or (.author.login == "p6m7g8-automation")) | .body | select((startswith("Claude Autonomous Review:")) or (contains("Code Review Complete"))) ] | last // ""')
           if [ -z "$codex_body" ] || [ -z "$claude_body" ]; then
             echo "verdict=iterate" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           codex_incorrect=$(printf '%s' "$codex_body" | grep -Eic 'Overall:\s*patch is incorrect' || true)
-          claude_incorrect=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is incorrect' || true)
+          claude_incorrect=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is incorrect|🚨\s*\*\*Bug\*\*|\[P1\]' || true)
           codex_correct=$(printf '%s' "$codex_body" | grep -Eic 'Overall:\s*patch is correct' || true)
-          claude_correct=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is correct' || true)
+          claude_correct=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is correct|Code Review Complete' || true)
 
           if [ "$codex_incorrect" -gt 0 ] || [ "$claude_incorrect" -gt 0 ]; then
             echo "verdict=iterate" >> "$GITHUB_OUTPUT"
@@ -106,7 +106,7 @@ jobs:
 
           echo "verdict=iterate" >> "$GITHUB_OUTPUT"
 
-      - name: Iterate by requesting both agents to address comments
+      - name: Iterate by recording adjudication
         if: steps.ai.outputs.verdict == 'iterate'
         env:
           GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
@@ -114,9 +114,7 @@ jobs:
         run: |
           set -euo pipefail
           repo="${{ github.repository }}"
-          gh pr comment "$PR_NUMBER" --repo "$repo" --body "Autonomous adjudicator: no Codex/Claude consensus yet. Requesting another iteration."
-          gh pr comment "$PR_NUMBER" --repo "$repo" --body "/codex address comments"
-          gh pr comment "$PR_NUMBER" --repo "$repo" --body "/claude address comments"
+          gh pr comment "$PR_NUMBER" --repo "$repo" --body "Autonomous adjudicator: no Codex/Claude consensus yet. Waiting for next pull_request synchronize change."
 
       - name: Resolve all unresolved review threads
         if: steps.ai.outputs.verdict == 'accept'
@@ -154,9 +152,7 @@ jobs:
           decision=$(gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json reviewDecision --jq '.reviewDecision')
           if [ "$decision" = "CHANGES_REQUESTED" ]; then
             echo "ok=false" >> "$GITHUB_OUTPUT"
-            gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "Autonomous adjudicator: changes are still requested. Triggering another AI iteration."
-            gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "/codex address comments"
-            gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "/claude address comments"
+            gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "Autonomous adjudicator: changes are still requested. Waiting for next pull_request synchronize change."
           else
             echo "ok=true" >> "$GITHUB_OUTPUT"
           fi
