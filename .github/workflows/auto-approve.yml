@@ -54,7 +54,7 @@ jobs:
           fi
 
           checks_json=$(gh api -H "Accept: application/vnd.github+json" "/repos/$owner_repo/commits/$head_sha/check-runs?per_page=100")
-          required=("req-build" "req-pr-title-lint" "claude-review" "codex-review")
+          required=("build" "Lint PR title" "claude-review" "codex-review")
 
           for name in "${required[@]}"; do
             count=$(echo "$checks_json" | jq --arg n "$name" '[.check_runs[] | select(.name == $n)] | length')
