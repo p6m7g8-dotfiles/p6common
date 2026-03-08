@@ -82,9 +82,8 @@ jobs:
           set -euo pipefail
           repo="${{ github.repository }}"
 
-          codex_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select(.author.login == "github-actions") | .body | select(startswith("Codex Autonomous Review:"))] | last // ""')
-          claude_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select(.author.login == "github-actions") | .body | select(startswith("Claude Autonomous Review:"))] | last // ""')
-
+          codex_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select(.author.login | startswith("github-actions")) | .body | select(startswith("Codex Autonomous Review:"))] | last // ""')
+          claude_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select(.author.login | startswith("github-actions")) | .body | select(startswith("Claude Autonomous Review:"))] | last // ""')
           if [ -z "$codex_body" ] || [ -z "$claude_body" ]; then
             echo "verdict=iterate" >> "$GITHUB_OUTPUT"
             exit 0
@@ -96,7 +95,7 @@ jobs:
           claude_correct=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is correct' || true)
 
           if [ "$codex_incorrect" -gt 0 ] || [ "$claude_incorrect" -gt 0 ]; then
-            echo "verdict=reject" >> "$GITHUB_OUTPUT"
+            echo "verdict=iterate" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -118,17 +117,6 @@ jobs:
           gh pr comment "$PR_NUMBER" --repo "$repo" --body "Autonomous adjudicator: no Codex/Claude consensus yet. Requesting another iteration."
           gh pr comment "$PR_NUMBER" --repo "$repo" --body "/codex address comments"
           gh pr comment "$PR_NUMBER" --repo "$repo" --body "/claude address comments"
-
-      - name: Reject and close PR
-        if: steps.ai.outputs.verdict == 'reject'
-        env:
-          GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
-          PR_NUMBER: ${{ steps.pr.outputs.number }}
-        run: |
-          set -euo pipefail
-          repo="${{ github.repository }}"
-          gh pr comment "$PR_NUMBER" --repo "$repo" --body "Autonomous adjudicator: rejected after Codex/Claude review. Closing PR."
-          gh pr close "$PR_NUMBER" --repo "$repo" --comment "Closed automatically due to AI rejection."
 
       - name: Resolve all unresolved review threads
         if: steps.ai.outputs.verdict == 'accept'
