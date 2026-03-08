@@ -28,3 +28,4 @@ jobs:
         uses: p6m7g8-actions/claude@main
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.P6_A_GH_TOKEN }}
