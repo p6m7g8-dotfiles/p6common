@@ -82,8 +82,8 @@ jobs:
           set -euo pipefail
           repo="${{ github.repository }}"
 
-          codex_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login == "github-actions") or (.author.login == "p6m7g8-automation")) | .body | select(startswith("Codex Autonomous Review:"))] | last // ""')
-          claude_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login == "github-actions") or (.author.login == "claude") or (.author.login == "p6m7g8-automation")) | .body | select((startswith("Claude Autonomous Review:")) or (contains("Code Review Complete"))) ] | last // ""')
+          codex_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login | startswith("github-actions")) or (.author.login == "p6m7g8-automation")) | .body | select(startswith("Codex Autonomous Review:"))] | last // ""')
+          claude_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login | startswith("github-actions")) or (.author.login | startswith("claude")) or (.author.login == "p6m7g8-automation")) | .body | select((startswith("Claude Autonomous Review:")) or (contains("Code Review Complete"))) ] | last // ""')
           if [ -z "$codex_body" ] || [ -z "$claude_body" ]; then
             echo "verdict=iterate" >> "$GITHUB_OUTPUT"
             exit 0
