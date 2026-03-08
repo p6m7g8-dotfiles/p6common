@@ -16,8 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  req-build:
-    name: req-build
+  build:
+    name: build
     runs-on: ubuntu-latest
     steps:
       - name: Build
@@ -27,8 +27,8 @@ jobs:
           shellcheck: false
           test: false
 
-  req-pr-title-lint:
-    name: req-pr-title-lint
+  lint_pr_title:
+    name: Lint PR title
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
