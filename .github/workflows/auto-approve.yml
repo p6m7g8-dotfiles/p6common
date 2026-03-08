@@ -1,22 +1,142 @@
-name: auto-approve
+name: Auto PR Orchestrator
 
 on:
   pull_request_target:
-    types:
-      - labeled
-      - opened
-      - synchronize
-      - reopened
-      - ready_for_review
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+  workflow_run:
+    workflows: ["Build", "Claude Code Review", "Codex Code Review"]
+    types: [completed]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: orchestrator-${{ github.event.pull_request.number || github.event.workflow_run.id || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
-  approve:
+  orchestrate:
+    if: >-
+      github.event_name == 'pull_request_target' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
-    name: Auto-Approve PR
-    permissions:
-      pull-requests: write
     steps:
-      - name: Auto-Approve PR
-        uses: p6m7g8-actions/p6-gh-pr-auto-approve@main
+      - name: Select PR
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request_target" ]; then
+            pr_number="${{ github.event.pull_request.number }}"
+          else
+            pr_number="$(jq -r '.workflow_run.pull_requests[0].number // empty' "$GITHUB_EVENT_PATH")"
+          fi
+          if [ -z "$pr_number" ]; then
+            echo "No PR in this event; exiting."
+            echo "number=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "number=$pr_number" >> "$GITHUB_OUTPUT"
+
+      - name: Gate on PR state and check completion
+        id: gate
+        if: steps.pr.outputs.number != ''
+        env:
+          GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          owner_repo="${{ github.repository }}"
+
+          state=$(gh pr view "$PR_NUMBER" --repo "$owner_repo" --json state --jq '.state')
+          draft=$(gh pr view "$PR_NUMBER" --repo "$owner_repo" --json isDraft --jq '.isDraft')
+          head_sha=$(gh pr view "$PR_NUMBER" --repo "$owner_repo" --json headRefOid --jq '.headRefOid')
+
+          if [ "$state" != "OPEN" ] || [ "$draft" = "true" ]; then
+            echo "PR not open/ready; exiting."
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          checks_json=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$owner_repo/commits/$head_sha/check-runs?per_page=100")
+
+          required=("req-build" "req-pr-title-lint" "claude-review" "codex-review")
+          for name in "${required[@]}"; do
+            count=$(echo "$checks_json" | jq --arg n "$name" '[.check_runs[] | select(.name == $n)] | length')
+            if [ "$count" -eq 0 ]; then
+              echo "Required check run '$name' not present yet."
+              echo "proceed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            status=$(echo "$checks_json" | jq -r --arg n "$name" '[.check_runs[] | select(.name == $n)] | sort_by(.started_at) | last | .status')
+            conclusion=$(echo "$checks_json" | jq -r --arg n "$name" '[.check_runs[] | select(.name == $n)] | sort_by(.started_at) | last | .conclusion')
+            if [ "$status" != "completed" ] || [ "$conclusion" != "success" ]; then
+              echo "Check '$name' status=$status conclusion=$conclusion; waiting."
+              echo "proceed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          done
+
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+          echo "proceed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Resolve all unresolved review threads
+        if: steps.gate.outputs.proceed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          owner="${{ github.repository_owner }}"
+          repo="${{ github.event.repository.name }}"
+
+          query='query($owner:String!,$repo:String!,$number:Int!){repository(owner:$owner,name:$repo){pullRequest(number:$number){reviewThreads(first:100){nodes{id isResolved}}}}}'
+          threads=$(gh api graphql -f query="$query" -F owner="$owner" -F repo="$repo" -F number="$PR_NUMBER" --jq '.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved == false) | .id' || true)
+          count=0
+          while IFS= read -r tid; do
+            [ -z "$tid" ] && continue
+            mutation='mutation($threadId:ID!){resolveReviewThread(input:{threadId:$threadId}){thread{id isResolved}}}'
+            gh api graphql -f query="$mutation" -F threadId="$tid" >/dev/null
+            count=$((count + 1))
+          done <<< "$threads"
+
+          gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "Autonomous adjudicator: resolved $count unresolved review thread(s)."
+
+      - name: Reject and close on changes requested
+        if: steps.gate.outputs.proceed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          decision=$(gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json reviewDecision --jq '.reviewDecision')
+          if [ "$decision" = "CHANGES_REQUESTED" ]; then
+            gh pr comment "$PR_NUMBER" --repo "${{ github.repository }}" --body "Autonomous adjudicator: rejected because review decision is CHANGES_REQUESTED. Closing PR."
+            gh pr close "$PR_NUMBER" --repo "${{ github.repository }}" --comment "Closed automatically due to unresolved requested changes."
+            echo "closed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "closed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Approve PR
+        if: steps.gate.outputs.proceed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.P6_A_GH_TOKEN }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          decision=$(gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json reviewDecision --jq '.reviewDecision')
+          if [ "$decision" != "CHANGES_REQUESTED" ]; then
+            gh pr review "$PR_NUMBER" --repo "${{ github.repository }}" --approve --body "Autonomous approval: all checks green; no changes requested."
+          fi
+
+      - name: Enqueue PR
+        if: steps.gate.outputs.proceed == 'true'
+        uses: p6m7g8-actions/p6-gh-pr-auto-enqueue@main
         with:
-          bot_token: ${{ secrets.P6_A_GH_TOKEN }}
+          gh_token: ${{ secrets.P6_A_GH_TOKEN }}
