@@ -83,16 +83,16 @@ jobs:
           repo="${{ github.repository }}"
 
           codex_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login | startswith("github-actions")) or (.author.login == "p6m7g8-automation")) | .body | select(startswith("Codex Autonomous Review:"))] | last // ""')
-          claude_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login | startswith("github-actions")) or (.author.login | startswith("claude")) or (.author.login == "p6m7g8-automation")) | .body | select((startswith("Claude Autonomous Review:")) or (contains("Code Review Complete"))) ] | last // ""')
+          claude_body=$(gh pr view "$PR_NUMBER" --repo "$repo" --json comments --jq '[.comments[] | select((.author.login | startswith("github-actions")) or (.author.login | startswith("claude")) or (.author.login == "p6m7g8-automation")) | .body | select((startswith("Claude Autonomous Review:")) or (contains("Code Review Complete")) or (startswith("**Claude finished"))) ] | last // ""')
           if [ -z "$codex_body" ] || [ -z "$claude_body" ]; then
             echo "verdict=iterate" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           codex_incorrect=$(printf '%s' "$codex_body" | grep -Eic 'Overall:\s*patch is incorrect' || true)
-          claude_incorrect=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is incorrect|🚨\s*\*\*Bug\*\*|\[P1\]' || true)
+          claude_incorrect=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is incorrect|🚨\s*\*\*Bug\*\*|\[P1\]|NOT APPROVED|DO NOT MERGE' || true)
           codex_correct=$(printf '%s' "$codex_body" | grep -Eic 'Overall:\s*patch is correct' || true)
-          claude_correct=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is correct|Code Review Complete' || true)
+          claude_correct=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is correct|Code Review Complete|APPROVED|ready to merge' || true)
           codex_findings=$(printf '%s' "$codex_body" | sed -nE 's/.*Findings \(total\):[[:space:]]*([0-9]+).*/\1/p' | tail -n1)
           if [ -z "$codex_findings" ]; then
             codex_findings=999
