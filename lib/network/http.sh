@@ -15,7 +15,7 @@
 p6_curl() {
     shift 0
 
-    p6_log "curl $*"
+    p6_log "curl [args redacted]"
     curl "$@"
 
     p6_return_void
