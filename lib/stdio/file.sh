@@ -3,6 +3,29 @@
 ######################################################################
 #<
 #
+# Function: p6_file_chmod(mode, file)
+#
+#  Args:
+#	mode - permission mode (e.g. 600)
+#	file - file path
+#
+#>
+#/ Synopsis
+#/    Change file permissions with logging support.
+######################################################################
+p6_file_chmod() {
+    local mode="$1" # permission mode
+    local file="$2" # file path
+
+    p6_file__debug "chmod(): $mode $file"
+    chmod "$mode" "$file"
+
+    p6_return_void
+}
+
+######################################################################
+#<
+#
 # Function: p6_file__debug(msg)
 #
 #  Args:
