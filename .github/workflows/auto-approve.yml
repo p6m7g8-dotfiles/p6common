@@ -31,6 +31,12 @@ jobs:
             pr_number="${{ github.event.pull_request.number }}"
           else
             pr_number="$(jq -r '.workflow_run.pull_requests[0].number // empty' "$GITHUB_EVENT_PATH")"
+            if [ -z "$pr_number" ]; then
+              head_sha="$(jq -r '.workflow_run.head_sha // empty' "$GITHUB_EVENT_PATH")"
+              if [ -n "$head_sha" ]; then
+                pr_number="$(gh api "repos/${{ github.repository }}/commits/${head_sha}/pulls" --jq '.[0].number // empty' 2>/dev/null || true)"
+              fi
+            fi
           fi
           echo "number=$pr_number" >> "$GITHUB_OUTPUT"
 
