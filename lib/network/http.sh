@@ -52,12 +52,11 @@ p6_network_http_post_basic_auth() {
 ######################################################################
 #<
 #
-# Function: str response = p6_network_http_call(method, url, token, [data=], ...)
+# Function: str response = p6_network_http_call(method, url, [data=], ...)
 #
 #  Args:
 #	method      - HTTP method (GET POST PATCH PUT DELETE)
 #	url         - full request URL
-#	token       - Bearer token
 #	OPTIONAL data - JSON request body []
 #	...         - additional curl args (e.g. -H "Header: value")
 #
@@ -66,20 +65,16 @@ p6_network_http_post_basic_auth() {
 #
 #>
 #/ Synopsis
-#/    Authenticated REST call with optional JSON body; returns response body.
+#/    HTTP call with optional JSON body; caller provides all headers.
 ######################################################################
 p6_network_http_call() {
     local method="$1" # HTTP method (GET POST PATCH PUT DELETE)
     local url="$2"    # full request URL
-    local token="$3"  # Bearer token
-    local data="${4:-}"
-    shift 4           # additional curl args
-
-    local bearer="Authorization: Bearer ${token}"
-    local ctype="Content-Type: application/json"
+    local data="${3:-}"
+    shift 3           # additional curl args
 
     local response
-    response=$(p6_curl -s -X "${method}" "$url" -H "$bearer" -H "$ctype" "${data:+-d}" "${data:+$data}" "$@")
+    response=$(p6_curl -s -X "${method}" "$url" "${data:+-d}" "${data:+$data}" "$@")
 
     p6_return_str "$response"
 }
