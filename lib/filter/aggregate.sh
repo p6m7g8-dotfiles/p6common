@@ -3,6 +3,25 @@
 ######################################################################
 #<
 #
+# Function: filter  = p6_filter_join_words()
+#
+#  Returns:
+#	filter -
+#
+#>
+#/ Synopsis
+#/    Collapse stdin lines/words into a single space-separated string.
+######################################################################
+p6_filter_join_words() {
+
+    tr '\n' ' ' | sed 's/ $//'
+
+    p6_return_filter
+}
+
+######################################################################
+#<
+#
 # Function: filter  = p6_filter_aggregate_map_reduce()
 #
 #  Returns:
