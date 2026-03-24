@@ -52,13 +52,13 @@ p6_network_http_post_basic_auth() {
 ######################################################################
 #<
 #
-# Function: str response = p6_network_http_call(method, url, [data=], ...)
+# Function: str response = p6_network_http_call(method, url, data, ...)
 #
 #  Args:
-#	method      - HTTP method (GET POST PATCH PUT DELETE)
-#	url         - full request URL
-#	OPTIONAL data - JSON request body []
-#	...         - additional curl args (e.g. -H "Header: value")
+#	method - HTTP method (GET POST PATCH PUT DELETE)
+#	url    - full request URL
+#	data   - JSON request body; pass "" for requests with no body
+#	...    - additional curl args (e.g. -H "Header: value")
 #
 #  Returns:
 #	str - response
@@ -66,17 +66,13 @@ p6_network_http_post_basic_auth() {
 #>
 #/ Synopsis
 #/    HTTP call with optional JSON body; caller provides all headers.
+#/    Always pass data as $3; use "" for requests without a body.
 ######################################################################
 p6_network_http_call() {
     local method="$1" # HTTP method (GET POST PATCH PUT DELETE)
     local url="$2"    # full request URL
-    local data=""
-    if [ $# -ge 3 ]; then
-        data="$3"
-        shift 3
-    else
-        shift 2
-    fi
+    local data="${3:-}"
+    shift "$(( $# < 3 ? $# : 3 ))"
 
     local response
     response=$(p6_curl -s -X "${method}" "$url" "${data:+-d}" "${data:+$data}" "$@")
