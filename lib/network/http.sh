@@ -70,8 +70,9 @@ p6_network_http_post_basic_auth() {
 p6_network_http_call() {
     local method="$1" # HTTP method (GET POST PATCH PUT DELETE)
     local url="$2"    # full request URL
-    local data="${3:-}"
-    shift 3           # additional curl args
+    shift 2
+    local data="${1:-}"
+    [ $# -gt 0 ] && shift 1
 
     local response
     response=$(p6_curl -s -X "${method}" "$url" "${data:+-d}" "${data:+$data}" "$@")
