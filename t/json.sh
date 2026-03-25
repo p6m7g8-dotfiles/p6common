@@ -16,7 +16,7 @@ main() {
 
     p6_test_start "p6_json_eval"
     (
-        p6_test_run "p6_json_eval '{\"a\":1}' '.a'"
+        p6_test_run "p6_echo '{\"a\":1}' | p6_json_eval '.a'"
         p6_test_assert_run_ok "eval" 0 "1"
     )
     p6_test_finish
