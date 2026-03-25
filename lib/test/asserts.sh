@@ -247,17 +247,17 @@ p6_test_assert_len() {
 #
 #  Args:
 #	val - actual value
-#	const - regex pattern
+#	const - glob pattern
 #	description - assertion description
 #	reason - failure reason
 #
 #>
 #/ Synopsis
-#/    Asserts val matches the regex const.
+#/    Asserts val contains the glob pattern const.
 ######################################################################
 p6_test_assert_contains() {
   local val="$1"         # actual value
-  local const="$2"       # regex pattern
+  local const="$2"       # glob pattern
   local description="$3" # assertion description
   local reason="$4"      # failure reason
 
@@ -284,17 +284,17 @@ p6_test_assert_contains() {
 #
 #  Args:
 #	val - actual value
-#	const - regex pattern
+#	const - glob pattern
 #	description - assertion description
 #	reason - failure reason
 #
 #>
 #/ Synopsis
-#/    Asserts val does not match the regex const.
+#/    Asserts val does not contain the glob pattern const.
 ######################################################################
 p6_test_assert_not_contains() {
   local val="$1"         # actual value
-  local const="$2"       # regex pattern
+  local const="$2"       # glob pattern
   local description="$3" # assertion description
   local reason="$4"      # failure reason
 
