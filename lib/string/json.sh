@@ -31,6 +31,8 @@ p6_json__debug() {
 #>
 #/ Synopsis
 #/    Run jq against JSON on stdin.
+#/ Usage
+#/    echo '{"key":"val"}' | p6_json_eval -r '.key'
 ######################################################################
 p6_json_eval() {
 
