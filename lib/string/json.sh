@@ -23,21 +23,23 @@ p6_json__debug() {
 ######################################################################
 #<
 #
-# Function: p6_json_eval(json, ...)
+# Function: p6_json_eval(...)
 #
 #  Args:
-#	json - JSON input
-#	... - jq filter and options
+#	... - jq filter and options (reads JSON from stdin)
 #
 #>
 #/ Synopsis
-#/    Run jq against a JSON string.
+#/    Run jq against JSON on stdin.
+#/ Usage
+#/    echo '{"key":"val"}' | p6_json_eval -r '.key'
 ######################################################################
 p6_json_eval() {
-    local json="$1" # JSON input
-    shift 1         # jq filter and options
 
-    p6_echo "$json" | jq "$@"
+    jq "$@"
+    local rv=$?
+
+    p6_return_stream "$rv"
 }
 
 ######################################################################
@@ -50,12 +52,13 @@ p6_json_eval() {
 #
 #>
 #/ Synopsis
-#/    Output JSON content from a file.
+#/    Stream JSON file content to stdout.
 ######################################################################
 p6_json_from_file() {
     local file="$1" # JSON file path
 
-    jq <"$file"
+    cat "$file"
+    local rv=$?
 
-    p6_return_void
+    p6_return_stream "$rv"
 }
