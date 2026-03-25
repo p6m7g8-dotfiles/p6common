@@ -33,6 +33,7 @@ p6_json__debug() {
 #/    Run jq against JSON on stdin.
 ######################################################################
 p6_json_eval() {
+
     jq "$@"
 
     p6_return_stream
