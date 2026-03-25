@@ -37,10 +37,8 @@ p6_json__debug() {
 p6_json_eval() {
 
     jq "$@"
-    local rv=$? # capture before p6_return_stream clears $?
 
-    p6_return_stream # exits p6_return_stream only; caller continues
-    return $rv       # propagate jq exit code to caller
+    p6_return_stream
 }
 
 ######################################################################
@@ -59,8 +57,6 @@ p6_json_from_file() {
     local file="$1" # JSON file path
 
     cat "$file"
-    local rv=$? # capture before p6_return_stream clears $?
 
-    p6_return_stream # exits p6_return_stream only; caller continues
-    return $rv       # propagate cat exit code to caller
+    p6_return_stream
 }
