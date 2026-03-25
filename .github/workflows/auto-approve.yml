@@ -98,7 +98,7 @@ jobs:
           codex_incorrect=$(printf '%s' "$codex_body" | grep -Eic 'Overall:\s*patch is incorrect' || true)
           claude_incorrect=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is incorrect|🚨\s*\*\*Bug\*\*|\[P1\]|NOT APPROVED|DO NOT MERGE' || true)
           codex_correct=$(printf '%s' "$codex_body" | grep -Eic 'Overall:\s*patch is correct' || true)
-          claude_correct=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is correct|Code Review Complete|APPROVED|ready to merge' || true)
+          claude_correct=$(printf '%s' "$claude_body" | grep -Eic 'Overall:\s*patch is correct|Code Review Complete|APPROVED|ready to merge|ready for merge' || true)
           codex_findings=$(printf '%s' "$codex_body" | sed -nE 's/.*Findings \(total\):[[:space:]]*([0-9]+).*/\1/p' | tail -n1)
           if [ -z "$codex_findings" ]; then
             codex_findings=999
