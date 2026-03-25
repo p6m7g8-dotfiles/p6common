@@ -168,7 +168,7 @@ p6_test_assert_eq() {
   local reason="$4"      # failure reason
 
   local rv=-1
-  if [[ "$val" == "$const" ]]; then
+  if [ "$val" = "$const" ]; then
     rv=1
     p6_test_tap_ok "$description" "$reason"
   else
@@ -202,7 +202,7 @@ p6_test_assert_not_eq() {
   local reason="$4"      # failure reason
 
   local rv=-1
-  if [[ "$val" == "$const" ]]; then
+  if [ "$val" = "$const" ]; then
     rv=0
     p6_test_tap_not_ok "$description" "$reason"
     p6_test_tap_diagnostic "expected [$const], got [$val]"
@@ -247,29 +247,32 @@ p6_test_assert_len() {
 #
 #  Args:
 #	val - actual value
-#	const - regex pattern
+#	const - glob pattern
 #	description - assertion description
 #	reason - failure reason
 #
 #>
 #/ Synopsis
-#/    Asserts val matches the regex const.
+#/    Asserts val contains the glob pattern const.
 ######################################################################
 p6_test_assert_contains() {
   local val="$1"         # actual value
-  local const="$2"       # regex pattern
+  local const="$2"       # glob pattern
   local description="$3" # assertion description
   local reason="$4"      # failure reason
 
   local rv=-1
-  if [[ "$val" =~ $const ]]; then
+  case "$val" in
+  *$const*)
     rv=1
     p6_test_tap_ok "$description" "$reason"
-  else
+    ;;
+  *)
     rv=0
     p6_test_tap_not_ok "$description" "$reason"
     p6_test_tap_diagnostic "val [$val] does not match [$const]"
-  fi
+    ;;
+  esac
 
   return $rv
 }
@@ -281,29 +284,32 @@ p6_test_assert_contains() {
 #
 #  Args:
 #	val - actual value
-#	const - regex pattern
+#	const - glob pattern
 #	description - assertion description
 #	reason - failure reason
 #
 #>
 #/ Synopsis
-#/    Asserts val does not match the regex const.
+#/    Asserts val does not contain the glob pattern const.
 ######################################################################
 p6_test_assert_not_contains() {
   local val="$1"         # actual value
-  local const="$2"       # regex pattern
+  local const="$2"       # glob pattern
   local description="$3" # assertion description
   local reason="$4"      # failure reason
 
   local rv=-1
-  if [[ "$val" =~ $const ]]; then
+  case "$val" in
+  *$const*)
     rv=0
     p6_test_tap_not_ok "$description" "$reason"
     p6_test_tap_diagnostic "val [$val] matches [$const]"
-  else
+    ;;
+  *)
     rv=1
     p6_test_tap_ok "$description" "$reason"
-  fi
+    ;;
+  esac
 
   return $rv
 }
