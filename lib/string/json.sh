@@ -35,8 +35,10 @@ p6_json__debug() {
 p6_json_eval() {
 
     jq "$@"
+    local rv=$?
 
     p6_return_stream
+    return $rv
 }
 
 ######################################################################
@@ -55,6 +57,8 @@ p6_json_from_file() {
     local file="$1" # JSON file path
 
     cat "$file"
+    local rv=$?
 
     p6_return_stream
+    return $rv
 }
