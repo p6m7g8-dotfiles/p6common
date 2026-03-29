@@ -1,28 +1,24 @@
 name: Claude Code Review
-
 on:
   pull_request:
     types: [opened, ready_for_review, synchronize]
-  merge_group:
-    types: [checks_requested]
+  push:
+    branches:
+      - gh-readonly-queue/**
+  merge_group: {}
 
 permissions:
   contents: read
   id-token: write
   pull-requests: write
 
-concurrency:
-  group: claude-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 jobs:
   claude-review:
-    name: claude-review
     runs-on: ubuntu-latest
     steps:
-      - name: Skip in merge queue context
-        if: github.event_name == 'merge_group'
-        run: echo "Skipping AI PR review in merge queue context."
+      - name: Skip on queue refs
+        if: github.event_name == 'merge_group' || github.event_name == 'push'
+        run: echo "Skipping review in queue context"
       - name: Run claude review
         if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
         continue-on-error: true
