@@ -6,7 +6,7 @@
 # Function: p6_file_chmod(mode, file)
 #
 #  Args:
-#	mode - permission mode (e.g. 600)
+#	mode - permission mode
 #	file - file path
 #
 #>
@@ -681,6 +681,42 @@ p6_file_marker_delete_to_end() {
     local marker="$2" # marker pattern
 
     p6_file_replace "$file" "/^$marker/,\$d"
+
+    p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_file_lines_remove(start, end, after, file)
+#
+#  Args:
+#	start - pattern marking start of block to remove
+#	end - pattern marking end of block to remove
+#	after - only remove the block that appears after this pattern
+#	file - file path
+#
+#>
+#/ Synopsis
+#/    Remove the first block between start..end that appears after the after pattern.
+######################################################################
+p6_file_lines_remove() {
+    local start="$1" # pattern marking start of block to remove
+    local end="$2"   # pattern marking end of block to remove
+    local after="$3" # only remove the block that appears after this pattern
+    local file="$4"  # file path
+
+    p6_file__debug "lines_remove(): [$start]..[end=$end] after [$after] in $file"
+
+    local tmp
+    tmp=$(awk -v after="$after" -v start="$start" -v end="$end" '
+        !found_after && $0 ~ after { found_after=1; print; next }
+        found_after && !in_block && $0 ~ start { in_block=1; next }
+        found_after && in_block && $0 ~ end { in_block=0; next }
+        in_block { next }
+        { print }
+    ' "$file")
+    p6_file_write "$file" "$tmp"
 
     p6_return_void
 }
