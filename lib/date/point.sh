@@ -110,8 +110,7 @@ p6_date_point_last_day_of_ym() {
     local next_first
     next_first=$(printf '%04d-%02d-01' "$next_year" "$next_month")
 
-    local os_name
-    os_name=$(p6_os_name)
+    local os_name=$(p6_os_name)
 
     local day
     case "$os_name" in

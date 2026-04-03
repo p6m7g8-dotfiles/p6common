@@ -61,8 +61,7 @@ p6_file__debug() {
 p6_file_mtime() {
     local file="$1" # file path
 
-    local os_name
-    os_name=$(p6_os_name)
+    local os_name=$(p6_os_name)
 
     local modified_epoch_seconds
     case "$os_name" in
@@ -234,8 +233,7 @@ p6_file_sed_in_place() {
     local file="$1"    # file path
     local sed_cmd="$2" # sed expression
 
-    local os_name
-    os_name=$(p6_os_name)
+    local os_name=$(p6_os_name)
 
     case "$os_name" in
         Darwin|FreeBSD|OpenBSD|NetBSD)

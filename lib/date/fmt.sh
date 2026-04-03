@@ -65,8 +65,7 @@ p6_date_fmt__date() {
         out_fmt="$output_fmt"
     fi
 
-    local os_name
-    os_name=$(p6_os_name)
+    local os_name=$(p6_os_name)
 
     local dt
     case "$os_name" in
