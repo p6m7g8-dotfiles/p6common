@@ -58,25 +58,13 @@ p6_file__debug() {
 #/ Synopsis
 #/    Return the file's modification time in epoch seconds.
 ######################################################################
-p6_file_mtime__bsd() {
-    local file="$1" # file path
-
-    stat -f "%m" "$file"
-}
-
-p6_file_mtime__gnu() {
-    local file="$1" # file path
-
-    stat -c "%Y" "$file"
-}
-
 p6_file_mtime() {
     local file="$1" # file path
 
     local modified_epoch_seconds
     case "$(uname -s)" in
-        Darwin|FreeBSD|OpenBSD|NetBSD) modified_epoch_seconds=$(p6_file_mtime__bsd "$file") ;;
-        *) modified_epoch_seconds=$(p6_file_mtime__gnu "$file") ;;
+        Darwin|FreeBSD|OpenBSD|NetBSD) modified_epoch_seconds=$(stat -f "%m" "$file") ;;
+        *) modified_epoch_seconds=$(stat -c "%Y" "$file") ;;
     esac
 
     p6_return_size_t "$modified_epoch_seconds"
@@ -239,29 +227,15 @@ p6_file_contains() {
 #/ Synopsis
 #/    Delete the last line of a file in place.
 ######################################################################
-p6_file_sed_in_place__bsd() {
-    local file="$1"    # file path
-    local sed_cmd="$2" # sed expression
-
-    sed -i '' -e "$sed_cmd" "$file"
-}
-
-p6_file_sed_in_place__gnu() {
-    local file="$1"    # file path
-    local sed_cmd="$2" # sed expression
-
-    sed -i -e "$sed_cmd" "$file"
-}
-
 p6_file_sed_in_place() {
     local file="$1"    # file path
     local sed_cmd="$2" # sed expression
 
     case "$(uname -s)" in
         Darwin|FreeBSD|OpenBSD|NetBSD)
-            p6_file_sed_in_place__bsd "$file" "$sed_cmd" ;;
+            sed -i '' -e "$sed_cmd" "$file" ;;
         *)
-            p6_file_sed_in_place__gnu "$file" "$sed_cmd" ;;
+            sed -i -e "$sed_cmd" "$file" ;;
     esac
 }
 
