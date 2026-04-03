@@ -711,10 +711,11 @@ p6_file_lines_remove() {
     local tmp
     tmp=$(awk -v after="$after" -v start="$start" -v end="$end" '
         !found_after && $0 ~ after { found_after=1; print; next }
-        found_after && !in_block && $0 ~ start { in_block=1; next }
-        found_after && in_block && $0 ~ end { in_block=0; next }
-        in_block { next }
+        found_after && !in_block && $0 ~ start { in_block=1; delete buf; buf_len=0; next }
+        found_after && in_block && $0 ~ end { in_block=0; buf_len=0; next }
+        found_after && in_block { buf[buf_len++]=$0; next }
         { print }
+        END { for (i=0; i<buf_len; i++) print buf[i] }
     ' "$file")
     p6_file_write "$file" "$tmp"
 
