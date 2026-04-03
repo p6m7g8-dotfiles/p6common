@@ -138,11 +138,12 @@ p6_date_fmt__date() {
     fi
 
     local dt
-    if p6_string_eq "$(uname -s)" "Darwin"; then
-        dt=$(p6_date_fmt__date_bsd "$input_date" "$input_fmt" "$out_fmt" "$offset" "$offset_fmt")
-    else
-        dt=$(p6_date_fmt__date_gnu "$input_date" "$out_fmt" "$offset")
-    fi
+    case "$(uname -s)" in
+        Darwin|FreeBSD|OpenBSD|NetBSD)
+            dt=$(p6_date_fmt__date_bsd "$input_date" "$input_fmt" "$out_fmt" "$offset" "$offset_fmt") ;;
+        *)
+            dt=$(p6_date_fmt__date_gnu "$input_date" "$out_fmt" "$offset") ;;
+    esac
 
     p6_date__debug "__date(): input_date=$input_date input_fmt=$input_fmt output_fmt=$output_fmt offset=$offset offset_fmt=$offset_fmt -> $dt"
 

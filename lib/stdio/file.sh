@@ -74,11 +74,10 @@ p6_file_mtime() {
     local file="$1" # file path
 
     local modified_epoch_seconds
-    if p6_string_eq "$(uname -s)" "Darwin"; then
-        modified_epoch_seconds=$(p6_file_mtime__bsd "$file")
-    else
-        modified_epoch_seconds=$(p6_file_mtime__gnu "$file")
-    fi
+    case "$(uname -s)" in
+        Darwin|FreeBSD|OpenBSD|NetBSD) modified_epoch_seconds=$(p6_file_mtime__bsd "$file") ;;
+        *) modified_epoch_seconds=$(p6_file_mtime__gnu "$file") ;;
+    esac
 
     p6_return_size_t "$modified_epoch_seconds"
 }
@@ -258,11 +257,12 @@ p6_file_sed_in_place() {
     local file="$1"    # file path
     local sed_cmd="$2" # sed expression
 
-    if p6_string_eq "$(uname -s)" "Darwin"; then
-        p6_file_sed_in_place__bsd "$file" "$sed_cmd"
-    else
-        p6_file_sed_in_place__gnu "$file" "$sed_cmd"
-    fi
+    case "$(uname -s)" in
+        Darwin|FreeBSD|OpenBSD|NetBSD)
+            p6_file_sed_in_place__bsd "$file" "$sed_cmd" ;;
+        *)
+            p6_file_sed_in_place__gnu "$file" "$sed_cmd" ;;
+    esac
 }
 
 p6_file_line_delete_last() {
@@ -679,30 +679,6 @@ p6_file_lines_first() {
     local lines=$(p6_filter_row_first "$n" <"$file")
 
     p6_return_str "$lines"
-}
-
-######################################################################
-#<
-#
-# Function: p6_file_replace(file, sed_cmd, file, sed_cmd)
-#
-#  Args:
-#	file - file path
-#	sed_cmd - sed expression
-#	file - file path
-#	sed_cmd - sed expression
-#
-#>
-#/ Synopsis
-#/    Run a sed expression in-place on a file.
-######################################################################
-p6_file_replace() {
-    local file="$1"    # file path
-    local sed_cmd="$2" # sed expression
-
-    p6_file_sed_in_place "$file" "$sed_cmd"
-
-    p6_return_void
 }
 
 ######################################################################
