@@ -152,7 +152,7 @@ b"
 
     p6_test_start "p6_file_ma_sync"
     (
-        p6_test_run "touch -t 202401010000 src.txt; touch -t 202401020000 dst.txt; p6_file_ma_sync src.txt dst.txt; if [ \"\$(stat -f '%m' src.txt)\" = \"\$(stat -f '%m' dst.txt)\" ]; then echo ok; else echo bad; fi"
+        p6_test_run "touch -t 202401010000 src.txt; touch -t 202401020000 dst.txt; p6_file_ma_sync src.txt dst.txt; if [ \"\$(p6_file_mtime src.txt)\" = \"\$(p6_file_mtime dst.txt)\" ]; then echo ok; else echo bad; fi"
         p6_test_assert_run_ok "ma_sync" 0 "ok"
     )
     p6_test_finish

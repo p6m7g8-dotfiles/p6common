@@ -6,7 +6,7 @@
 # Function: p6_file_chmod(mode, file)
 #
 #  Args:
-#	mode - permission mode (e.g. 600)
+#	mode - permission mode
 #	file - file path
 #
 #>
@@ -61,7 +61,13 @@ p6_file__debug() {
 p6_file_mtime() {
     local file="$1" # file path
 
-    local modified_epoch_seconds=$(stat -f "%m" $file)
+    local os_name=$(p6_os_name)
+
+    local modified_epoch_seconds
+    case "$os_name" in
+        Darwin|FreeBSD|OpenBSD|NetBSD) modified_epoch_seconds=$(stat -f "%m" "$file") ;;
+        *) modified_epoch_seconds=$(stat -c "%Y" "$file") ;;
+    esac
 
     p6_return_size_t "$modified_epoch_seconds"
 }
@@ -223,11 +229,25 @@ p6_file_contains() {
 #/ Synopsis
 #/    Delete the last line of a file in place.
 ######################################################################
+p6_file_sed_in_place() {
+    local file="$1"    # file path
+    local sed_cmd="$2" # sed expression
+
+    local os_name=$(p6_os_name)
+
+    case "$os_name" in
+        Darwin|FreeBSD|OpenBSD|NetBSD)
+            sed -i '' -e "$sed_cmd" "$file" ;;
+        *)
+            sed -i -e "$sed_cmd" "$file" ;;
+    esac
+}
+
 p6_file_line_delete_last() {
     local file="$1" # file path
 
-    p6_file__debug "line_delete_last(): sed -i '' -e '$d' $file"
-    sed -i '' -e '$d' $file
+    p6_file__debug "line_delete_last(): sed -i -e '\$d' $file"
+    p6_file_sed_in_place "$file" '$d'
 
     p6_return_void
 }
@@ -251,8 +271,8 @@ p6_file_replace() {
     local file="$1"    # file path
     local sed_cmd="$2" # sed expression
 
-    p6_file__debug "replace(): sed -i '' -e $sed_cmd $file"
-    sed -i '' -e $sed_cmd $file
+    p6_file__debug "replace(): sed -i -e $sed_cmd $file"
+    p6_file_sed_in_place "$file" "$sed_cmd"
 
     p6_return_void
 }
@@ -642,30 +662,6 @@ p6_file_lines_first() {
 ######################################################################
 #<
 #
-# Function: p6_file_replace(file, sed_cmd, file, sed_cmd)
-#
-#  Args:
-#	file - file path
-#	sed_cmd - sed expression
-#	file - file path
-#	sed_cmd - sed expression
-#
-#>
-#/ Synopsis
-#/    Run a sed expression in-place on a file.
-######################################################################
-p6_file_replace() {
-    local file="$1"    # file path
-    local sed_cmd="$2" # sed expression
-
-    sed -i '' -e "$sed_cmd" "$file"
-
-    p6_return_void
-}
-
-######################################################################
-#<
-#
 # Function: p6_file_marker_delete_to_end(file, marker)
 #
 #  Args:
@@ -681,6 +677,43 @@ p6_file_marker_delete_to_end() {
     local marker="$2" # marker pattern
 
     p6_file_replace "$file" "/^$marker/,\$d"
+
+    p6_return_void
+}
+
+######################################################################
+#<
+#
+# Function: p6_file_lines_remove(start, end, after, file)
+#
+#  Args:
+#	start - pattern marking start of block to remove
+#	end - pattern marking end of block to remove
+#	after - only remove the block that appears after this pattern
+#	file - file path
+#
+#>
+#/ Synopsis
+#/    Remove the first block between start..end that appears after the after pattern.
+######################################################################
+p6_file_lines_remove() {
+    local start="$1" # pattern marking start of block to remove
+    local end="$2"   # pattern marking end of block to remove
+    local after="$3" # only remove the block that appears after this pattern
+    local file="$4"  # file path
+
+    p6_file__debug "lines_remove(): [$start]..[end=$end] after [$after] in $file"
+
+    local tmp
+    tmp=$(awk -v after="$after" -v start="$start" -v end="$end" '
+        !found_after && $0 ~ after { found_after=1; print; next }
+        found_after && !in_block && $0 ~ start { in_block=1; delete buf; buf_len=0; next }
+        found_after && in_block && $0 ~ end { in_block=0; buf_len=0; next }
+        found_after && in_block { buf[buf_len++]=$0; next }
+        { print }
+        END { for (i=0; i<buf_len; i++) print buf[i] }
+    ' "$file")
+    p6_file_write "$file" "$tmp"
 
     p6_return_void
 }
