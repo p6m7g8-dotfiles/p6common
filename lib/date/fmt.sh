@@ -65,8 +65,10 @@ p6_date_fmt__date() {
         out_fmt="$output_fmt"
     fi
 
+    local os_name=$(p6_os_name)
+
     local dt
-    case "$(p6_os_name)" in
+    case "$os_name" in
         Darwin|FreeBSD|OpenBSD|NetBSD)
             local cli_args=""
             if p6_string_blank_NOT "$offset"; then

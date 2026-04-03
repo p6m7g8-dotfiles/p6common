@@ -110,8 +110,10 @@ p6_date_point_last_day_of_ym() {
     local next_first
     next_first=$(printf '%04d-%02d-01' "$next_year" "$next_month")
 
+    local os_name=$(p6_os_name)
+
     local day
-    case "$(p6_os_name)" in
+    case "$os_name" in
         Darwin|FreeBSD|OpenBSD|NetBSD)
             day=$(date -j -f "%Y-%m-%d" "$next_first" -v -1d +"%d") ;;
         *)
