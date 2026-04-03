@@ -62,7 +62,7 @@ p6_file_mtime() {
     local file="$1" # file path
 
     local modified_epoch_seconds
-    case "$(uname -s)" in
+    case "$(p6_os_name)" in
         Darwin|FreeBSD|OpenBSD|NetBSD) modified_epoch_seconds=$(stat -f "%m" "$file") ;;
         *) modified_epoch_seconds=$(stat -c "%Y" "$file") ;;
     esac
@@ -231,7 +231,7 @@ p6_file_sed_in_place() {
     local file="$1"    # file path
     local sed_cmd="$2" # sed expression
 
-    case "$(uname -s)" in
+    case "$(p6_os_name)" in
         Darwin|FreeBSD|OpenBSD|NetBSD)
             sed -i '' -e "$sed_cmd" "$file" ;;
         *)

@@ -3,6 +3,39 @@
 ######################################################################
 #<
 #
+# Function: str gnu_unit = p6_date_fmt___unit_char_to_gnu(unit_char)
+#
+#  Args:
+#	unit_char - BSD -v unit character (d, m, y, H, M, S, w)
+#
+#  Returns:
+#	str - gnu_unit
+#
+#>
+#/ Synopsis
+#/    Converts a BSD date -v unit character to a GNU date unit word.
+######################################################################
+p6_date_fmt___unit_char_to_gnu() {
+    local unit_char="$1" # BSD -v unit character
+
+    local gnu_unit
+    case "$unit_char" in
+        d) gnu_unit="day" ;;
+        m) gnu_unit="month" ;;
+        y) gnu_unit="year" ;;
+        H) gnu_unit="hour" ;;
+        M) gnu_unit="minute" ;;
+        S) gnu_unit="second" ;;
+        w) gnu_unit="week" ;;
+        *) gnu_unit="$unit_char" ;;
+    esac
+
+    p6_return_str "$gnu_unit"
+}
+
+######################################################################
+#<
+#
 # Function: p6_date_fmt__date(input_date, input_fmt, output_fmt, offset, offset_fmt)
 #
 #  Args:
@@ -33,7 +66,7 @@ p6_date_fmt__date() {
     fi
 
     local dt
-    case "$(uname -s)" in
+    case "$(p6_os_name)" in
         Darwin|FreeBSD|OpenBSD|NetBSD)
             local cli_args=""
             if p6_string_blank_NOT "$offset"; then
@@ -56,16 +89,7 @@ p6_date_fmt__date() {
                 local num="${rest%%[a-zA-Z]*}"
                 local unit_char="${rest#"$num"}"
                 local gnu_unit
-                case "$unit_char" in
-                    d) gnu_unit="day" ;;
-                    m) gnu_unit="month" ;;
-                    y) gnu_unit="year" ;;
-                    H) gnu_unit="hour" ;;
-                    M) gnu_unit="minute" ;;
-                    S) gnu_unit="second" ;;
-                    w) gnu_unit="week" ;;
-                    *) gnu_unit="$unit_char" ;;
-                esac
+                gnu_unit=$(p6_date_fmt___unit_char_to_gnu "$unit_char")
                 if p6_string_blank_NOT "$date_spec"; then
                     date_spec="$date_spec ${sign}${num} ${gnu_unit}"
                 else
