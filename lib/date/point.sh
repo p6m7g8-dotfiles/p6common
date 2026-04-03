@@ -101,7 +101,21 @@ p6_date_point_last_day_of_ym() {
     local year="$1"  # year (YYYY)
     local month="$2" # month (1-12)
 
-    local day=$(cal "$month" "$year" | awk 'NF {day=$NF} END {print day}')
+    local next_month=$((month + 1))
+    local next_year=$year
+    if [ "$next_month" -gt 12 ]; then
+        next_month=1
+        next_year=$((year + 1))
+    fi
+    local next_first
+    next_first=$(printf '%04d-%02d-01' "$next_year" "$next_month")
+
+    local day
+    if p6_string_eq "$(uname -s)" "Darwin"; then
+        day=$(date -j -f "%Y-%m-%d" "$next_first" -v -1d +"%d")
+    else
+        day=$(date -d "$next_first -1 day" +"%d")
+    fi
 
     p6_return_int "$day"
 }
