@@ -248,6 +248,7 @@ p6_test_harness_test_run() {
       ;;
     not\ ok*) # failed test
       TF=$((TF + 1)) # failed count
+      echo "FAIL[$base]: $line" >&2
       ;;
     ok\ *) # passed test
       Ts=$((Ts + 1)) # passed count
