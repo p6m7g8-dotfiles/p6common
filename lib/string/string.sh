@@ -1188,3 +1188,28 @@ p6_string_zero_pad() {
 
     p6_return_str "$padded"
 }
+
+######################################################################
+#<
+#
+# Function: str padded = p6_string_space_pad(str, pad)
+#
+#  Args:
+#	str - string
+#	pad - width to pad to
+#
+#  Returns:
+#	str - padded
+#
+#>
+#/ Synopsis
+#/    Left-justify a string in a field of given width, padding with spaces.
+######################################################################
+p6_string_space_pad() {
+    local str="$1" # string
+    local pad="$2" # width to pad to
+
+    local padded=$(printf "%-${pad}s" "$str")
+
+    p6_return_str "$padded"
+}
