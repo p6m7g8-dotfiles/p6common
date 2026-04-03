@@ -138,7 +138,7 @@ p6_date_fmt__date() {
     fi
 
     local dt
-    if [ "$(uname -s)" = "Darwin" ]; then
+    if p6_string_eq "$(uname -s)" "Darwin"; then
         dt=$(p6_date_fmt__date_bsd "$input_date" "$input_fmt" "$out_fmt" "$offset" "$offset_fmt")
     else
         dt=$(p6_date_fmt__date_gnu "$input_date" "$out_fmt" "$offset")
