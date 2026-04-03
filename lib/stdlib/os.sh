@@ -30,11 +30,11 @@ p6_os__debug() {
 #
 #>
 #/ Synopsis
-#/    Return the OS kernel release string.
+#/    Return the OS kernel name (uname -s), e.g. Darwin, Linux.
 ######################################################################
 p6_os_name() {
 
-    local name=$(uname -r)
+    local name=$(uname -s)
 
     p6_os__debug "name(): $name"
 
