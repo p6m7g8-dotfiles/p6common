@@ -249,6 +249,13 @@ p6_test_harness_test_run() {
     not\ ok*) # failed test
       TF=$((TF + 1)) # failed count
       echo "FAIL[$base]: $line" >&2
+      _p6_harness_print_diag=1
+      ;;
+    \#\ *) # TAP diagnostic
+      if [ "${_p6_harness_print_diag:-0}" = "1" ]; then
+        echo "DIAG[$base]: $line" >&2
+        _p6_harness_print_diag=0
+      fi
       ;;
     ok\ *) # passed test
       Ts=$((Ts + 1)) # passed count
