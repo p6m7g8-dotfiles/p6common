@@ -25,27 +25,59 @@ p6_date_fmt__date() {
     local offset="$4"     # offset expression
     local offset_fmt="$5" # offset format suffix
 
-    local cli_args=""
-
-    # Applies offset
-    if p6_string_blank_NOT "$offset"; then
-        cli_args="$cli_args -v ${offset}${offset_fmt}"
-    fi
-
-    if p6_string_blank_NOT "$input_date"; then
-        cli_args="$cli_args -j -f \"$input_fmt\" \"$input_date\""
-    else
-        cli_args="$cli_args -j"
-    fi
-
-    # Set output format
+    local out_fmt
     if p6_string_blank "$output_fmt"; then
-        cli_args="$cli_args +\"%Y-%m-%d\""
+        out_fmt="%Y-%m-%d"
     else
-        cli_args="$cli_args +\"$output_fmt\""
+        out_fmt="$output_fmt"
     fi
 
-    local dt=$(p6_date_fmt__cli "$cli_args")
+    local dt
+    if [ "$(uname -s)" = "Darwin" ]; then
+        # BSD date (macOS): -j -f input_fmt, -v offset
+        local cli_args=""
+        if p6_string_blank_NOT "$offset"; then
+            cli_args="$cli_args -v ${offset}${offset_fmt}"
+        fi
+        if p6_string_blank_NOT "$input_date"; then
+            cli_args="$cli_args -j -f \"$input_fmt\" \"$input_date\""
+        else
+            cli_args="$cli_args -j"
+        fi
+        cli_args="$cli_args +\"$out_fmt\""
+        dt=$(p6_date_fmt__cli "$cli_args")
+    else
+        # GNU date (Linux): -d "date_spec [offset]"
+        local date_spec="$input_date"
+        if p6_string_blank_NOT "$offset"; then
+            # Convert BSD offset (e.g. +1d, -1d, +1m) to GNU ("+1 day", "-1 day")
+            local sign="${offset%"${offset#[+-]}"}"
+            local rest="${offset#[+-]}"
+            local num="${rest%%[a-zA-Z]*}"
+            local unit_char="${rest#"$num"}"
+            local gnu_unit
+            case "$unit_char" in
+                d) gnu_unit="day" ;;
+                m) gnu_unit="month" ;;
+                y) gnu_unit="year" ;;
+                H) gnu_unit="hour" ;;
+                M) gnu_unit="minute" ;;
+                S) gnu_unit="second" ;;
+                w) gnu_unit="week" ;;
+                *) gnu_unit="$unit_char" ;;
+            esac
+            if p6_string_blank_NOT "$date_spec"; then
+                date_spec="$date_spec ${sign}${num} ${gnu_unit}"
+            else
+                date_spec="${sign}${num} ${gnu_unit}"
+            fi
+        fi
+        if p6_string_blank_NOT "$date_spec"; then
+            dt=$(p6_date_fmt__cli "-d \"$date_spec\" +\"$out_fmt\"")
+        else
+            dt=$(p6_date_fmt__cli "+\"$out_fmt\"")
+        fi
+    fi
 
     p6_date__debug "__date(): input_date=$input_date input_fmt=$input_fmt output_fmt=$output_fmt offset=$offset offset_fmt=$offset_fmt -> $dt"
 
