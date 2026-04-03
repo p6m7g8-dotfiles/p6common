@@ -262,6 +262,8 @@ p6_test_assert_contains() {
   local reason="$4"      # failure reason
 
   local rv=-1
+  # In zsh, variables in case patterns are not glob-expanded unless GLOB_SUBST is set
+  [ -n "${ZSH_VERSION:-}" ] && setopt GLOB_SUBST 2>/dev/null || true
   case "$val" in
   *$const*)
     rv=1
@@ -273,6 +275,7 @@ p6_test_assert_contains() {
     p6_test_tap_diagnostic "val [$val] does not match [$const]"
     ;;
   esac
+  [ -n "${ZSH_VERSION:-}" ] && unsetopt GLOB_SUBST 2>/dev/null || true
 
   return $rv
 }
