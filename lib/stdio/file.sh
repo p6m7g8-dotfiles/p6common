@@ -58,10 +58,27 @@ p6_file__debug() {
 #/ Synopsis
 #/    Return the file's modification time in epoch seconds.
 ######################################################################
+p6_file_mtime__bsd() {
+    local file="$1" # file path
+
+    stat -f "%m" "$file"
+}
+
+p6_file_mtime__gnu() {
+    local file="$1" # file path
+
+    stat -c "%Y" "$file"
+}
+
 p6_file_mtime() {
     local file="$1" # file path
 
-    local modified_epoch_seconds=$(stat -f "%m" $file)
+    local modified_epoch_seconds
+    if p6_string_eq "$(uname -s)" "Darwin"; then
+        modified_epoch_seconds=$(p6_file_mtime__bsd "$file")
+    else
+        modified_epoch_seconds=$(p6_file_mtime__gnu "$file")
+    fi
 
     p6_return_size_t "$modified_epoch_seconds"
 }
@@ -223,11 +240,36 @@ p6_file_contains() {
 #/ Synopsis
 #/    Delete the last line of a file in place.
 ######################################################################
+p6_file_sed_in_place__bsd() {
+    local file="$1"    # file path
+    local sed_cmd="$2" # sed expression
+
+    sed -i '' -e "$sed_cmd" "$file"
+}
+
+p6_file_sed_in_place__gnu() {
+    local file="$1"    # file path
+    local sed_cmd="$2" # sed expression
+
+    sed -i -e "$sed_cmd" "$file"
+}
+
+p6_file_sed_in_place() {
+    local file="$1"    # file path
+    local sed_cmd="$2" # sed expression
+
+    if p6_string_eq "$(uname -s)" "Darwin"; then
+        p6_file_sed_in_place__bsd "$file" "$sed_cmd"
+    else
+        p6_file_sed_in_place__gnu "$file" "$sed_cmd"
+    fi
+}
+
 p6_file_line_delete_last() {
     local file="$1" # file path
 
-    p6_file__debug "line_delete_last(): sed -i '' -e '$d' $file"
-    sed -i '' -e '$d' $file
+    p6_file__debug "line_delete_last(): sed -i -e '\$d' $file"
+    p6_file_sed_in_place "$file" '$d'
 
     p6_return_void
 }
@@ -251,8 +293,8 @@ p6_file_replace() {
     local file="$1"    # file path
     local sed_cmd="$2" # sed expression
 
-    p6_file__debug "replace(): sed -i '' -e $sed_cmd $file"
-    sed -i '' -e $sed_cmd $file
+    p6_file__debug "replace(): sed -i -e $sed_cmd $file"
+    p6_file_sed_in_place "$file" "$sed_cmd"
 
     p6_return_void
 }
@@ -658,7 +700,7 @@ p6_file_replace() {
     local file="$1"    # file path
     local sed_cmd="$2" # sed expression
 
-    sed -i '' -e "$sed_cmd" "$file"
+    p6_file_sed_in_place "$file" "$sed_cmd"
 
     p6_return_void
 }
