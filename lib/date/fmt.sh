@@ -58,21 +58,27 @@ p6_date_fmt__date_bsd() {
 ######################################################################
 #<
 #
-# Function: p6_date_fmt__date_gnu(input_date, out_fmt, offset)
+# Function: p6_date_fmt__date_gnu(input_date, input_fmt, out_fmt, offset, offset_fmt)
 #
 #  Args:
 #	input_date - input date string
+#	input_fmt - input format (accepted for API parity; GNU date -d parses common formats)
 #	out_fmt - output format
 #	offset - offset expression (BSD -v form, e.g. +1d)
+#	offset_fmt - offset format suffix (e.g. "d", "m"); appended to offset
 #
 #>
 #/ Synopsis
 #/    GNU date implementation: converts BSD offset notation to GNU -d spec.
 ######################################################################
 p6_date_fmt__date_gnu() {
-    local input_date="$1" # input date string
-    local out_fmt="$2"    # output format
-    local offset="$3"     # offset expression (BSD -v form, e.g. +1d)
+    local input_date="$1"  # input date string
+    local input_fmt="$2"   # input format (API parity; unused — GNU date -d infers format)
+    local out_fmt="$3"     # output format
+    local offset="$4"      # offset expression (BSD -v form, e.g. +1d)
+    local offset_fmt="$5"  # offset format suffix (e.g. "d", "m")
+
+    [ -n "$offset_fmt" ] && offset="${offset}${offset_fmt}"
 
     local date_spec="$input_date"
     if p6_string_blank_NOT "$offset"; then
@@ -138,11 +144,12 @@ p6_date_fmt__date() {
     fi
 
     local dt
-    if p6_string_eq "$(uname -s)" "Darwin"; then
-        dt=$(p6_date_fmt__date_bsd "$input_date" "$input_fmt" "$out_fmt" "$offset" "$offset_fmt")
-    else
-        dt=$(p6_date_fmt__date_gnu "$input_date" "$out_fmt" "$offset")
-    fi
+    case "$(uname -s)" in
+        Darwin|FreeBSD|OpenBSD|NetBSD)
+            dt=$(p6_date_fmt__date_bsd "$input_date" "$input_fmt" "$out_fmt" "$offset" "$offset_fmt") ;;
+        *)
+            dt=$(p6_date_fmt__date_gnu "$input_date" "$input_fmt" "$out_fmt" "$offset" "$offset_fmt") ;;
+    esac
 
     p6_date__debug "__date(): input_date=$input_date input_fmt=$input_fmt output_fmt=$output_fmt offset=$offset offset_fmt=$offset_fmt -> $dt"
 
