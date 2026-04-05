@@ -6,7 +6,7 @@
 # Function: str gnu_unit = p6_date_fmt___unit_char_to_gnu(unit_char)
 #
 #  Args:
-#	unit_char - BSD -v unit character (d, m, y, H, M, S, w)
+#	unit_char - BSD -v unit character
 #
 #  Returns:
 #	str - gnu_unit

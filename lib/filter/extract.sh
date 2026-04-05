@@ -9,7 +9,7 @@
 #	name - URL query parameter name
 #
 #  Returns:
-#	filter -
+#	filter - 
 #
 #>
 #/ Synopsis

@@ -251,6 +251,7 @@ p6_test_assert_len() {
 #	description - assertion description
 #	reason - failure reason
 #
+#  Environment:	 ZSH_VERSION
 #>
 #/ Synopsis
 #/    Asserts val contains the glob pattern const.

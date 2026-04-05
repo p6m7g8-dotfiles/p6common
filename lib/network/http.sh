@@ -6,7 +6,7 @@
 # Function: p6_curl(...)
 #
 #  Args:
-#	... - curl arguments
+#	... - 
 #
 #>
 #/ Synopsis
@@ -27,9 +27,9 @@ p6_curl() {
 # Function: str response = p6_network_http_post_basic_auth(url, creds, ...)
 #
 #  Args:
-#	url   - endpoint URL
+#	url - endpoint URL
 #	creds - user:password for HTTP Basic auth
-#	...   - additional curl args (e.g. -H "Header: value")
+#	... - additional curl args
 #
 #  Returns:
 #	str - response
@@ -52,13 +52,13 @@ p6_network_http_post_basic_auth() {
 ######################################################################
 #<
 #
-# Function: str response = p6_network_http_call(method, url, data, ...)
+# Function: str response = p6_network_http_call(method, url, [data=], ...)
 #
 #  Args:
 #	method - HTTP method (GET POST PATCH PUT DELETE)
-#	url    - full request URL
-#	data   - JSON request body; pass "" for requests with no body
-#	...    - additional curl args (e.g. -H "Header: value")
+#	url - full request URL
+#	OPTIONAL data - []
+#	... - < 3 ? $# : 3 ))"
 #
 #  Returns:
 #	str - response
