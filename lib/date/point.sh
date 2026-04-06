@@ -92,7 +92,6 @@ p6_date_point_tomorrow_ymd() {
 #  Returns:
 #	int - day
 #
-#  Environment:	 NF
 #>
 #/ Synopsis
 #/    Computes the last day number of a given year and month.

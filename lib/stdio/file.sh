@@ -220,10 +220,11 @@ p6_file_contains() {
 ######################################################################
 #<
 #
-# Function: p6_file_line_delete_last(file)
+# Function: p6_file_sed_in_place(file, sed_cmd)
 #
 #  Args:
 #	file - file path
+#	sed_cmd - sed expression
 #
 #>
 #/ Synopsis
@@ -243,6 +244,16 @@ p6_file_sed_in_place() {
     esac
 }
 
+######################################################################
+#<
+#
+# Function: p6_file_line_delete_last(file)
+#
+#  Args:
+#	file - file path
+#
+#>
+######################################################################
 p6_file_line_delete_last() {
     local file="$1" # file path
 
@@ -255,11 +266,9 @@ p6_file_line_delete_last() {
 ######################################################################
 #<
 #
-# Function: p6_file_replace(file, sed_cmd, file, sed_cmd)
+# Function: p6_file_replace(file, sed_cmd)
 #
 #  Args:
-#	file - file path
-#	sed_cmd - sed expression
 #	file - file path
 #	sed_cmd - sed expression
 #

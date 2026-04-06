@@ -6,7 +6,7 @@
 # Function: filter  = p6_filter_join_words()
 #
 #  Returns:
-#	filter -
+#	filter - 
 #
 #>
 #/ Synopsis

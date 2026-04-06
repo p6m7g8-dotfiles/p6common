@@ -23,10 +23,10 @@ p6_json__debug() {
 ######################################################################
 #<
 #
-# Function: p6_json_eval(...)
+# Function: stream rv = p6_json_eval()
 #
-#  Args:
-#	... - jq filter and options (reads JSON from stdin)
+#  Returns:
+#	stream - rv
 #
 #>
 #/ Synopsis
@@ -45,10 +45,13 @@ p6_json_eval() {
 ######################################################################
 #<
 #
-# Function: p6_json_from_file(file)
+# Function: stream rv = p6_json_from_file(file)
 #
 #  Args:
 #	file - JSON file path
+#
+#  Returns:
+#	stream - rv
 #
 #>
 #/ Synopsis

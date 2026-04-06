@@ -151,6 +151,8 @@ TODO: Add a short summary of this module.
   - Synopsis: Aggregate a table into total count and per-column averages.
   - Args:
     - OPTIONAL sep - field separator [\t]
+- `filter  = p6_filter_join_words()`
+  - Synopsis: Collapse stdin lines/words into a single space-separated string.
 
 ##### p6common/lib/filter/column.sh
 
@@ -208,6 +210,10 @@ TODO: Add a short summary of this module.
   - Args:
     - start - start pattern
     - end - end pattern
+- `filter  = p6_filter_extract_query_param(name)`
+  - Synopsis: Extract a named URL query parameter value from an HTTP request line on stdin.
+  - Args:
+    - name - URL query parameter name
 
 ##### p6common/lib/filter/kv.sh
 
@@ -339,6 +345,8 @@ TODO: Add a short summary of this module.
   - Synopsis: Strip leading and trailing spaces from each line.
 - `filter  = p6_filter_strip_leading_spaces()`
   - Synopsis: Strip leading spaces from each line.
+- `filter  = p6_filter_strip_leading_underscores()`
+  - Synopsis: Strip leading underscores from each line.
 - `filter  = p6_filter_strip_quotes()`
   - Synopsis: Strip both single and double quotes from each line.
 - `filter  = p6_filter_strip_single_quote()`
@@ -469,6 +477,26 @@ TODO: Add a short summary of this module.
     - dest - destination file path
     - ... - unused extra args
 
+##### p6common/lib/network/http.sh
+
+- `p6_curl(...)`
+  - Synopsis: Thin wrapper around curl; all callers build their own args.
+  - Args:
+    - ...
+- `str response = p6_network_http_call(method, url, [data=], ...)`
+  - Synopsis: HTTP call with optional JSON body; caller provides all headers. Always pass data as $3; use "" for request
+  - Args:
+    - method - HTTP method (GET POST PATCH PUT DELETE)
+    - url - full request URL
+    - OPTIONAL data - []
+    - ... - < 3 ? $# : 3 ))"
+- `str response = p6_network_http_post_basic_auth(url, creds, ...)`
+  - Synopsis: HTTP POST with Basic auth credentials; returns response body.
+  - Args:
+    - url - endpoint URL
+    - creds - user:password for HTTP Basic auth
+    - ... - additional curl args
+
 ##### p6common/lib/network/network.sh
 
 - `ipv4 ip = p6_network_ip_public()`
@@ -567,7 +595,7 @@ TODO: Add a short summary of this module.
     - port - TCP port
     - ... - additional openssl options
 - `p6_openssl_s_client_connect(host, [port=443], ...)`
-  - Synopsis: Connects to $host on $port and returns the SSL Cert This already redirected to STDOUT Additional openssl options can be passed SSL is not allowed, only TLSv1+ <!-- markdownlint-disable-line MD013 -->
+  - Synopsis: Connects to $host on $port and returns the SSL Cert This already redirected to STDOUT Additional openssl o
   - Args:
     - host - FQDN of the website
     - OPTIONAL port - TCP port [443]
@@ -624,11 +652,11 @@ TODO: Add a short summary of this module.
 
 - `p6df::modules::p6common::gha::ModuleDeps(module)`
   - Args:
-    - module -
+    - module
 - `p6df::modules::p6common::init(_module, dir)`
   - Args:
-    - _module -
-    - dir -
+    - _module
+    - dir
 
 #### p6common/conf/debug
 
@@ -636,7 +664,7 @@ TODO: Add a short summary of this module.
 
 - `p6_log(msg)`
   - Args:
-    - msg -
+    - msg
 - `p6_log_disable()`
 - `p6_log_enable()`
 
@@ -675,9 +703,9 @@ TODO: Add a short summary of this module.
   - Args:
     - date - date string in accepted formats
 - `p6_return_void()`
-  - Synopsis: The literal absence of a return value Do not use this in conditionals Do not use this in blank string checks Use me when the function simply groups commands for re-use <!-- markdownlint-disable-line MD013 -->
+  - Synopsis: The literal absence of a return value Do not use this in conditionals Do not use this in blank string chec
 - `path  = p6_return_path(path)`
-  - Synopsis: Specialized string of well formed simple unix paths Only /, letters, numbers, -, _, @, +, ~, ., ',' NO SPACES, QUOTES etc... <!-- markdownlint-disable-line MD013 -->
+  - Synopsis: Specialized string of well formed simple unix paths Only /, letters, numbers, -, _, @, +, ~, ., ',' NO SPA
   - Args:
     - path - unix-like path string
 - `size_t  = p6_return_size_t(size_t)`
@@ -697,7 +725,7 @@ TODO: Add a short summary of this module.
 - `true  = p6_return_true()`
   - Synopsis: Suitable for use in conditionals
 - `words  = p6_return_words(words)`
-  - Synopsis: A word is a loop item. Words is a collection of words. Words should be split on $IFS "" or '' count as a blank word <!-- markdownlint-disable-line MD013 -->
+  - Synopsis: A word is a loop item. Words is a collection of words. Words should be split on $IFS "" or '' count as a b
   - Args:
     - words - words list (preserves splits)
 
@@ -705,9 +733,9 @@ TODO: Add a short summary of this module.
 
 - `p6_time(t0, t1, msg)`
   - Args:
-    - t0 -
-    - t1 -
-    - msg -
+    - t0
+    - t1
+    - msg
 
 #### p6common/conf/prod
 
@@ -715,7 +743,7 @@ TODO: Add a short summary of this module.
 
 - `p6_log(msg)`
   - Args:
-    - msg -
+    - msg
 - `p6_log_disable()`
 - `p6_log_enable()`
 
@@ -743,9 +771,9 @@ TODO: Add a short summary of this module.
 
 - `p6_time(t0, t1, msg)`
   - Args:
-    - t0 -
-    - t1 -
-    - msg -
+    - t0
+    - t1
+    - msg
 
 #### p6common/lib
 
@@ -875,6 +903,11 @@ TODO: Add a short summary of this module.
   - Args:
     - file - file path
     - contents - content to append
+- `p6_file_chmod(mode, file)`
+  - Synopsis: Change file permissions with logging support.
+  - Args:
+    - mode - permission mode
+    - file - file path
 - `p6_file_contains(pattern, file)`
   - Synopsis: Select lines from a file matching a pattern.
   - Args:
@@ -894,8 +927,14 @@ TODO: Add a short summary of this module.
   - Args:
     - file - file path
 - `p6_file_line_delete_last(file)`
-  - Synopsis: Delete the last line of a file in place.
   - Args:
+    - file - file path
+- `p6_file_lines_remove(start, end, after, file)`
+  - Synopsis: Remove the first block between start..end that appears after the after pattern.
+  - Args:
+    - start - pattern marking start of block to remove
+    - end - pattern marking end of block to remove
+    - after - only remove the block that appears after this pattern
     - file - file path
 - `p6_file_load(file)`
   - Synopsis: Source a file, honoring P6_PREFIX when set.
@@ -916,24 +955,20 @@ TODO: Add a short summary of this module.
   - Args:
     - src - source path
     - dst - destination path
-- `p6_file_replace(file, sed_cmd, file, sed_cmd)`
+- `p6_file_replace(file, sed_cmd)`
   - Synopsis: Run a sed expression in-place on a file.
   - Args:
-    - file - file path
-    - sed_cmd - sed expression
-    - file - file path
-    - sed_cmd - sed expression
-- `p6_file_replace(file, sed_cmd, file, sed_cmd)`
-  - Synopsis: Run a sed expression in-place on a file.
-  - Args:
-    - file - file path
-    - sed_cmd - sed expression
     - file - file path
     - sed_cmd - sed expression
 - `p6_file_rmf(file)`
   - Synopsis: Remove a file if it exists.
   - Args:
     - file - file path
+- `p6_file_sed_in_place(file, sed_cmd)`
+  - Synopsis: Delete the last line of a file in place.
+  - Args:
+    - file - file path
+    - sed_cmd - sed expression
 - `p6_file_symlink(to, from)`
   - Synopsis: Create a symbolic link.
   - Args:
@@ -1039,6 +1074,10 @@ TODO: Add a short summary of this module.
   - Synopsis: Print a colon-delimited string vertically, one per line.
   - Args:
     - v - colon-delimited string
+
+##### p6common/lib/stdio/prod.sh
+
+- `p6_prod_load()`
 
 ##### p6common/lib/stdio/verbose.sh
 
@@ -1156,8 +1195,16 @@ TODO: Add a short summary of this module.
 
 ##### p6common/lib/stdlib/os.sh
 
+- `bool rv = p6_cmd_exists(cmd)`
+  - Synopsis: Return true if cmd is available: uses p6_file_executable for absolute paths, type for names resolved via P
+  - Args:
+    - cmd - command name or absolute path
+- `bool rv = p6_os_type(cmd)`
+  - Synopsis: Return true if cmd is found via type (PATH, functions, aliases).
+  - Args:
+    - cmd - command name
 - `str name = p6_os_name()`
-  - Synopsis: Return the OS kernel release string.
+  - Synopsis: Return the OS kernel name (uname -s), e.g. Darwin, Linux.
 
 ##### p6common/lib/stdlib/path.sh
 
@@ -1311,13 +1358,10 @@ TODO: Add a short summary of this module.
 
 ##### p6common/lib/string/json.sh
 
-- `p6_json_eval(json, ...)`
-  - Synopsis: Run jq against a JSON string.
-  - Args:
-    - json - JSON input
-    - ... - jq filter and options
-- `p6_json_from_file(file)`
-  - Synopsis: Output JSON content from a file.
+- `stream rv = p6_json_eval()`
+  - Synopsis: Run jq against JSON on stdin. Usage echo '{"key":"val"}' | p6_json_eval -r '.key'
+- `stream rv = p6_json_from_file(file)`
+  - Synopsis: Stream JSON file content to stdout.
   - Args:
     - file - JSON file path
 
@@ -1391,6 +1435,11 @@ TODO: Add a short summary of this module.
   - Args:
     - str - input string
     - default - fallback value
+- `str padded = p6_string_space_pad(str, pad)`
+  - Synopsis: Left-justify a string in a field of given width, padding with spaces.
+  - Args:
+    - str - string
+    - pad - width to pad to
 - `str padded = p6_string_zero_pad(str, pad)`
   - Synopsis: Zero-pad a number to a fixed width.
   - Args:
@@ -1470,6 +1519,10 @@ TODO: Add a short summary of this module.
     - str - input string
 - `str str_r = p6_string_strip_leading_spaces(str)`
   - Synopsis: Strip leading spaces from a string.
+  - Args:
+    - str - input string
+- `str str_r = p6_string_strip_leading_underscores(str)`
+  - Synopsis: Strip leading underscores from a string.
   - Args:
     - str - input string
 - `str str_r = p6_string_strip_non_branch_chars(str)`
@@ -1610,7 +1663,8 @@ TODO: Add a short summary of this module.
 │       ├── log-prod.sh
 │       ├── return.sh
 │       ├── time-prod.sh
-│       └── trace-debug.sh
+│       ├── trace-debug.sh
+│       └── trace-prod.sh
 ├── Dockerfile
 ├── init.zsh
 ├── lib
@@ -1646,6 +1700,7 @@ TODO: Add a short summary of this module.
 │   │   └── range.sh
 │   ├── network
 │   │   ├── download.sh
+│   │   ├── http.sh
 │   │   ├── network.sh
 │   │   └── ssh.sh
 │   ├── openssl
@@ -1666,6 +1721,7 @@ TODO: Add a short summary of this module.
 │   │   ├── file.sh
 │   │   ├── interactive.sh
 │   │   ├── io.sh
+│   │   ├── prod.sh
 │   │   └── verbose.sh
 │   ├── stdlib
 │   │   ├── alias.sh
@@ -1699,47 +1755,48 @@ TODO: Add a short summary of this module.
 │       ├── state.sh
 │       └── tap.sh
 ├── README.md
-└── t
-    ├── alias.sh
-    ├── cicd.sh
-    ├── color.sh
-    ├── const.sh
-    ├── ctl.sh
-    ├── date.sh
-    ├── debug.sh
-    ├── diag.sh
-    ├── dir.sh
-    ├── dryrunning.sh
-    ├── edit.sh
-    ├── env.sh
-    ├── file.sh
-    ├── filter.sh
-    ├── inc.sh
-    ├── interactive.sh
-    ├── io.sh
-    ├── json.sh
-    ├── lang.sh
-    ├── math.sh
-    ├── misc.sh
-    ├── openssl.sh
-    ├── os.sh
-    ├── path.sh
-    ├── remote.sh
-    ├── retry.sh
-    ├── return.sh
-    ├── run.sh
-    ├── ssh.sh
-    ├── string.sh
-    ├── template.sh
-    ├── tokens.sh
-    ├── transients.sh
-    ├── unroll.sh
-    ├── uri.sh
-    ├── verbose.sh
-    ├── word.sh
-    └── yml.sh
+├── t
+│   ├── alias.sh
+│   ├── cicd.sh
+│   ├── color.sh
+│   ├── const.sh
+│   ├── ctl.sh
+│   ├── date.sh
+│   ├── debug.sh
+│   ├── diag.sh
+│   ├── dir.sh
+│   ├── dryrunning.sh
+│   ├── edit.sh
+│   ├── env.sh
+│   ├── file.sh
+│   ├── filter.sh
+│   ├── inc.sh
+│   ├── interactive.sh
+│   ├── io.sh
+│   ├── json.sh
+│   ├── lang.sh
+│   ├── math.sh
+│   ├── misc.sh
+│   ├── openssl.sh
+│   ├── os.sh
+│   ├── path.sh
+│   ├── remote.sh
+│   ├── retry.sh
+│   ├── return.sh
+│   ├── run.sh
+│   ├── ssh.sh
+│   ├── string.sh
+│   ├── template.sh
+│   ├── tokens.sh
+│   ├── transients.sh
+│   ├── unroll.sh
+│   ├── uri.sh
+│   ├── verbose.sh
+│   ├── word.sh
+│   └── yml.sh
+└── THREAD_AUTO_RESOLVE_PROOF.md
 
-18 directories, 125 files
+18 directories, 129 files
 ```
 
 ## Author
