@@ -21,7 +21,7 @@ main() {
 
         p6_test_run "p6_token_hash 'foo'"
         p6_test_assert_blank "$(p6_test_run_stderr)" "no stderr"
-        p6_test_assert_eq "$(p6_test_run_stdout)" "d3b07384d113edec49eaa6238ad5ff00" "expected hash"
+        p6_test_assert_eq "$(p6_test_run_stdout)" "d3b07384d113edec49eaa6238ad5ff00" "expected hash"  # pragma: allowlist secret
     )
     p6_test_finish
 
@@ -50,7 +50,7 @@ main() {
     p6_test_start "p6_token_sha256()"
     (
         p6_test_run "p6_token_sha256 foo | tr -d \"$P6_NL\""
-        p6_test_assert_run_ok "sha256 foo" 0 "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"
+        p6_test_assert_run_ok "sha256 foo" 0 "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae"  # pragma: allowlist secret
     )
     p6_test_finish
 

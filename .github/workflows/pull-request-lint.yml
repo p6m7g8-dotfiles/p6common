@@ -26,6 +26,6 @@ jobs:
         run: echo "Skipping lint in queue context"
       - name: Lint PR title
         if: github.event_name == 'pull_request_target'
-        uses: p6m7g8-actions/p6-gh-pr-title-linter@main
+        uses: p6m7g8-actions/p6-gh-pr-title-lint@main
         with:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
