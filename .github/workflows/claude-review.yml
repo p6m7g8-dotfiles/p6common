@@ -22,6 +22,6 @@ jobs:
       - name: Run claude review
         if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
         continue-on-error: true
-        uses: p6m7g8-actions/claude@main
+        uses: p6m7g8-actions/p6-code-review@main
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
